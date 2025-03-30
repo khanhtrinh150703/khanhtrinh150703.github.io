@@ -2,7 +2,7 @@
 
 const CONFIG = {
   github: {
-    username: 'zafuss', // Your GitHub org/user name. (This is the only required config)
+    username: 'khanhtrinh150703', // Your GitHub org/user name. (This is the only required config)
   },
   /**
    * If you are deploying to https://<USERNAME>.github.io/, for example your repository is at https://github.com/zafus/zafus.github.io, set base to '/'.
@@ -21,8 +21,20 @@ const CONFIG = {
         exclude: {
           forks: false, // Forked projects will not be displayed if set to true.
           projects: [
-            'zafuss/BadmintonManagement',
-            'zafuss/BadmintonBookingApp',
+            'khanhtrinh150703/python-youtube-tutorials',
+            'khanhtrinh150703/cracking-the-coding-interview',
+            'khanhtrinh150703/BadmintonManagement',
+            'khanhtrinh150703/khanhtrinh150703.github.io',
+            'khanhtrinh150703/Bai07_Nhom02',
+            'khanhtrinh150703/python',
+            'khanhtrinh150703/Reinforcement-Learning',
+            'khanhtrinh150703/kiemtra',
+            'khanhtrinh150703/DemoPython',
+            'khanhtrinh150703/BTWeb',
+            'khanhtrinh150703/MathQuizTS',
+            'khanhtrinh150703/Test',
+            'khanhtrinh150703/Tester',
+            'khanhtrinh150703/Trinhhhhhh',
           ], // These projects will not be displayed. example: ['zafus/my-project1', 'zafus/my-project2']
         },
       },
@@ -38,10 +50,10 @@ const CONFIG = {
         {
           title: 'MathQuiz Application',
           description:
-            'A math quiz practice app for students. Users can register/login, take quizzes, review past results, and join classes. Admins can manage users, quizzes, and classes. Built with ASP.Net Core for the backend and Flutter for the frontend.',
+            'A math quiz practice app for students. Users can register/login, take quizzes, review past results, and join classes. Admins can manage users, quizzes, and classes. Built entirely with Java Spring Boot.',
           imageUrl:
             'https://play-lh.googleusercontent.com/jzk4udprxbRqywvNTWbzNttgoQdPFGSlm8KymplGpZD5_ojLz6JOwoLKjj2GtHpUZIE=w480-h960-rw',
-          link: 'https://play.google.com/store/apps/details?id=com.zafus.mathquiz',
+          link: 'https://github.com/NghiaDau/MathQuizJava',
         },
         {
           title: 'RubikBMT Website',
@@ -54,61 +66,62 @@ const CONFIG = {
     },
   },
   seo: {
-    title: 'Portfolio of Dang Hoang Gia Phu',
+    title: 'Portfolio of Nguyen Ba Khanh Trinh',
     description: '',
     imageURL: '',
   },
   social: {
-    linkedin: 'zafus',
-    phone: '0823216213',
-    email: 'zafus.coding@gmail.com',
+    linkedin: 'khanh-trinh-78a7b6235',
+    phone: '0963788076',
+    email: 'khanhtrinh150703@gmail.com',
   },
 
   dateOfBirth: {
-    dateOfBirth: '21/03/2001 | Viet Nam 🇻🇳', // Empty fileUrl will hide the `Download Resume` button.
+    dateOfBirth: '15/07/2003 | Viet Nam 🇻🇳', // Empty fileUrl will hide the `Download Resume` button.
   },
 
   description: {
     description:
-      'I am a passionate software developer specializing in building modern mobile applications and websites using Flutter, Java Spring Boot and ReactJS. I enjoy solving complex problems and continuously learning new technologies.',
+      'I am a passionate backend developer with expertise in Java Spring Boot and Node.js with TypeScript. I have experience in databases, APIs, and real-time communication. Additionally, I am knowledgeable in IoT technologies like MQTT and have explored data mining techniques, including Apriori, N-List, and PP-Tree, with multithreading optimizations. I thrive on solving complex challenges and continuously expanding my skills in backend development, distributed systems, and data-driven solutions.',
   },
 
   skills: [
-    'Dart (Flutter)',
     'Java (SpringBoot)',
-    'ReactJS',
-    'NodeJS',
+    'Python',
+    'JavaScript',
+    'TypeScript',
     'C/C++/C#',
     'MySQL',
     'SQLServer',
+    'Postgresql',
+    'MongoDB',
   ],
-  // experiences: [
-  //   {
-  //     company: 'Company Name',
-  //     position: 'Position',
-  //     from: 'September 2021',
-  //     to: 'Present',
-  //     companyLink: 'https://example.com',
-  //   },
-  //   {
-  //     company: 'Company Name',
-  //     position: 'Position',
-  //     from: 'July 2019',
-  //     to: 'August 2021',
-  //     companyLink: 'https://example.com',
-  //   },
-  // ],
+  experiences: [
+    {
+      company: 'TOIDM',
+      position: 'Teacher Assistant',
+      from: 'September 2024',
+      to: 'December 2024',
+      companyLink: 'https://www.facebook.com/toidmedu/',
+    },
+    // {
+    //   company: 'Company Name',
+    //   position: 'Position',
+    //   from: 'July 2019',
+    //   to: 'August 2021',
+    //   companyLink: 'https://example.com',
+    // },
+  ],
   certifications: [
     {
-      name: 'TOEIC',
-      body: '780/990',
-      year: 'November 2023',
+      name: 'B1 HUTECH',
+      year: 'July 2024',
     },
   ],
   educations: [
     {
       institution: 'Ho Chi Minh City University of Technology (HUTECH)',
-      degree: 'Current GPA: 3.67/4.0',
+      degree: 'Current GPA: 3.56/4.0',
       from: '2021',
       to: 'Present',
     },
