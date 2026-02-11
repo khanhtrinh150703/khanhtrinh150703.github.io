@@ -82,7 +82,7 @@ const CONFIG = {
 
   description: {
     description:
-      'I am a passionate backend developer with expertise in Java Spring Boot and Node.js with TypeScript. I have experience in databases, APIs, and real-time communication. Additionally, I am knowledgeable in IoT technologies like MQTT and have explored data mining techniques, including Apriori, N-List, and PP-Tree, with multithreading optimizations. I thrive on solving complex challenges and continuously expanding my skills in backend development, distributed systems, and data-driven solutions.',
+      'Passionate developer with experience in Java Spring Boot and Node.js (TypeScript). I have worked on building APIs, real-time communication systems, and IoT solutions using MQTT and Jetson Orin. Along with optimizing data mining techniques like N-List and PP-Tree, I focus on integrating AI models such as YOLO and PhoBERT into backend infrastructures to develop intelligent, data-driven systems',
   },
 
   skills: [
@@ -104,13 +104,13 @@ const CONFIG = {
       to: 'December 2024',
       companyLink: 'https://www.facebook.com/toidmedu/',
     },
-    // {
-    //   company: 'Company Name',
-    //   position: 'Position',
-    //   from: 'July 2019',
-    //   to: 'August 2021',
-    //   companyLink: 'https://example.com',
-    // },
+    {
+      company: 'HONDAPLUS VIETNAM CO., LTD',
+      position: 'Ai Engineer',
+      from: 'April 2025',
+      to: 'January 2026',
+      companyLink: 'https://www.hondaplus-vietnam.com.vn/vi',
+    },
   ],
   certifications: [
     {
@@ -121,9 +121,9 @@ const CONFIG = {
   educations: [
     {
       institution: 'Ho Chi Minh City University of Technology (HUTECH)',
-      degree: 'Current GPA: 3.56/4.0',
+      degree: 'Current GPA: 3.6/4.0',
       from: '2021',
-      to: 'Present',
+      to: '2025',
     },
   ],
   // publications: [
