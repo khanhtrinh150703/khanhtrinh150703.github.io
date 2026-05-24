@@ -48,6 +48,13 @@ const CONFIG = {
       // To hide the `External Projects` section, keep it empty.
       projects: [
         {
+          title: 'SMART GPLX SYSTEM',
+          description:
+            'An online examination platform for the Vietnamese Driving License (GPLX). The system supporting real-time exam simulations, dynamic question matrix generation, and detailed performance tracking. Developed with Next.js, TypeScript, and Node.js, featuring a highly responsive, modern UI/UX powered by shadcn/ui.',
+          imageUrl: 'public/Smart.png',
+          link: 'https://github.com/khanhtrinh150703/SMART-GPLX-SYSTEM',
+        },
+        {
           title: 'MathQuiz Application',
           description:
             'A math quiz practice app for students. Users can register/login, take quizzes, review past results, and join classes. Admins can manage users, quizzes, and classes. Built entirely with Java Spring Boot.',
@@ -59,7 +66,7 @@ const CONFIG = {
           title: 'RubikBMT Website',
           description:
             'Official website for RubikBMT Academy. Users can enroll in courses, read and comment on news, and track live competition results. Admins can manage students, posts, and competitions. Developed using Java Spring Boot for the backend and HTML, CSS, Bootstrap, Thymeleaf for the frontend.',
-          imageUrl: 'https://www.rubikbmt.vn/images/AvatarRubikBmt.png',
+          imageUrl: 'public/Rubik.png',
           link: 'https://rubikbmt.vn',
         },
       ],
@@ -77,19 +84,19 @@ const CONFIG = {
   },
 
   dateOfBirth: {
-    dateOfBirth: '15/07/2003 | Viet Nam 🇻🇳', // Empty fileUrl will hide the `Download Resume` button.
+    dateOfBirth: '15/07/2003 | Viet Nam 🇻🇳', 
   },
 
   description: {
     description:
-      'Passionate developer with experience in Java Spring Boot and Node.js (TypeScript). I have worked on building APIs, real-time communication systems, and IoT solutions using MQTT and Jetson Orin. Along with optimizing data mining techniques like N-List and PP-Tree, I focus on integrating AI models such as YOLO and PhoBERT into backend infrastructures to develop intelligent, data-driven systems',
+      'A Backend Developer experienced in Node.js (TypeScript) and Java Spring Boot. I specialize in building scalable APIs, high-concurrency architectures, and real-time communication systems. I focus on optimizing backend infrastructures and integrating AI models (such as BERT/YOLO) to deliver intelligent, efficient, and data-driven software solutions.',
   },
 
   skills: [
     'Java (SpringBoot)',
     'Python',
     'JavaScript',
-    'TypeScript',
+    'TypeScript (Nodejs)',
     'C/C++/C#',
     'MySQL',
     'SQLServer',
