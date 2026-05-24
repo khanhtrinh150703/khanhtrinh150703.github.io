@@ -51,7 +51,7 @@ const CONFIG = {
           title: 'SMART GPLX SYSTEM',
           description:
             'An online examination platform for the Vietnamese Driving License (GPLX). The system supporting real-time exam simulations, dynamic question matrix generation, and detailed performance tracking. Developed with Next.js, TypeScript, and Node.js, featuring a highly responsive, modern UI/UX powered by shadcn/ui.',
-          imageUrl: 'public/Smart.png',
+          imageUrl: '/Smart.png',
           link: 'https://github.com/khanhtrinh150703/SMART-GPLX-SYSTEM',
         },
         {
@@ -66,7 +66,7 @@ const CONFIG = {
           title: 'RubikBMT Website',
           description:
             'Official website for RubikBMT Academy. Users can enroll in courses, read and comment on news, and track live competition results. Admins can manage students, posts, and competitions. Developed using Java Spring Boot for the backend and HTML, CSS, Bootstrap, Thymeleaf for the frontend.',
-          imageUrl: 'public/Rubik.png',
+          imageUrl: '/Rubik.png',
           link: 'https://rubikbmt.vn',
         },
       ],
@@ -84,7 +84,7 @@ const CONFIG = {
   },
 
   dateOfBirth: {
-    dateOfBirth: '15/07/2003 | Viet Nam 🇻🇳', 
+    dateOfBirth: '15/07/2003 | Viet Nam 🇻🇳',
   },
 
   description: {
