@@ -93,15 +93,18 @@ const CONFIG = {
   },
 
   skills: [
-    'Java (SpringBoot)',
+    'Java (Spring Boot)',
     'Python',
     'JavaScript',
-    'TypeScript (Nodejs)',
+    'TypeScript (Node.js)',
     'C/C++/C#',
     'MySQL',
-    'SQLServer',
-    'Postgresql',
+    'SQL Server',
+    'PostgreSQL',
     'MongoDB',
+    'Machine Learning',
+    'Deep Learning',
+    'Data Mining',
   ],
   experiences: [
     {
