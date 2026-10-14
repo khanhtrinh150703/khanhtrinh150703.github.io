@@ -5,7 +5,7 @@
     "email": "khanhtrinh150703@gmail.com",
     "phone": "0963788076",
     "linkedin": "khanh-trinh-78a7b6235",
-    "location": "15/07/2003 | Viet Nam 🇻🇳",
+    "location": "15/07/2003 | Vietnam 🇻🇳",
     "status": "Available for AI Engineer & Backend Roles",
     "role": "AI Engineer & Backend Developer",
     "tagline": "AI Engineer",
@@ -251,7 +251,7 @@
   "skills": {
     "badge": "SKILLS & EXPERTISE",
     "title": "Technical Stack & Capabilities",
-    "description": "Nhấp vào bất kỳ kỹ năng nào bên dưới để xem tiêu điểm công nghệ.",
+    "description": "Click any skill below to explore technology highlights and focus areas.",
     "categories": [
       {
         "title": "AI, GraphRAG & Computer Vision",
@@ -344,3 +344,4 @@
     "khanhtrinh150703/paychain_backend"
   ]
 }
+ 

@@ -118,7 +118,7 @@ const Projects: React.FC<ProjectsProps> = ({
                   : 'text-slate-400'
               }`}
             >
-              Nhấp chuột vào bất kỳ dự án nào để xem chi tiết kiến trúc, phân hệ Backend và AI.
+              Click on any project to inspect architectural details, Backend subsystems, and AI engines.
             </p>
           </div>
         </ScrollReveal>
@@ -210,7 +210,7 @@ const Projects: React.FC<ProjectsProps> = ({
         </div>
       </ScrollReveal>
 
-        {/* Compact Projects Grid: Tinh tế, không bị to chả bà, click để xem chi tiết */}
+        {/* Compact Projects Grid: Click card to view full architectural details */}
         {activeTab !== 'github' && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {filteredProjects.map((project, index) => {
@@ -308,7 +308,7 @@ const Projects: React.FC<ProjectsProps> = ({
                         {project.title}
                       </h3>
 
-                      {/* Teaser Description (line-clamp-2 gọn gàng) */}
+                      {/* Teaser Description (clean line-clamp-2) */}
                       <p
                         className={`text-xs mt-2 line-clamp-2 leading-relaxed ${
                           isLight
@@ -365,7 +365,7 @@ const Projects: React.FC<ProjectsProps> = ({
                     }`}
                   >
                     <span className="flex items-center gap-1.5">
-                      <span>Xem chi tiết</span>
+                      <span>View Details</span>
                       <FaArrowRight className="text-[10px] group-hover:translate-x-1 transition-transform" />
                     </span>
                     <FaCircleInfo className="text-xs opacity-60" />
@@ -481,7 +481,7 @@ const Projects: React.FC<ProjectsProps> = ({
       </ScrollReveal>
     </div>
 
-      {/* DETAIL MODAL POPUP: Hiện toàn bộ nội dung chi tiết khi ấn vô thẻ */}
+      {/* DETAIL MODAL POPUP: Displays complete architectural specifications on click */}
       {selectedProject && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-fadeIn">
           {/* Backdrop click to close */}
@@ -507,13 +507,13 @@ const Projects: React.FC<ProjectsProps> = ({
                   {selectedProject.category === 'BE' && (
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">
                       <FaServer className="text-[10px]" />
-                      <span>Phân hệ Backend (BE)</span>
+                      <span>Backend Subsystem (BE)</span>
                     </span>
                   )}
                   {selectedProject.category === 'AI' && (
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                       <FaBrain className="text-[10px]" />
-                      <span>Phân hệ AI Engine (AI)</span>
+                      <span>AI Engine Subsystem (AI)</span>
                     </span>
                   )}
                 </div>
@@ -549,7 +549,7 @@ const Projects: React.FC<ProjectsProps> = ({
               {/* Full Detailed Description */}
               <div>
                 <h4 className="text-xs font-mono uppercase tracking-wider text-indigo-500 dark:text-indigo-400 font-semibold mb-2">
-                  Chi tiết kiến trúc & Nghiệp vụ
+                  Architecture & Engineering Details
                 </h4>
                 <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300 whitespace-pre-line">
                   {selectedProject.description}
@@ -560,7 +560,7 @@ const Projects: React.FC<ProjectsProps> = ({
               {(selectedProject.beStack || selectedProject.aiStack) && (
                 <div>
                   <h4 className="text-xs font-mono uppercase tracking-wider text-indigo-500 dark:text-indigo-400 font-semibold mb-2.5">
-                    Công nghệ sử dụng (Tech Stack)
+                    Technologies & Technical Stack
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {(selectedProject.beStack || selectedProject.aiStack || []).map(
@@ -585,7 +585,7 @@ const Projects: React.FC<ProjectsProps> = ({
                 onClick={() => setSelectedProject(null)}
                 className="px-4 py-2 rounded-xl text-xs font-semibold border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               >
-                Đóng
+                Close
               </button>
 
               <a
@@ -601,12 +601,12 @@ const Projects: React.FC<ProjectsProps> = ({
                 {selectedProject.link.includes('github.com') ? (
                   <>
                     <FaGithub className="text-sm" />
-                    <span>Mở GitHub Repository</span>
+                    <span>Open GitHub Repository</span>
                   </>
                 ) : (
                   <>
                     <FaArrowUpRightFromSquare className="text-xs" />
-                    <span>Truy cập Website</span>
+                    <span>Visit Live Website</span>
                   </>
                 )}
               </a>

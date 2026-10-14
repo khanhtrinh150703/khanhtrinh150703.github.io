@@ -229,7 +229,7 @@ const Skills: React.FC<SkillsProps> = ({ skills, theme = 'dark' }) => {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold flex items-center gap-2">
-                    <span>Đang chọn kỹ năng:</span>
+                    <span>Selected Skill:</span>
                     <span className={isCyber ? 'text-emerald-300' : 'text-indigo-400'}>
                       {selectedSkill}
                     </span>
@@ -245,7 +245,7 @@ const Skills: React.FC<SkillsProps> = ({ skills, theme = 'dark' }) => {
                 onClick={() => setSelectedSkill(null)}
                 className="px-3 py-1.5 rounded-xl border text-xs font-semibold hover:opacity-80 transition-opacity w-fit border-indigo-500/30"
               >
-                Đóng
+                Close
               </button>
             </div>
           </ScrollReveal>

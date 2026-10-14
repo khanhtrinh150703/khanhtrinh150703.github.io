@@ -30,7 +30,7 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
 }): JSX.Element => {
   return (
     <div className="relative card shadow-lg compact bg-base-100">
-      {/* ThemeChanger ở góc trên bên phải */}
+      {/* Theme changer in top-right corner */}
       {!themeConfig.disableSwitch && (
         <div className="absolute top-4 right-4">
           <ThemeChanger
@@ -70,7 +70,7 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
           </div>
         )}
 
-        {/* Tên người dùng */}
+        {/* User name */}
         <div className="text-center mx-auto px-8">
           <h5 className="font-bold text-2xl">
             {loading || !profile ? (
@@ -83,7 +83,7 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
           </h5>
         </div>
 
-        {/* Ngày sinh */}
+        {/* Date of birth */}
         {dateOfBirth && (
           <div className="text-center mx-auto px-8 mt-2">
             {loading ? (
@@ -94,7 +94,7 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
           </div>
         )}
 
-        {/* Mô tả */}
+        {/* Description */}
         {description && (
           <div className="text-center mx-auto px-8 mt-2">
             {loading ? (
@@ -105,7 +105,7 @@ const AvatarCard: React.FC<AvatarCardProps> = ({
           </div>
         )}
 
-        {/* Nút tải xuống resume */}
+        {/* Resume download button */}
         {resumeFileUrl && (
           <div className="mt-6">
             {loading ? (

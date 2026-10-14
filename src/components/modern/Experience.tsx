@@ -47,7 +47,7 @@ const Experience: React.FC<ExperienceProps> = ({ experiences, theme = 'dark' }) 
                 isLight ? 'text-slate-600' : 'text-slate-400'
               }`}
             >
-              Nhấp vào từng giai đoạn nghề nghiệp để xem chi tiết đóng góp và công nghệ áp dụng.
+              Click on any career milestone to view detailed contributions and technical stack.
             </p>
           </div>
         </ScrollReveal>
