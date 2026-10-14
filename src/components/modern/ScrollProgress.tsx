@@ -10,7 +10,7 @@ export const ScrollProgress: React.FC<ScrollProgressProps> = ({ theme = 'sunny' 
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
-  const isLight = theme === 'sunny' || theme === 'cloudy';
+  const isLight = theme === 'sunny' || theme === 'cloudy' || theme === 'snowy';
 
   useEffect(() => {
     const handleScroll = () => {

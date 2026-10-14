@@ -39,22 +39,22 @@ const GitProfile = ({ config }: { config: Config }) => {
   });
   const [githubProjects, setGithubProjects] = useState<GithubProject[]>([]);
 
-  // Weather Theme State: 'sunny' | 'cloudy' | 'rainy' | 'moonlit'
+  // Weather Theme State: 'sunny' | 'cloudy' | 'rainy' | 'moonlit' | 'snowy'
   const [theme, setTheme] = useState<WeatherTheme>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('weather_theme_preference') as WeatherTheme;
-      if (saved && ['sunny', 'cloudy', 'rainy', 'moonlit'].includes(saved)) {
+      if (saved && ['sunny', 'cloudy', 'rainy', 'moonlit', 'snowy'].includes(saved)) {
         return saved;
       }
     }
-    return 'sunny';
+    return 'cloudy';
   });
 
   useEffect(() => {
     localStorage.setItem('weather_theme_preference', theme);
     const root = document.documentElement;
     root.setAttribute('data-weather', theme);
-    const isLightMode = theme === 'sunny' || theme === 'cloudy';
+    const isLightMode = theme === 'sunny' || theme === 'cloudy' || theme === 'snowy';
     if (isLightMode) {
       root.classList.remove('dark');
       root.classList.add('light');
@@ -239,7 +239,7 @@ const GitProfile = ({ config }: { config: Config }) => {
     );
   }
 
-  const isLight = theme === 'sunny' || theme === 'cloudy';
+  const isLight = theme === 'sunny' || theme === 'cloudy' || theme === 'snowy';
 
   return (
     <HelmetProvider>
@@ -289,7 +289,7 @@ const GitProfile = ({ config }: { config: Config }) => {
             />
           )}
 
-          {/* Projects Section (Clear separation between BE and AI) */}
+          {/* Projects Section */}
           <Projects
             externalProjects={sanitizedConfig.projects.external.projects}
             externalHeader={sanitizedConfig.projects.external.header}

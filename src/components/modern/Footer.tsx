@@ -14,7 +14,7 @@ interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({ config, theme = 'sunny' }) => {
-  const isLight = theme === 'sunny' || theme === 'cloudy';
+  const isLight = theme === 'sunny' || theme === 'cloudy' || theme === 'snowy';
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -11,7 +11,6 @@ import {
   FaArrowRight,
   FaCircleInfo,
   FaDiagramProject,
-  FaSatellite,
 } from 'react-icons/fa6';
 import { SanitizedExternalProject } from '../../interfaces/sanitized-config';
 import { GithubProject } from '../../interfaces/github-project';
@@ -40,7 +39,7 @@ const Projects: React.FC<ProjectsProps> = ({
   const [activeTab, setActiveTab] = useState<TabType>('all');
   const [selectedProject, setSelectedProject] = useState<SanitizedExternalProject | null>(null);
 
-  const isLight = theme === 'sunny' || theme === 'cloudy';
+  const isLight = theme === 'sunny' || theme === 'cloudy' || theme === 'snowy';
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -81,16 +80,15 @@ const Projects: React.FC<ProjectsProps> = ({
         {/* Section Header */}
         <ScrollReveal direction="up">
           <div className="flex flex-col items-center text-center mb-10">
-            <div
-              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium mb-3 border shadow-sm ${
+            <span
+              className={`px-4 py-1.5 rounded-full text-xs font-mono font-medium border mb-3 ${
                 isLight
                   ? 'bg-sky-50 border-sky-200 text-sky-700'
-                  : 'bg-slate-900/80 border-sky-500/30 text-sky-300 shadow-sm'
+                  : 'bg-slate-900 border-slate-800 text-sky-300'
               }`}
             >
-              <FaSatellite className="text-xs text-sky-500" />
-              <span>RADAR DETECTIONS • ARCHITECTURE REPOSITORIES</span>
-            </div>
+              FEATURED PROJECTS
+            </span>
             <h2
               className={`text-3xl sm:text-4xl font-black tracking-tight ${
                 isLight ? 'text-slate-900' : 'text-white'
@@ -98,7 +96,7 @@ const Projects: React.FC<ProjectsProps> = ({
             >
               {externalHeader || 'Featured Systems & Engineering Projects'}
             </h2>
-            <div className="w-20 h-1 rounded-full mt-4 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500" />
+            <div className="w-16 h-1 rounded-full mt-3 bg-gradient-to-r from-sky-400 to-blue-600" />
             <p
               className={`text-sm max-w-xl mt-3 ${
                 isLight ? 'text-slate-600' : 'text-slate-400'
@@ -556,6 +554,25 @@ const Projects: React.FC<ProjectsProps> = ({
                 <h3 className="text-xl sm:text-2xl font-bold tracking-tight">
                   {selectedProject.title}
                 </h3>
+                {(selectedProject.role || selectedProject.period || selectedProject.teamSize) && (
+                  <div className="flex flex-wrap items-center gap-2 mt-2">
+                    {selectedProject.role && (
+                      <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-lg bg-sky-50 dark:bg-slate-800 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-slate-700">
+                        Role: {selectedProject.role}
+                      </span>
+                    )}
+                    {selectedProject.period && (
+                      <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                        {selectedProject.period}
+                      </span>
+                    )}
+                    {selectedProject.teamSize && (
+                      <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                        Team size: {selectedProject.teamSize}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
 
               <button
@@ -605,6 +622,31 @@ const Projects: React.FC<ProjectsProps> = ({
                 </p>
               </div>
 
+              {selectedProject.responsibilities && selectedProject.responsibilities.length > 0 && (
+                <div>
+                  <h4
+                    className={`text-xs font-mono uppercase tracking-wider font-semibold mb-2.5 ${
+                      isLight ? 'text-sky-800' : 'text-sky-400'
+                    }`}
+                  >
+                    Key Responsibilities & Deliverables
+                  </h4>
+                  <ul className="space-y-2">
+                    {selectedProject.responsibilities.map((resp, rIdx) => (
+                      <li
+                        key={rIdx}
+                        className={`text-xs leading-relaxed flex items-start gap-2.5 ${
+                          isLight ? 'text-slate-600' : 'text-slate-300'
+                        }`}
+                      >
+                        <span className="text-sky-500 shrink-0 font-bold text-xs mt-0.5">▹</span>
+                        <span>{resp}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               {(selectedProject.beStack || selectedProject.aiStack) && (
                 <div>
                   <h4
@@ -652,24 +694,42 @@ const Projects: React.FC<ProjectsProps> = ({
                 Close
               </button>
 
-              <a
-                href={selectedProject.link}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-400 hover:to-blue-500 shadow-md shadow-sky-300/40 transition-all cursor-pointer"
-              >
-                {selectedProject.link.includes('github.com') ? (
-                  <>
-                    <FaGithub className="text-sm" />
-                    <span>Open GitHub Repository</span>
-                  </>
-                ) : (
-                  <>
-                    <FaArrowUpRightFromSquare className="text-xs" />
-                    <span>Visit Live Website</span>
-                  </>
-                )}
-              </a>
+              {selectedProject.github && (
+                <a
+                  href={selectedProject.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                    isLight
+                      ? 'border-sky-200 bg-white hover:bg-sky-50 text-slate-800 shadow-xs'
+                      : 'border-sky-500/30 bg-slate-900 hover:bg-slate-800 text-sky-200'
+                  }`}
+                >
+                  <FaGithub className="text-sm" />
+                  <span>GitHub Repository</span>
+                </a>
+              )}
+
+              {selectedProject.link && (
+                <a
+                  href={selectedProject.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-400 hover:to-blue-500 shadow-md shadow-sky-300/40 transition-all cursor-pointer"
+                >
+                  {selectedProject.link.includes('github.com') ? (
+                    <>
+                      <FaGithub className="text-sm" />
+                      <span>Open GitHub</span>
+                    </>
+                  ) : (
+                    <>
+                      <FaArrowUpRightFromSquare className="text-xs" />
+                      <span>Visit Live Website</span>
+                    </>
+                  )}
+                </a>
+              )}
             </div>
           </div>
         </div>

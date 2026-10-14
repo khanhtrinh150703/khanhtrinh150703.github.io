@@ -6,7 +6,6 @@ import {
   FaGithub,
   FaCopy,
   FaCheck,
-  FaTowerBroadcast,
 } from 'react-icons/fa6';
 import { SanitizedConfig } from '../../interfaces/sanitized-config';
 import profileData from '../../../profile.data.json';
@@ -20,7 +19,7 @@ interface ContactProps {
 
 const Contact: React.FC<ContactProps> = ({ config, theme = 'sunny' }) => {
   const [copied, setCopied] = useState(false);
-  const isLight = theme === 'sunny' || theme === 'cloudy';
+  const isLight = theme === 'sunny' || theme === 'cloudy' || theme === 'snowy';
 
   const handleCopyEmail = () => {
     if (config.social.email) {
@@ -41,17 +40,15 @@ const Contact: React.FC<ContactProps> = ({ config, theme = 'sunny' }) => {
                 : 'bg-slate-900/85 border-sky-500/30 shadow-[0_20px_60px_rgba(0,0,0,0.7)]'
             }`}
           >
-            {/* Header Badge */}
-            <div
-              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium mb-4 border shadow-sm ${
+            <span
+              className={`px-4 py-1.5 rounded-full text-xs font-mono font-medium border mb-4 inline-block ${
                 isLight
                   ? 'bg-sky-50 border-sky-200 text-sky-700'
-                  : 'bg-slate-950/80 border-sky-500/30 text-sky-300'
+                  : 'bg-slate-900 border-slate-800 text-sky-300'
               }`}
             >
-              <FaTowerBroadcast className="text-xs text-sky-500" />
-              <span>{profileData.contact?.badge || 'ATMOSPHERIC SIGNAL BROADCAST'}</span>
-            </div>
+              CONTACT
+            </span>
 
             <h2
               className={`text-3xl sm:text-4xl font-black tracking-tight ${

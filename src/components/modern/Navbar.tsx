@@ -30,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({ config, theme, onThemeChange }) => {
     { name: 'Contact', href: '#contact' },
   ];
 
-  const isLight = theme === 'sunny' || theme === 'cloudy';
+  const isLight = theme === 'sunny' || theme === 'cloudy' || theme === 'snowy';
 
   return (
     <nav

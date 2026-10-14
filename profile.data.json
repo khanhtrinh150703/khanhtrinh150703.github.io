@@ -6,10 +6,10 @@
     "phone": "0963788076",
     "linkedin": "khanh-trinh-78a7b6235",
     "location": "15/07/2003 | Vietnam 🇻🇳",
-    "status": "Available for AI Engineer & Backend Roles",
-    "role": "AI Engineer & Backend Developer",
+    "status": "Available for AI Engineer Opportunities",
+    "role": "AI Engineer",
     "tagline": "AI Engineer",
-    "shortBio": "An AI Engineer with strong Backend and High-Performance Systems background. Specialized in Hybrid GraphRAG, Knowledge Graphs (Ontotext/Neo4j), Edge AI (NVIDIA Jetson, TensorRT, YOLO), and robust backend architectures (Node.js TypeScript, Java Spring Boot, Python, C++).",
+    "shortBio": "An AI Engineer specialized in Hybrid GraphRAG, Knowledge Graphs (Ontotext GraphDB, Neo4j), Edge AI (NVIDIA Jetson, TensorRT, YOLO), backed by robust C++ parallel computing and high-concurrency systems expertise.",
     "resumeUrl": ""
   },
   "heroHighlights": [
@@ -22,8 +22,8 @@
       "description": "Real-world YOLO deployment on NVIDIA Jetson with TensorRT and industrial camera systems."
     },
     {
-      "title": "High-Performance Backend",
-      "description": "Clean Architecture, DDD, high-concurrency APIs, distributed caching, and C++ parallel processing."
+      "title": "High-Performance Systems",
+      "description": "Clean Architecture, DDD, distributed caching, and C++ parallel processing (3.5x speedup)."
     },
     {
       "title": "Top Academic Track",
@@ -36,7 +36,7 @@
     "subheading": "Architecting Intelligent Systems & High-Performance Infrastructure",
     "paragraphs": [
       "I am an AI Engineer specializing in Intelligent Systems, Hybrid GraphRAG architectures, and Computer Vision. I design end-to-end AI pipelines that transform raw unstructured multi-modal data into validated Knowledge Graphs and high-speed neural inferences.",
-      "With a solid foundation in Backend development and Systems Optimization (Node.js, Spring Boot, Python, C++), I bridge the gap between cutting-edge AI models and production-ready, scalable enterprise services."
+      "With a solid foundation in Systems Optimization and Backend architecture (Python, C++, Node.js, Spring Boot), I bridge the gap between cutting-edge AI research and production-grade, scalable services."
     ],
     "strengths": [
       {
@@ -85,18 +85,38 @@
       ]
     },
     {
-      "company": "Backend & Systems Architecture",
-      "position": "Backend Engineer",
-      "from": "2024",
-      "to": "Present",
-      "companyLink": "https://github.com/khanhtrinh150703",
-      "description": "Robust server architecture, Clean Architecture, Domain-Driven Design (DDD), high-concurrency APIs, and C++ parallel computing.",
+      "company": "SMART-GPLX-SYSTEM",
+      "position": "Full Stack",
+      "from": "March 2026",
+      "to": "May 2026",
+      "companyLink": "https://gplx.dividesk.com",
+      "description": "Online multiple-choice traffic exam platform with session management, history tracking, and user performance analytics. (Team size: 1 | Role: Full Stack)",
+      "responsibilities": [
+        "Full-Stack Core: Developed the Node.js (TypeScript/Awilix/Prisma) backend, MySQL database schemas, and a responsive Next.js (Shadcn UI) exam dashboard.",
+        "State and Session Architecture: Managed live exam states in MongoDB to prevent F5 data loss, implemented JWT/Redis token blacklisting, and handled temporary registration OTP via Nodemailer.",
+        "Performance and Async Processing: Orchestrated non-blocking Promise.all flows to run parallel MongoDB snapshots and MySQL statistical updates; built a bulk question importer via BullMQ background queues.",
+        "Testing and Infrastructure: Authored 200+ integration tests using Jest and containerized services via Docker/Nginx for standalone VPS deployment."
+      ],
       "tags": [
         "Node.js (TypeScript)",
-        "Java (Spring Boot)",
-        "C / C++ (Parallel Computing)",
-        "Clean Architecture & DDD",
-        "Docker"
+        "Awilix",
+        "Prisma ORM",
+        "MySQL",
+        "MongoDB",
+        "Redis",
+        "BullMQ",
+        "Nodemailer",
+        "JWT",
+        "Next.js",
+        "React",
+        "Zustand",
+        "TanStack Query",
+        "Tailwind CSS",
+        "Shadcn/UI",
+        "Docker",
+        "Nginx",
+        "Jest",
+        "VPS"
       ]
     },
     {
@@ -160,6 +180,28 @@
         "Code Review",
         "Instruction"
       ]
+    },
+    {
+      "company": "RubikBMT Website",
+      "position": "Backend",
+      "from": "August 2024",
+      "to": "October 2024",
+      "companyLink": "https://rubikbmt.vn/",
+      "description": "Web platform for managing Rubik's Cube competitions, event registrations, and news, successfully serving over 100 users during live events. (Team size: 2 | Role: Backend)",
+      "responsibilities": [
+        "Backend and API Development: Built RESTful APIs and core business logic using Java and Spring Boot to handle event workflows and competitor data.",
+        "Data Integration: Engineered a conversion utility to parse and standardize custom timestamps from csTimer.net into standard date formats for score consistency.",
+        "Database and Frontend: Designed MySQL schemas for competition tracking and developed the user interface using HTML and JavaScript."
+      ],
+      "tags": [
+        "Java",
+        "Spring Boot",
+        "MySQL",
+        "RESTful APIs",
+        "csTimer Integration",
+        "HTML",
+        "JavaScript"
+      ]
     }
   ],
   "projects": [
@@ -199,23 +241,41 @@
       ]
     },
     {
-      "title": "Smart GPLX - Backend Architecture",
-      "description": "A robust, production-ready backend engine for the online driving license examination platform. Architected as a Modular Monolith adhering to Clean Architecture & Domain-Driven Design (DDD). Features an automated Exam Matrix generation engine matching Ministry of Transport standards, fine-grained RBAC permission controls, Redis caching & real-time leaderboards, asynchronous BullMQ queues, MongoDB session storage, and automated CI/CD pipeline using Docker, Husky, and GitHub Actions.",
+      "title": "SMART-GPLX-SYSTEM",
+      "description": "Online multiple-choice traffic exam platform with session management, history tracking, and user performance analytics.",
       "imageUrl": "/Smart.png",
-      "link": "https://github.com/khanhtrinh150703/SMART-GPLX-SYSTEM",
+      "link": "https://gplx.dividesk.com",
+      "github": "https://github.com/khanhtrinh150703/SMART-GPLX-SYSTEM",
       "category": "BE",
+      "role": "Full Stack",
+      "period": "March 2026 - May 2026",
+      "teamSize": "1",
+      "responsibilities": [
+        "Full-Stack Core: Developed the Node.js (TypeScript/Awilix/Prisma) backend, MySQL database schemas, and a responsive Next.js (Shadcn UI) exam dashboard.",
+        "State and Session Architecture: Managed live exam states in MongoDB to prevent F5 data loss, implemented JWT/Redis token blacklisting, and handled temporary registration OTP via Nodemailer.",
+        "Performance and Async Processing: Orchestrated non-blocking Promise.all flows to run parallel MongoDB snapshots and MySQL statistical updates; built a bulk question importer via BullMQ background queues.",
+        "Testing and Infrastructure: Authored 200+ integration tests using Jest and containerized services via Docker/Nginx for standalone VPS deployment."
+      ],
       "beStack": [
-        "Node.js",
-        "TypeScript",
-        "Clean Architecture",
-        "DDD",
-        "Prisma",
+        "Node.js (TypeScript)",
+        "Awilix",
+        "Prisma ORM",
         "MySQL",
-        "MongoDB Atlas",
-        "Redis (Cache/Queue)",
+        "MongoDB",
+        "Redis",
         "BullMQ",
+        "Nodemailer",
+        "JWT",
+        "Next.js",
+        "React",
+        "Zustand",
+        "TanStack Query",
+        "Tailwind CSS",
+        "Shadcn/UI",
         "Docker",
-        "CI/CD Pipeline"
+        "Nginx",
+        "Jest",
+        "VPS"
       ]
     },
     {
@@ -234,17 +294,27 @@
       ]
     },
     {
-      "title": "RubikBMT Academy Website",
-      "description": "Official website for RubikBMT Academy. Users can enroll in courses, read and comment on news, and track live competition results. Admins can manage students, posts, and competitions.",
+      "title": "RubikBMT Website",
+      "description": "Web platform for managing Rubik's Cube competitions, event registrations, and news, successfully serving over 100 users during live events.",
       "imageUrl": "/Rubik.png",
-      "link": "https://rubikbmt.vn",
+      "link": "https://rubikbmt.vn/",
       "category": "BE",
+      "role": "Backend",
+      "period": "August 2024 - October 2024",
+      "teamSize": "2",
+      "responsibilities": [
+        "Backend and API Development: Built RESTful APIs and core business logic using Java and Spring Boot to handle event workflows and competitor data.",
+        "Data Integration: Engineered a conversion utility to parse and standardize custom timestamps from csTimer.net into standard date formats for score consistency.",
+        "Database and Frontend: Designed MySQL schemas for competition tracking and developed the user interface using HTML and JavaScript."
+      ],
       "beStack": [
         "Java",
         "Spring Boot",
         "MySQL",
-        "Thymeleaf",
-        "Bootstrap"
+        "RESTful APIs",
+        "csTimer Integration",
+        "HTML",
+        "JavaScript"
       ]
     }
   ],
@@ -332,7 +402,7 @@
   "contact": {
     "badge": "GET IN TOUCH",
     "title": "Ready to Build Something Great?",
-    "description": "I am currently open to Backend Developer and AI Engineer opportunities. Whether you have a question, an exciting project, or simply want to connect, feel free to reach out!",
+    "description": "I am currently open to AI Engineer opportunities. Whether you have a challenging AI initiative, research project, or simply want to connect, feel free to reach out!",
     "buttonText": "Send Me an Email"
   },
   "displayGithubProjects": [

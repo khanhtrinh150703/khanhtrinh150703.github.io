@@ -1,7 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { FaSun, FaCloud, FaCloudRain, FaMoon, FaChevronDown } from 'react-icons/fa6';
+import {
+  FaSun,
+  FaCloud,
+  FaCloudRain,
+  FaMoon,
+  FaSnowflake,
+  FaChevronDown,
+} from 'react-icons/fa6';
 
-export type WeatherTheme = 'sunny' | 'cloudy' | 'rainy' | 'moonlit';
+export type WeatherTheme = 'sunny' | 'cloudy' | 'rainy' | 'moonlit' | 'snowy';
 
 interface ThemeSwitcherProps {
   currentTheme: WeatherTheme;
@@ -36,13 +43,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
     indicator: string;
   }[] = [
     {
-      id: 'sunny',
-      label: 'Sunny Day',
-      sublabel: 'Daylight & Sunbeams',
-      icon: <FaSun className="text-amber-500 text-sm animate-spin-slow" />,
-      indicator: 'bg-amber-400 border-amber-300 shadow-amber-300/50',
-    },
-    {
       id: 'cloudy',
       label: 'Cloudy Sky',
       sublabel: 'Fluffy Drifting Clouds',
@@ -51,22 +51,36 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
     },
     {
       id: 'rainy',
-      label: 'Gentle Rain',
-      sublabel: 'Raindrops & Mist',
+      label: 'Rainy Sky',
+      sublabel: 'Raindrops & Ground Ripples',
       icon: <FaCloudRain className="text-cyan-400 text-sm" />,
+      indicator: 'bg-cyan-400 border-cyan-300 shadow-cyan-300/50',
+    },
+    {
+      id: 'sunny',
+      label: 'Sunny Day',
+      sublabel: 'Golden Daylight & Sunbeams',
+      icon: <FaSun className="text-amber-500 text-sm animate-spin-slow" />,
+      indicator: 'bg-amber-400 border-amber-300 shadow-amber-300/50',
+    },
+    {
+      id: 'snowy',
+      label: 'Snowy Frost',
+      sublabel: 'Winter Snowfall & Ice Crystals',
+      icon: <FaSnowflake className="text-cyan-600 text-sm animate-spin-slow" />,
       indicator: 'bg-cyan-400 border-cyan-300 shadow-cyan-300/50',
     },
     {
       id: 'moonlit',
       label: 'Moonlit Night',
-      sublabel: 'Moon & Twinkling Stars',
+      sublabel: 'Celestial Moon & Stars',
       icon: <FaMoon className="text-indigo-300 text-sm" />,
       indicator: 'bg-indigo-400 border-indigo-300 shadow-indigo-300/50',
     },
   ];
 
   const activeTheme = themes.find((t) => t.id === currentTheme) || themes[0];
-  const isLightMode = currentTheme === 'sunny' || currentTheme === 'cloudy';
+  const isLightMode = currentTheme === 'sunny' || currentTheme === 'cloudy' || currentTheme === 'snowy';
 
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>

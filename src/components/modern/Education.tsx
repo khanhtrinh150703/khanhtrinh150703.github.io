@@ -4,7 +4,6 @@ import {
   FaCertificate,
   FaAward,
   FaCalendarDays,
-  FaBookOpen,
 } from 'react-icons/fa6';
 import {
   SanitizedEducation,
@@ -24,7 +23,7 @@ const Education: React.FC<EducationProps> = ({
   certifications,
   theme = 'sunny',
 }) => {
-  const isLight = theme === 'sunny' || theme === 'cloudy';
+  const isLight = theme === 'sunny' || theme === 'cloudy' || theme === 'snowy';
 
   return (
     <section id="education" className="py-20 relative">
@@ -32,16 +31,15 @@ const Education: React.FC<EducationProps> = ({
         {/* Section Header */}
         <ScrollReveal direction="up" delay={0}>
           <div className="flex flex-col items-center text-center mb-16">
-            <div
-              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium mb-3 border shadow-sm ${
+            <span
+              className={`px-4 py-1.5 rounded-full text-xs font-mono font-medium border mb-3 ${
                 isLight
                   ? 'bg-sky-50 border-sky-200 text-sky-700'
-                  : 'bg-slate-900/80 border-sky-500/30 text-sky-300 shadow-sm'
+                  : 'bg-slate-900 border-slate-800 text-sky-300'
               }`}
             >
-              <FaBookOpen className="text-xs text-sky-500" />
-              <span>ACADEMIC FOUNDATION & CREDENTIALS</span>
-            </div>
+              EDUCATION & CREDENTIALS
+            </span>
             <h2
               className={`text-3xl sm:text-4xl font-black tracking-tight ${
                 isLight ? 'text-slate-900' : 'text-white'
@@ -49,7 +47,7 @@ const Education: React.FC<EducationProps> = ({
             >
               Education & Certifications
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 rounded-full mt-4"></div>
+            <div className="w-16 h-1 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full mt-3"></div>
           </div>
         </ScrollReveal>
 

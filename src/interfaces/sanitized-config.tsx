@@ -24,7 +24,12 @@ export interface SanitizedExternalProject {
   description?: string;
   imageUrl?: string;
   link: string;
+  github?: string;
   category?: string;
+  role?: string;
+  period?: string;
+  teamSize?: string | number;
+  responsibilities?: string[];
   beStack?: string[];
   aiStack?: string[];
   beDescription?: string;

@@ -5,7 +5,6 @@ import {
   FaCalendarDays,
   FaChevronDown,
   FaLightbulb,
-  FaCompass,
 } from 'react-icons/fa6';
 import { SanitizedExperience } from '../../interfaces/sanitized-config';
 import { WeatherTheme } from './ThemeSwitcher';
@@ -19,7 +18,7 @@ interface ExperienceProps {
 const Experience: React.FC<ExperienceProps> = ({ experiences, theme = 'sunny' }) => {
   if (!experiences || experiences.length === 0) return null;
 
-  const isLight = theme === 'sunny' || theme === 'cloudy';
+  const isLight = theme === 'sunny' || theme === 'cloudy' || theme === 'snowy';
   const [expandedId, setExpandedId] = useState<number | null>(null); // Strictly collapsed by default
   const sortedExperiences = [...experiences];
 
@@ -29,16 +28,15 @@ const Experience: React.FC<ExperienceProps> = ({ experiences, theme = 'sunny' })
         {/* Section Header */}
         <ScrollReveal direction="up">
           <div className="flex flex-col items-center text-center mb-16">
-            <div
-              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium mb-3 border shadow-sm ${
+            <span
+              className={`px-4 py-1.5 rounded-full text-xs font-mono font-medium border mb-3 ${
                 isLight
                   ? 'bg-sky-50 border-sky-200 text-sky-700'
-                  : 'bg-slate-900/80 border-sky-500/30 text-sky-300 shadow-sm'
+                  : 'bg-slate-900 border-slate-800 text-sky-300'
               }`}
             >
-              <FaCompass className="text-xs text-sky-500" />
-              <span>CAREER TRAJECTORY & RADAR MILESTONES</span>
-            </div>
+              WORK EXPERIENCE
+            </span>
             <h2
               className={`text-3xl sm:text-4xl font-black tracking-tight ${
                 isLight ? 'text-slate-900' : 'text-white'
@@ -46,7 +44,7 @@ const Experience: React.FC<ExperienceProps> = ({ experiences, theme = 'sunny' })
             >
               Work Experience
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 rounded-full mt-4"></div>
+            <div className="w-16 h-1 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full mt-3"></div>
             <p
               className={`text-sm max-w-lg mt-3 ${
                 isLight ? 'text-slate-600' : 'text-slate-400'

@@ -10,7 +10,6 @@ import {
   FaLayerGroup,
   FaCube,
   FaNetworkWired,
-  FaWind,
 } from 'react-icons/fa6';
 import {
   SiSpringboot,
@@ -79,7 +78,7 @@ const getCategoryIcon = (index: number) => {
 };
 
 const Skills: React.FC<SkillsProps> = ({ skills, theme = 'sunny' }) => {
-  const isLight = theme === 'sunny' || theme === 'cloudy';
+  const isLight = theme === 'sunny' || theme === 'cloudy' || theme === 'snowy';
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
 
   const skillCategories = (profileData.skills?.categories || []).map((cat, idx) => ({
@@ -98,16 +97,15 @@ const Skills: React.FC<SkillsProps> = ({ skills, theme = 'sunny' }) => {
         {/* Section Header */}
         <ScrollReveal direction="up">
           <div className="flex flex-col items-center text-center mb-16">
-            <div
-              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium mb-3 border shadow-sm ${
+            <span
+              className={`px-4 py-1.5 rounded-full text-xs font-mono font-medium border mb-3 ${
                 isLight
                   ? 'bg-sky-50 border-sky-200 text-sky-700'
-                  : 'bg-slate-900/80 border-sky-500/30 text-sky-300 shadow-sm'
+                  : 'bg-slate-900 border-slate-800 text-sky-300'
               }`}
             >
-              <FaWind className="text-xs text-sky-500" />
-              <span>{profileData.skills?.badge || 'ATMOSPHERIC MATRIX • CAPABILITIES'}</span>
-            </div>
+              TECHNICAL CAPABILITIES
+            </span>
             <h2
               className={`text-3xl sm:text-4xl font-black tracking-tight ${
                 isLight ? 'text-slate-900' : 'text-white'
@@ -115,7 +113,7 @@ const Skills: React.FC<SkillsProps> = ({ skills, theme = 'sunny' }) => {
             >
               {profileData.skills?.title || 'Technical Stack & Capabilities'}
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 rounded-full mt-4"></div>
+            <div className="w-16 h-1 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full mt-3"></div>
             {profileData.skills?.description && (
               <p
                 className={`text-sm max-w-lg mt-3 ${

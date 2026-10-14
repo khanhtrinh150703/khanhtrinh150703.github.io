@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 230" fill="none">
+  <!-- Top Wind Swirl (delicate hairline strokes) -->
+  <path d="M 80 82 C 160 50, 260 48, 360 72 C 390 79, 410 75, 424 55 C 440 32, 436 12, 418 12 C 402 12, 396 28, 410 38 C 420 45, 432 38, 428 26" 
+        stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.85" />
+  <path d="M 65 102 C 150 72, 260 70, 375 95 C 405 101, 420 95, 432 80" 
+        stroke="#64748b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.75" />
+
+  <!-- Bottom Wind Swirl -->
+  <path d="M 155 135 C 230 120, 310 126, 390 152 C 418 161, 430 156, 438 142 C 445 128, 438 118, 426 120 C 416 122, 416 134, 426 138 C 432 140, 438 135, 435 128" 
+        stroke="#64748b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+  <path d="M 30 178 C 160 135, 290 142, 410 182 C 440 192, 470 190, 495 175" 
+        stroke="#64748b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
+  <path d="M 365 158 C 390 170, 420 175, 445 168" 
+        stroke="#64748b" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.6" />
+</svg>

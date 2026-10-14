@@ -107,6 +107,26 @@ html[data-weather="moonlit"] ::-webkit-scrollbar-thumb:hover {
   background: #818cf8;
 }
 
+/* 5. SNOWY FROST (Mùa đông tuyết rơi - Băng giá) */
+html[data-weather="snowy"] body {
+  background-color: #f7fbff;
+  color: #0f172a;
+}
+html[data-weather="snowy"] ::-webkit-scrollbar {
+  width: 8px;
+}
+html[data-weather="snowy"] ::-webkit-scrollbar-track {
+  background: #edf5fd;
+}
+html[data-weather="snowy"] ::-webkit-scrollbar-thumb {
+  background: #93c5fd;
+  border-radius: 9999px;
+  border: 2px solid #edf5fd;
+}
+html[data-weather="snowy"] ::-webkit-scrollbar-thumb:hover {
+  background: #38bdf8;
+}
+
 /* Default scrollbar fallback */
 ::-webkit-scrollbar {
   width: 8px;
