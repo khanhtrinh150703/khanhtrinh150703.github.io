@@ -20,10 +20,10 @@ import Contact from './modern/Contact';
 import Footer from './modern/Footer';
 import AnimatedBackground from './modern/AnimatedBackground';
 import ScrollProgress from './modern/ScrollProgress';
-import { ThemeMode } from './modern/ThemeSwitcher';
+import { WeatherTheme } from './modern/ThemeSwitcher';
 
 /**
- * Modern Developer Portfolio for Nguyen Ba Khanh Trinh
+ * Weather-Themed Atmospheric Developer Portfolio for Nguyen Ba Khanh Trinh
  */
 const GitProfile = ({ config }: { config: Config }) => {
   const [sanitizedConfig] = useState<SanitizedConfig>(
@@ -31,7 +31,7 @@ const GitProfile = ({ config }: { config: Config }) => {
   );
   const [loading, setLoading] = useState<boolean>(false);
   const [profile, setProfile] = useState<Profile | null>({
-    avatar: `https://github.com/${config.github.username}.png`,
+    avatar: '/avatar.jpg',
     name: config.seo?.title?.replace('Portfolio of ', '') || 'Nguyen Ba Khanh Trinh',
     bio: config.description?.description || '',
     location: config.dateOfBirth?.dateOfBirth || 'Vietnam 🇻🇳',
@@ -39,30 +39,28 @@ const GitProfile = ({ config }: { config: Config }) => {
   });
   const [githubProjects, setGithubProjects] = useState<GithubProject[]>([]);
 
-  // Theme State: 'dark' | 'light' | 'cyber'
-  const [theme, setTheme] = useState<ThemeMode>(() => {
+  // Weather Theme State: 'sunny' | 'cloudy' | 'rainy' | 'moonlit'
+  const [theme, setTheme] = useState<WeatherTheme>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('theme_preference') as ThemeMode;
-      if (saved && ['dark', 'light', 'cyber'].includes(saved)) {
+      const saved = localStorage.getItem('weather_theme_preference') as WeatherTheme;
+      if (saved && ['sunny', 'cloudy', 'rainy', 'moonlit'].includes(saved)) {
         return saved;
       }
     }
-    return 'dark';
+    return 'sunny';
   });
 
   useEffect(() => {
-    localStorage.setItem('theme_preference', theme);
+    localStorage.setItem('weather_theme_preference', theme);
     const root = document.documentElement;
-    if (theme === 'light') {
-      root.classList.remove('dark', 'cyber');
+    root.setAttribute('data-weather', theme);
+    const isLightMode = theme === 'sunny' || theme === 'cloudy';
+    if (isLightMode) {
+      root.classList.remove('dark');
       root.classList.add('light');
       root.setAttribute('data-theme', 'light');
-    } else if (theme === 'cyber') {
-      root.classList.remove('light');
-      root.classList.add('dark', 'cyber');
-      root.setAttribute('data-theme', 'cyber');
     } else {
-      root.classList.remove('light', 'cyber');
+      root.classList.remove('light');
       root.classList.add('dark');
       root.setAttribute('data-theme', 'dark');
     }
@@ -208,7 +206,7 @@ const GitProfile = ({ config }: { config: Config }) => {
       const data = response.data;
 
       setProfile({
-        avatar: data.avatar_url || `https://github.com/${sanitizedConfig.github.username}.png`,
+        avatar: '/avatar.jpg',
         name: data.name || 'Nguyen Ba Khanh Trinh',
         bio: data.bio || sanitizedConfig.description.description || '',
         location: data.location || sanitizedConfig.dateOfBirth.dateOfBirth || '',
@@ -241,18 +239,15 @@ const GitProfile = ({ config }: { config: Config }) => {
     );
   }
 
-  const isLight = theme === 'light';
-  const isCyber = theme === 'cyber';
+  const isLight = theme === 'sunny' || theme === 'cloudy';
 
   return (
     <HelmetProvider>
       <div
-        className={`min-h-screen font-sans antialiased relative transition-colors duration-500 ${
+        className={`min-h-screen font-sans antialiased relative transition-colors duration-700 ${
           isLight
-            ? 'bg-[#f8fafc] text-slate-900 selection:bg-indigo-500/20 selection:text-indigo-700'
-            : isCyber
-            ? 'bg-[#040e14] text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-200'
-            : 'bg-[#070a12] text-slate-100 selection:bg-indigo-500/30 selection:text-indigo-200'
+            ? 'text-slate-800 selection:bg-sky-200 selection:text-sky-900'
+            : 'text-slate-100 selection:bg-sky-500/30 selection:text-sky-200'
         }`}
       >
         <HeadTagEditor

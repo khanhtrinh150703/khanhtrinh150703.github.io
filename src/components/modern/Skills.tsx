@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import {
-  FaCode,
   FaDatabase,
   FaBrain,
   FaServer,
-  FaCheckDouble,
   FaWandMagicSparkles,
   FaMicrochip,
   FaDiagramProject,
@@ -12,6 +10,7 @@ import {
   FaLayerGroup,
   FaCube,
   FaNetworkWired,
+  FaWind,
 } from 'react-icons/fa6';
 import {
   SiSpringboot,
@@ -30,11 +29,12 @@ import {
 } from 'react-icons/si';
 
 import profileData from '../../../profile.data.json';
+import { WeatherTheme } from './ThemeSwitcher';
 import ScrollReveal from './ScrollReveal';
 
 interface SkillsProps {
   skills: string[];
-  theme?: string;
+  theme?: WeatherTheme;
 }
 
 const getSkillIcon = (name: string) => {
@@ -44,47 +44,42 @@ const getSkillIcon = (name: string) => {
   if (lower.includes('node')) return <SiNodedotjs className="text-green-500" />;
   if (lower.includes('typescript')) return <SiTypescript className="text-blue-500" />;
   if (lower.includes('javascript')) return <SiJavascript className="text-yellow-500" />;
-  if (lower.includes('python')) return <SiPython className="text-amber-400" />;
+  if (lower.includes('python')) return <SiPython className="text-sky-400" />;
   if (lower.includes('postgres')) return <SiPostgresql className="text-blue-400" />;
-  if (lower.includes('mysql')) return <SiMysql className="text-orange-500" />;
+  if (lower.includes('mysql')) return <SiMysql className="text-blue-400" />;
   if (lower.includes('mongo')) return <SiMongodb className="text-emerald-500" />;
-  if (lower.includes('redis')) return <SiRedis className="text-rose-500" />;
-  if (lower.includes('docker')) return <SiDocker className="text-sky-500" />;
+  if (lower.includes('redis')) return <SiRedis className="text-rose-400" />;
+  if (lower.includes('docker')) return <SiDocker className="text-sky-400" />;
   if (lower.includes('c / c++') || lower.includes('c++') || lower.includes('c/c++') || lower.includes('c#'))
-    return <SiCplusplus className="text-blue-600" />;
+    return <SiCplusplus className="text-blue-500" />;
   if (lower.includes('neo4j')) return <SiNeo4J className="text-sky-400" />;
   if (lower.includes('graphdb') || lower.includes('graphrag') || lower.includes('graph'))
-    return <FaDiagramProject className="text-indigo-400" />;
+    return <FaDiagramProject className="text-sky-500" />;
   if (lower.includes('yolo') || lower.includes('vision') || lower.includes('camera'))
-    return <FaEye className="text-cyan-400" />;
+    return <FaEye className="text-sky-400" />;
   if (lower.includes('jetson') || lower.includes('tensorrt') || lower.includes('edge') || lower.includes('cuda'))
-    return <FaMicrochip className="text-emerald-400" />;
+    return <FaMicrochip className="text-blue-400" />;
   if (lower.includes('qdrant') || lower.includes('vector') || lower.includes('embedding'))
-    return <FaLayerGroup className="text-purple-400" />;
+    return <FaLayerGroup className="text-sky-400" />;
   if (lower.includes('sparql') || lower.includes('rdf') || lower.includes('owl') || lower.includes('semantic') || lower.includes('shacl'))
-    return <FaNetworkWired className="text-amber-400" />;
-  if (lower.includes('llama') || lower.includes('llm') || lower.includes('deep') || lower.includes('neural'))
-    return <FaBrain className="text-pink-400" />;
-  if (lower.includes('machine') || lower.includes('ai'))
-    return <FaBrain className="text-purple-400" />;
+    return <FaNetworkWired className="text-indigo-400" />;
   if (lower.includes('clean architecture') || lower.includes('ddd') || lower.includes('architecture'))
-    return <FaCube className="text-indigo-400" />;
+    return <FaCube className="text-blue-500" />;
   if (lower.includes('linux') || lower.includes('ubuntu') || lower.includes('wsl'))
-    return <SiLinux className="text-yellow-400" />;
+    return <SiLinux className="text-amber-500" />;
   if (lower.includes('mining') || lower.includes('data') || lower.includes('sql') || lower.includes('storage'))
-    return <FaDatabase className="text-cyan-500" />;
-  return <FaCode className="text-indigo-400" />;
+    return <FaDatabase className="text-sky-400" />;
+  return <FaBrain className="text-sky-500" />;
 };
 
 const getCategoryIcon = (index: number) => {
-  if (index === 0) return <FaBrain className="text-purple-500 dark:text-purple-400" />;
-  if (index === 1) return <FaServer className="text-indigo-500 dark:text-indigo-400" />;
-  return <FaDatabase className="text-teal-500 dark:text-teal-400" />;
+  if (index === 0) return <FaBrain className="text-sky-500" />;
+  if (index === 1) return <FaServer className="text-blue-500" />;
+  return <FaDatabase className="text-indigo-400" />;
 };
 
-const Skills: React.FC<SkillsProps> = ({ skills, theme = 'dark' }) => {
-  const isLight = theme === 'light';
-  const isCyber = theme === 'cyber';
+const Skills: React.FC<SkillsProps> = ({ skills, theme = 'sunny' }) => {
+  const isLight = theme === 'sunny' || theme === 'cloudy';
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
 
   const skillCategories = (profileData.skills?.categories || []).map((cat, idx) => ({
@@ -103,18 +98,24 @@ const Skills: React.FC<SkillsProps> = ({ skills, theme = 'dark' }) => {
         {/* Section Header */}
         <ScrollReveal direction="up">
           <div className="flex flex-col items-center text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-500 dark:text-indigo-400 text-xs font-mono mb-3">
-              <FaCode className="text-xs" />
-              <span>{profileData.skills?.badge || 'SKILLS & EXPERTISE'}</span>
+            <div
+              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium mb-3 border shadow-sm ${
+                isLight
+                  ? 'bg-sky-50 border-sky-200 text-sky-700'
+                  : 'bg-slate-900/80 border-sky-500/30 text-sky-300 shadow-sm'
+              }`}
+            >
+              <FaWind className="text-xs text-sky-500" />
+              <span>{profileData.skills?.badge || 'ATMOSPHERIC MATRIX • CAPABILITIES'}</span>
             </div>
             <h2
-              className={`text-3xl sm:text-4xl font-extrabold tracking-tight ${
+              className={`text-3xl sm:text-4xl font-black tracking-tight ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
               {profileData.skills?.title || 'Technical Stack & Capabilities'}
             </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full mt-4"></div>
+            <div className="w-20 h-1 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 rounded-full mt-4"></div>
             {profileData.skills?.description && (
               <p
                 className={`text-sm max-w-lg mt-3 ${
@@ -130,22 +131,22 @@ const Skills: React.FC<SkillsProps> = ({ skills, theme = 'dark' }) => {
         {/* Categories Grid with ScrollReveal & Stagger */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {skillCategories.map((cat, idx) => (
-            <ScrollReveal key={idx} delay={idx * 140} direction="up" className="h-full">
+            <ScrollReveal key={idx} delay={idx * 120} direction="up" className="h-full">
               <div
-                className={`h-full p-7 rounded-3xl border transition-all duration-300 shadow-xl flex flex-col justify-between group hover:-translate-y-1.5 ${
+                className={`h-full p-7 rounded-3xl border transition-all duration-300 shadow-md flex flex-col justify-between group hover:-translate-y-1.5 backdrop-blur-xl ${
                   isLight
-                    ? 'bg-white border-slate-200 shadow-slate-200/60 hover:border-indigo-400 hover:shadow-2xl'
-                    : isCyber
-                    ? 'bg-[#041118] border-emerald-500/30 hover:border-cyan-400 shadow-[0_0_15px_rgba(16,185,129,0.08)] hover:shadow-[0_0_25px_rgba(6,182,212,0.25)]'
-                    : 'bg-gradient-to-b from-[#0d1424] to-[#090e1a] border-slate-800 hover:border-indigo-500/50 hover:shadow-2xl hover:shadow-indigo-500/10'
+                    ? 'bg-white/95 border-sky-100 shadow-sky-100/40 hover:border-sky-300 hover:shadow-xl hover:shadow-sky-200/40'
+                    : 'bg-slate-900/80 border-sky-500/20 hover:border-sky-400/50 shadow-[0_15px_35px_rgba(0,0,0,0.5)]'
                 }`}
               >
                 <div>
-                  {/* Header */}
+                  {/* Category Header */}
                   <div className="flex items-center gap-3 mb-3">
                     <div
                       className={`p-3 rounded-2xl border text-lg group-hover:scale-110 transition-transform ${
-                        isLight ? 'bg-slate-100 border-slate-200' : 'bg-slate-900 border-slate-800'
+                        isLight
+                          ? 'bg-sky-50 border-sky-100 text-sky-600'
+                          : 'bg-slate-950/70 border-sky-500/30 shadow-md'
                       }`}
                     >
                       {cat.icon}
@@ -163,7 +164,7 @@ const Skills: React.FC<SkillsProps> = ({ skills, theme = 'dark' }) => {
 
                   <p
                     className={`text-xs mb-6 leading-relaxed ${
-                      isLight ? 'text-slate-600' : 'text-slate-400'
+                      isLight ? 'text-slate-600' : 'text-slate-300/80'
                     }`}
                   >
                     {cat.description}
@@ -181,12 +182,12 @@ const Skills: React.FC<SkillsProps> = ({ skills, theme = 'dark' }) => {
                           }
                           className={`inline-flex items-center gap-2 px-3 py-2 rounded-xl border text-xs font-medium transition-all duration-200 shadow-sm hover:scale-105 active:scale-95 cursor-pointer ${
                             isSelected
-                              ? isCyber
-                                ? 'bg-emerald-500/25 border-emerald-400 text-emerald-200 ring-2 ring-emerald-400/50 shadow-emerald-500/30'
-                                : 'bg-indigo-600 border-indigo-400 text-white ring-2 ring-indigo-400/50 shadow-indigo-500/30'
+                              ? isLight
+                                ? 'bg-sky-500 border-sky-400 text-white shadow-md shadow-sky-200 ring-2 ring-sky-300/60'
+                                : 'bg-sky-600 border-sky-400 text-white ring-2 ring-sky-400/50 shadow-[0_0_20px_rgba(2,132,199,0.5)]'
                               : isLight
-                              ? 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-800'
-                              : 'bg-slate-900/90 hover:bg-slate-800 border-slate-800/90 hover:border-slate-700 text-slate-200'
+                              ? 'bg-sky-50/70 hover:bg-sky-100/80 border-sky-200/70 hover:border-sky-300 text-slate-800'
+                              : 'bg-slate-950/60 hover:bg-slate-800/80 border-sky-500/20 hover:border-sky-400/40 text-slate-200'
                           }`}
                         >
                           <span className="text-sm">{skill.icon}</span>
@@ -197,53 +198,72 @@ const Skills: React.FC<SkillsProps> = ({ skills, theme = 'dark' }) => {
                   </div>
                 </div>
 
-                {/* Bottom Tag */}
                 <div
-                  className={`pt-6 mt-6 border-t flex items-center gap-2 text-[11px] font-mono ${
-                    isLight ? 'border-slate-100 text-slate-500' : 'border-slate-800/80 text-slate-400'
+                  className={`mt-8 pt-4 border-t flex items-center justify-between text-[11px] font-mono ${
+                    isLight ? 'border-sky-100 text-slate-500' : 'border-sky-500/15 text-slate-400'
                   }`}
                 >
-                  <FaCheckDouble className="text-indigo-500 text-xs" />
-                  <span>Production Ready</span>
+                  <span>Domain Matrix</span>
+                  <span
+                    className={`font-semibold ${
+                      isLight ? 'text-sky-600' : 'text-sky-400'
+                    }`}
+                  >
+                    Active Radar
+                  </span>
                 </div>
               </div>
             </ScrollReveal>
           ))}
         </div>
 
-        {/* Interactive Selected Skill Toast/Banner */}
+        {/* Selected Skill Spotlight Card */}
         {selectedSkill && (
-          <ScrollReveal direction="up" delay={50}>
+          <ScrollReveal direction="up" delay={0}>
             <div
-              className={`mt-8 p-4 sm:p-5 rounded-2xl border backdrop-blur-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg ${
+              className={`mt-8 p-4 sm:p-5 rounded-2xl border shadow-xl flex items-center justify-between gap-4 transition-all duration-300 animate-fadeIn backdrop-blur-xl ${
                 isLight
-                  ? 'bg-indigo-50/90 border-indigo-200 text-slate-800'
-                  : isCyber
-                  ? 'bg-[#03151c]/90 border-emerald-500/40 text-emerald-100'
-                  : 'bg-indigo-950/40 border-indigo-500/40 text-slate-200'
+                  ? 'bg-white border-sky-200 text-slate-800 shadow-sky-100/60'
+                  : 'bg-slate-900/90 border-sky-500/40 text-slate-200 shadow-[0_0_30px_rgba(2,132,199,0.25)]'
               }`}
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-indigo-500/20 text-indigo-400 text-base">
+                <div
+                  className={`p-2.5 rounded-xl text-base border ${
+                    isLight
+                      ? 'bg-sky-100 text-sky-600 border-sky-200'
+                      : 'bg-sky-500/20 text-sky-300 border-sky-400/30'
+                  }`}
+                >
                   <FaWandMagicSparkles className="animate-pulse" />
                 </div>
                 <div>
                   <h4 className="text-sm font-bold flex items-center gap-2">
-                    <span>Selected Skill:</span>
-                    <span className={isCyber ? 'text-emerald-300' : 'text-indigo-400'}>
+                    <span className={isLight ? 'text-slate-500 font-normal' : 'text-slate-400 font-normal'}>
+                      Selected Skill:
+                    </span>
+                    <span
+                      className={`font-mono font-bold ${
+                        isLight ? 'text-sky-700' : 'text-sky-300'
+                      }`}
+                    >
                       {selectedSkill}
                     </span>
                   </h4>
-                  <p className="text-xs text-slate-400 mt-0.5">
+                  <p className={`text-xs mt-0.5 ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
                     {profileData.skills.categories.find((c) =>
                       c.skills.some((s) => s.toLowerCase() === selectedSkill.toLowerCase())
-                    )?.description || `Skill: ${selectedSkill}`}
+                    )?.description || `Engineered with high production standards: ${selectedSkill}`}
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => setSelectedSkill(null)}
-                className="px-3 py-1.5 rounded-xl border text-xs font-semibold hover:opacity-80 transition-opacity w-fit border-indigo-500/30"
+                className={`px-3.5 py-1.5 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
+                  isLight
+                    ? 'border-sky-200 text-sky-700 hover:bg-sky-50'
+                    : 'border-sky-500/40 text-sky-300 hover:bg-slate-800'
+                }`}
               >
                 Close
               </button>
@@ -251,17 +271,17 @@ const Skills: React.FC<SkillsProps> = ({ skills, theme = 'dark' }) => {
           </ScrollReveal>
         )}
 
-        {/* Full Tags List from Config */}
+        {/* Complete Skills Orbit List */}
         <div
           className={`mt-12 p-6 rounded-3xl border backdrop-blur-md ${
             isLight
-              ? 'bg-slate-50/80 border-slate-200'
-              : 'bg-[#0a0f1d]/60 border-slate-800/60'
+              ? 'bg-sky-50/40 border-sky-100'
+              : 'bg-slate-900/60 border-sky-500/20'
           }`}
         >
           <p
-            className={`text-xs font-mono uppercase tracking-wider mb-3 text-center sm:text-left ${
-              isLight ? 'text-slate-500' : 'text-slate-400'
+            className={`text-xs font-mono uppercase tracking-wider mb-4 text-center sm:text-left ${
+              isLight ? 'text-slate-500 font-medium' : 'text-sky-400/90 font-semibold'
             }`}
           >
             All Specified Skills in Profile:
@@ -270,12 +290,10 @@ const Skills: React.FC<SkillsProps> = ({ skills, theme = 'dark' }) => {
             {skills.map((skillName, index) => (
               <span
                 key={index}
-                className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-mono font-medium border transition-all duration-200 cursor-default ${
+                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium border transition-all duration-200 cursor-default ${
                   isLight
-                    ? 'bg-white text-slate-800 border-slate-200 shadow-sm hover:border-indigo-300 hover:shadow-md'
-                    : isCyber
-                    ? 'bg-[#041118] text-emerald-300 border-emerald-500/25 hover:border-emerald-400/50'
-                    : 'bg-slate-900/90 text-slate-200 border-slate-800 hover:border-indigo-400/40 hover:bg-slate-800'
+                    ? 'bg-white text-slate-800 border-sky-100 shadow-sm hover:border-sky-300'
+                    : 'bg-slate-950/60 text-slate-200 border-sky-500/20 hover:border-sky-400/50 hover:bg-slate-900 hover:text-white'
                 }`}
               >
                 <span className="text-sm shrink-0">{getSkillIcon(skillName)}</span>

@@ -6,20 +6,21 @@ import {
   FaGithub,
   FaCopy,
   FaCheck,
-  FaPaperPlane,
+  FaTowerBroadcast,
 } from 'react-icons/fa6';
 import { SanitizedConfig } from '../../interfaces/sanitized-config';
 import profileData from '../../../profile.data.json';
-import { ScrollReveal } from './ScrollReveal';
+import { WeatherTheme } from './ThemeSwitcher';
+import ScrollReveal from './ScrollReveal';
 
 interface ContactProps {
   config: SanitizedConfig;
-  theme?: string;
+  theme?: WeatherTheme;
 }
 
-const Contact: React.FC<ContactProps> = ({ config, theme = 'dark' }) => {
+const Contact: React.FC<ContactProps> = ({ config, theme = 'sunny' }) => {
   const [copied, setCopied] = useState(false);
-  const isLight = theme === 'light';
+  const isLight = theme === 'sunny' || theme === 'cloudy';
 
   const handleCopyEmail = () => {
     if (config.social.email) {
@@ -34,179 +35,223 @@ const Contact: React.FC<ContactProps> = ({ config, theme = 'dark' }) => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal direction="up" delay={0}>
           <div
-            className={`relative rounded-3xl border p-8 sm:p-12 shadow-2xl backdrop-blur-2xl text-center ${
+            className={`relative rounded-3xl border p-8 sm:p-12 shadow-xl backdrop-blur-2xl text-center ${
               isLight
-                ? 'bg-white/95 border-slate-200 shadow-slate-200/60'
-                : 'bg-gradient-to-b from-[#10192e] to-[#0a0f1d] border-slate-700/80 shadow-black/40'
+                ? 'bg-white/95 border-sky-100 shadow-sky-100/60'
+                : 'bg-slate-900/85 border-sky-500/30 shadow-[0_20px_60px_rgba(0,0,0,0.7)]'
             }`}
           >
-            {/* Header */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-500 dark:text-indigo-400 text-xs font-mono mb-4">
-              <FaPaperPlane className="text-xs" />
-              <span>{profileData.contact?.badge || 'GET IN TOUCH'}</span>
+            {/* Header Badge */}
+            <div
+              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium mb-4 border shadow-sm ${
+                isLight
+                  ? 'bg-sky-50 border-sky-200 text-sky-700'
+                  : 'bg-slate-950/80 border-sky-500/30 text-sky-300'
+              }`}
+            >
+              <FaTowerBroadcast className="text-xs text-sky-500" />
+              <span>{profileData.contact?.badge || 'ATMOSPHERIC SIGNAL BROADCAST'}</span>
             </div>
 
-          <h2
-            className={`text-3xl sm:text-4xl font-extrabold tracking-tight ${
-              isLight ? 'text-slate-900' : 'text-white'
-            }`}
-          >
-            {profileData.contact?.title || 'Ready to Build Something Great?'}
-          </h2>
+            <h2
+              className={`text-3xl sm:text-4xl font-black tracking-tight ${
+                isLight ? 'text-slate-900' : 'text-white'
+              }`}
+            >
+              {profileData.contact?.title || 'Ready to Build Something Great?'}
+            </h2>
 
-          <p
-            className={`text-sm sm:text-base max-w-xl mx-auto mt-4 leading-relaxed ${
-              isLight ? 'text-slate-600' : 'text-slate-300'
-            }`}
-          >
-            {profileData.contact?.description ||
-              'I am currently open to Backend Developer and AI Engineer opportunities. Whether you have a question, an exciting project, or simply want to connect, feel free to reach out!'}
-          </p>
+            <p
+              className={`text-sm sm:text-base max-w-xl mx-auto mt-4 leading-relaxed ${
+                isLight ? 'text-slate-600' : 'text-slate-300/90'
+              }`}
+            >
+              {profileData.contact?.description ||
+                'I am currently open to Backend Developer and AI Engineer opportunities. Whether you have a question, an exciting project, or simply want to connect, feel free to reach out!'}
+            </p>
 
-          {/* Contact Direct Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 text-left">
-            {/* Email Card */}
-            {config.social.email && (
-              <div
-                className={`p-4 rounded-2xl border transition-all flex items-center justify-between gap-3 ${
-                  isLight
-                    ? 'bg-slate-50 border-slate-200 hover:border-indigo-400'
-                    : 'bg-slate-900/80 border-slate-800 hover:border-indigo-500/50'
-                }`}
-              >
-                <a
-                  href={`mailto:${config.social.email}`}
-                  className="flex items-center gap-3 overflow-hidden group"
+            {/* Contact Direct Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 text-left">
+              {/* Email Card */}
+              {config.social.email && (
+                <div
+                  className={`p-4 rounded-2xl border transition-all flex items-center justify-between gap-3 ${
+                    isLight
+                      ? 'bg-sky-50/50 border-sky-100 hover:border-sky-300 hover:bg-sky-50'
+                      : 'bg-slate-950/40 border-sky-500/20 hover:border-sky-400/40 hover:bg-slate-900'
+                  }`}
                 >
-                  <div className="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-500 flex items-center justify-center shrink-0 border border-rose-500/20">
-                    <FaEnvelope className="text-base" />
-                  </div>
-                  <div className="overflow-hidden">
-                    <p className="text-[11px] text-slate-400">Email Address</p>
-                    <p
-                      className={`text-xs font-semibold group-hover:text-indigo-500 transition-colors truncate ${
-                        isLight ? 'text-slate-900' : 'text-white'
+                  <a
+                    href={`mailto:${config.social.email}`}
+                    className="flex items-center gap-3 overflow-hidden group"
+                  >
+                    <div
+                      className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border shadow-xs ${
+                        isLight
+                          ? 'bg-sky-100 text-sky-600 border-sky-200'
+                          : 'bg-sky-500/15 text-sky-400 border-sky-500/25'
                       }`}
                     >
-                      {config.social.email}
+                      <FaEnvelope className="text-base" />
+                    </div>
+                    <div className="overflow-hidden">
+                      <p className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
+                        Email Signal
+                      </p>
+                      <p
+                        className={`text-xs font-semibold transition-colors truncate ${
+                          isLight
+                            ? 'text-slate-900 group-hover:text-sky-600'
+                            : 'text-white group-hover:text-sky-300'
+                        }`}
+                      >
+                        {config.social.email}
+                      </p>
+                    </div>
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={handleCopyEmail}
+                    className={`p-2 rounded-xl transition-colors shrink-0 cursor-pointer ${
+                      isLight
+                        ? 'bg-white hover:bg-sky-100 text-sky-700 border border-sky-200/80 shadow-xs'
+                        : 'bg-slate-800 hover:bg-slate-700 text-sky-300 hover:text-white'
+                    }`}
+                    title="Copy email to clipboard"
+                  >
+                    {copied ? (
+                      <FaCheck className="text-sky-600 text-xs" />
+                    ) : (
+                      <FaCopy className="text-xs" />
+                    )}
+                  </button>
+                </div>
+              )}
+
+              {/* Phone Card */}
+              {config.social.phone && (
+                <a
+                  href={`tel:${config.social.phone}`}
+                  className={`p-4 rounded-2xl border transition-all flex items-center gap-3 group ${
+                    isLight
+                      ? 'bg-sky-50/50 border-sky-100 hover:border-sky-300 hover:bg-sky-50'
+                      : 'bg-slate-950/40 border-sky-500/20 hover:border-sky-400/40 hover:bg-slate-900'
+                  }`}
+                >
+                  <div
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border shadow-xs ${
+                      isLight
+                        ? 'bg-sky-100 text-sky-600 border-sky-200'
+                        : 'bg-sky-500/15 text-sky-400 border-sky-500/25'
+                    }`}
+                  >
+                    <FaPhone className="text-base" />
+                  </div>
+                  <div>
+                    <p className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
+                      Direct Frequency / Telegram
+                    </p>
+                    <p
+                      className={`text-xs font-semibold transition-colors ${
+                        isLight
+                          ? 'text-slate-900 group-hover:text-sky-600'
+                          : 'text-white group-hover:text-sky-300'
+                      }`}
+                    >
+                      {config.social.phone}
                     </p>
                   </div>
                 </a>
+              )}
 
-                <button
-                  type="button"
-                  onClick={handleCopyEmail}
-                  className={`p-2 rounded-lg transition-colors shrink-0 ${
+              {/* LinkedIn Card */}
+              {config.social.linkedin && (
+                <a
+                  href={`https://linkedin.com/in/${config.social.linkedin}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`p-4 rounded-2xl border transition-all flex items-center gap-3 group ${
                     isLight
-                      ? 'bg-slate-200 hover:bg-slate-300 text-slate-700'
-                      : 'bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white'
-                  }`}
-                  title="Copy email to clipboard"
-                >
-                  {copied ? (
-                    <FaCheck className="text-emerald-500 text-xs" />
-                  ) : (
-                    <FaCopy className="text-xs" />
-                  )}
-                </button>
-              </div>
-            )}
-
-            {/* Phone Card */}
-            {config.social.phone && (
-              <a
-                href={`tel:${config.social.phone}`}
-                className={`p-4 rounded-2xl border transition-all flex items-center gap-3 group ${
-                  isLight
-                    ? 'bg-slate-50 border-slate-200 hover:border-emerald-400'
-                    : 'bg-slate-900/80 border-slate-800 hover:border-emerald-500/50'
-                }`}
-              >
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 border border-emerald-500/20">
-                  <FaPhone className="text-base" />
-                </div>
-                <div>
-                  <p className="text-[11px] text-slate-400">Phone / Zalo</p>
-                  <p
-                    className={`text-xs font-semibold group-hover:text-emerald-500 transition-colors ${
-                      isLight ? 'text-slate-900' : 'text-white'
-                    }`}
-                  >
-                    {config.social.phone}
-                  </p>
-                </div>
-              </a>
-            )}
-
-            {/* LinkedIn Card */}
-            {config.social.linkedin && (
-              <a
-                href={`https://linkedin.com/in/${config.social.linkedin}`}
-                target="_blank"
-                rel="noreferrer"
-                className={`p-4 rounded-2xl border transition-all flex items-center gap-3 group ${
-                  isLight
-                    ? 'bg-slate-50 border-slate-200 hover:border-blue-400'
-                    : 'bg-slate-900/80 border-slate-800 hover:border-blue-500/50'
-                }`}
-              >
-                <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0 border border-blue-500/20">
-                  <FaLinkedin className="text-base" />
-                </div>
-                <div>
-                  <p className="text-[11px] text-slate-400">LinkedIn Profile</p>
-                  <p
-                    className={`text-xs font-semibold group-hover:text-blue-500 transition-colors ${
-                      isLight ? 'text-slate-900' : 'text-white'
-                    }`}
-                  >
-                    khanh-trinh
-                  </p>
-                </div>
-              </a>
-            )}
-
-            {/* GitHub Card */}
-            {config.github.username && (
-              <a
-                href={`https://github.com/${config.github.username}`}
-                target="_blank"
-                rel="noreferrer"
-                className={`p-4 rounded-2xl border transition-all flex items-center gap-3 group ${
-                  isLight
-                    ? 'bg-slate-50 border-slate-200 hover:border-slate-400'
-                    : 'bg-slate-900/80 border-slate-800 hover:border-slate-600'
-                }`}
-              >
-                <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ${
-                    isLight
-                      ? 'bg-slate-200 border-slate-300 text-slate-700'
-                      : 'bg-slate-800 border-slate-700 text-slate-300'
+                      ? 'bg-sky-50/50 border-sky-100 hover:border-sky-300 hover:bg-sky-50'
+                      : 'bg-slate-950/40 border-sky-500/20 hover:border-sky-400/40 hover:bg-slate-900'
                   }`}
                 >
-                  <FaGithub className="text-base" />
-                </div>
-                <div>
-                  <p className="text-[11px] text-slate-400">GitHub Profile</p>
-                  <p
-                    className={`text-xs font-semibold group-hover:text-indigo-500 transition-colors ${
-                      isLight ? 'text-slate-900' : 'text-white'
+                  <div
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border shadow-xs ${
+                      isLight
+                        ? 'bg-sky-100 text-sky-600 border-sky-200'
+                        : 'bg-sky-500/15 text-sky-400 border-sky-500/25'
                     }`}
                   >
-                    @{config.github.username}
-                  </p>
-                </div>
-              </a>
-            )}
-          </div>
+                    <FaLinkedin className="text-base" />
+                  </div>
+                  <div>
+                    <p className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
+                      LinkedIn Radar
+                    </p>
+                    <p
+                      className={`text-xs font-semibold transition-colors ${
+                        isLight
+                          ? 'text-slate-900 group-hover:text-sky-600'
+                          : 'text-white group-hover:text-sky-300'
+                      }`}
+                    >
+                      khanh-trinh
+                    </p>
+                  </div>
+                </a>
+              )}
 
-            {/* Action Button */}
+              {/* GitHub Card */}
+              {config.github.username && (
+                <a
+                  href={`https://github.com/${config.github.username}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`p-4 rounded-2xl border transition-all flex items-center gap-3 group ${
+                    isLight
+                      ? 'bg-sky-50/50 border-sky-100 hover:border-sky-300 hover:bg-sky-50'
+                      : 'bg-slate-950/40 border-sky-500/20 hover:border-sky-400/40 hover:bg-slate-900'
+                  }`}
+                >
+                  <div
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border shadow-xs ${
+                      isLight
+                        ? 'bg-sky-100 text-sky-600 border-sky-200'
+                        : 'bg-sky-500/15 text-sky-400 border-sky-500/25'
+                    }`}
+                  >
+                    <FaGithub className="text-base" />
+                  </div>
+                  <div>
+                    <p className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
+                      GitHub Station
+                    </p>
+                    <p
+                      className={`text-xs font-semibold transition-colors ${
+                        isLight
+                          ? 'text-slate-900 group-hover:text-sky-600'
+                          : 'text-white group-hover:text-sky-300'
+                      }`}
+                    >
+                      @{config.github.username}
+                    </p>
+                  </div>
+                </a>
+              )}
+            </div>
+
+            {/* Action Call to Button */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               {config.social.email && (
                 <a
                   href={`mailto:${config.social.email}`}
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white font-semibold text-sm shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all duration-200"
+                  className={`px-8 py-3.5 rounded-2xl font-semibold text-sm transition-all duration-200 cursor-pointer ${
+                    isLight
+                      ? 'bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-400 hover:to-blue-500 text-white shadow-lg shadow-sky-300/40 hover:shadow-xl hover:shadow-sky-400/50 hover:-translate-y-0.5'
+                      : 'bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-400 hover:to-blue-500 text-white shadow-[0_0_25px_rgba(2,132,199,0.45)] hover:shadow-[0_0_35px_rgba(2,132,199,0.65)] hover:-translate-y-0.5'
+                  }`}
                 >
                   {profileData.contact?.buttonText || 'Send Me an Email'}
                 </a>

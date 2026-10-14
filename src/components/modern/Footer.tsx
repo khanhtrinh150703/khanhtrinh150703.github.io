@@ -6,14 +6,15 @@ import {
   FaArrowUp,
 } from 'react-icons/fa6';
 import { SanitizedConfig } from '../../interfaces/sanitized-config';
+import { WeatherTheme } from './ThemeSwitcher';
 
 interface FooterProps {
   config: SanitizedConfig;
-  theme?: string;
+  theme?: WeatherTheme;
 }
 
-const Footer: React.FC<FooterProps> = ({ config, theme = 'dark' }) => {
-  const isLight = theme === 'light';
+const Footer: React.FC<FooterProps> = ({ config, theme = 'sunny' }) => {
+  const isLight = theme === 'sunny' || theme === 'cloudy';
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -23,26 +24,26 @@ const Footer: React.FC<FooterProps> = ({ config, theme = 'dark' }) => {
 
   return (
     <footer
-      className={`relative border-t py-12 text-xs transition-colors ${
+      className={`relative border-t py-12 text-xs transition-colors backdrop-blur-xl ${
         isLight
-          ? 'border-slate-200 bg-white text-slate-500'
-          : 'border-slate-800/80 bg-[#05070e] text-slate-400'
+          ? 'border-sky-100 bg-white/80 text-slate-500'
+          : 'border-sky-500/20 bg-slate-950/80 text-slate-400'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-          {/* Brand & Copyright */}
+          {/* Brand & Meteorological Status */}
           <div className="flex flex-col items-center sm:items-start gap-1">
             <div
               className={`flex items-center gap-2 font-bold text-sm ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
-              <span className="text-indigo-500 font-mono">&lt;KT /&gt;</span>
+              <span className="text-sky-500 font-mono font-bold">&lt;KT /&gt;</span>
               <span>Nguyen Ba Khanh Trinh</span>
             </div>
-            <p className={isLight ? 'text-slate-500' : 'text-slate-500'}>
-              © {currentYear} • Designed & Built with precision for Backend & AI.
+            <p className="text-slate-400">
+              © {currentYear} • Weather Coding Station • Architecting AI & Scalable Systems.
             </p>
           </div>
 
@@ -53,10 +54,10 @@ const Footer: React.FC<FooterProps> = ({ config, theme = 'dark' }) => {
                 href={`https://github.com/${config.github.username}`}
                 target="_blank"
                 rel="noreferrer"
-                className={`p-2 rounded-xl border transition-all ${
+                className={`p-2.5 rounded-xl border transition-all ${
                   isLight
-                    ? 'bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200 border-slate-200'
-                    : 'bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border-slate-800'
+                    ? 'bg-sky-50 text-slate-600 hover:text-sky-600 border-sky-100 hover:border-sky-300'
+                    : 'bg-slate-900 text-sky-300 hover:text-white hover:bg-slate-800 border-sky-500/25'
                 }`}
                 title="GitHub"
               >
@@ -68,10 +69,10 @@ const Footer: React.FC<FooterProps> = ({ config, theme = 'dark' }) => {
                 href={`https://linkedin.com/in/${config.social.linkedin}`}
                 target="_blank"
                 rel="noreferrer"
-                className={`p-2 rounded-xl border transition-all ${
+                className={`p-2.5 rounded-xl border transition-all ${
                   isLight
-                    ? 'bg-slate-100 text-slate-600 hover:text-blue-600 hover:bg-slate-200 border-slate-200'
-                    : 'bg-slate-900 text-slate-400 hover:text-blue-400 hover:bg-slate-800 border-slate-800'
+                    ? 'bg-sky-50 text-slate-600 hover:text-sky-600 border-sky-100 hover:border-sky-300'
+                    : 'bg-slate-900 text-sky-300 hover:text-white hover:bg-slate-800 border-sky-500/25'
                 }`}
                 title="LinkedIn"
               >
@@ -81,10 +82,10 @@ const Footer: React.FC<FooterProps> = ({ config, theme = 'dark' }) => {
             {config.social.email && (
               <a
                 href={`mailto:${config.social.email}`}
-                className={`p-2 rounded-xl border transition-all ${
+                className={`p-2.5 rounded-xl border transition-all ${
                   isLight
-                    ? 'bg-slate-100 text-slate-600 hover:text-rose-600 hover:bg-slate-200 border-slate-200'
-                    : 'bg-slate-900 text-slate-400 hover:text-rose-400 hover:bg-slate-800 border-slate-800'
+                    ? 'bg-sky-50 text-slate-600 hover:text-sky-600 border-sky-100 hover:border-sky-300'
+                    : 'bg-slate-900 text-sky-300 hover:text-white hover:bg-slate-800 border-sky-500/25'
                 }`}
                 title="Email"
               >
@@ -93,17 +94,17 @@ const Footer: React.FC<FooterProps> = ({ config, theme = 'dark' }) => {
             )}
           </div>
 
-          {/* Back to top */}
+          {/* Back to top button */}
           <div>
             <button
               onClick={scrollToTop}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border transition-all cursor-pointer font-mono text-[11px] ${
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl border transition-all cursor-pointer font-mono text-xs ${
                 isLight
-                  ? 'bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 border-slate-200 hover:border-indigo-300'
-                  : 'bg-slate-900 hover:bg-indigo-600/20 text-slate-400 hover:text-indigo-300 border-slate-800 hover:border-indigo-500/40'
+                  ? 'bg-sky-50 hover:bg-sky-100 text-sky-700 border-sky-200'
+                  : 'bg-slate-900 hover:bg-slate-800 text-sky-300 hover:text-white border-sky-500/30 hover:border-sky-400'
               }`}
             >
-              <span>Back to Top</span>
+              <span>Back to Zenith</span>
               <FaArrowUp className="text-[10px]" />
             </button>
           </div>

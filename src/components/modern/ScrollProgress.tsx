@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowUp } from 'react-icons/fa6';
+import { WeatherTheme } from './ThemeSwitcher';
 
 interface ScrollProgressProps {
-  theme?: string;
+  theme?: WeatherTheme;
 }
 
-export const ScrollProgress: React.FC<ScrollProgressProps> = ({ theme = 'dark' }) => {
+export const ScrollProgress: React.FC<ScrollProgressProps> = ({ theme = 'sunny' }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
-  const isLight = theme === 'light';
-  const isCyber = theme === 'cyber';
+  const isLight = theme === 'sunny' || theme === 'cloudy';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,12 +45,10 @@ export const ScrollProgress: React.FC<ScrollProgressProps> = ({ theme = 'dark' }
       <button
         onClick={scrollToTop}
         aria-label="Scroll to top"
-        className={`relative w-12 h-12 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 group hover:scale-110 active:scale-95 backdrop-blur-md ${
+        className={`relative w-12 h-12 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 group hover:scale-110 active:scale-95 backdrop-blur-md cursor-pointer ${
           isLight
-            ? 'bg-white/90 text-indigo-600 border border-slate-200 shadow-slate-300/60'
-            : isCyber
-            ? 'bg-[#041118]/90 text-emerald-300 border border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.3)]'
-            : 'bg-slate-900/90 text-indigo-400 border border-slate-700/80 shadow-indigo-950/50'
+            ? 'bg-white/95 text-sky-600 border border-sky-200 shadow-sky-200/50 hover:border-sky-300'
+            : 'bg-slate-900/90 text-sky-300 border border-sky-500/30 shadow-[0_0_25px_rgba(2,132,199,0.35)]'
         }`}
       >
         {/* Progress SVG Ring */}
@@ -60,7 +58,7 @@ export const ScrollProgress: React.FC<ScrollProgressProps> = ({ theme = 'dark' }
             cy="24"
             r="18"
             className={`fill-none stroke-current opacity-20 ${
-              isCyber ? 'text-emerald-500' : 'text-indigo-500'
+              isLight ? 'text-sky-300' : 'text-sky-600'
             }`}
             strokeWidth="2.5"
           />
@@ -68,9 +66,7 @@ export const ScrollProgress: React.FC<ScrollProgressProps> = ({ theme = 'dark' }
             cx="24"
             cy="24"
             r="18"
-            className={`fill-none stroke-current transition-all duration-150 ${
-              isCyber ? 'text-emerald-400' : isLight ? 'text-indigo-600' : 'text-indigo-400'
-            }`}
+            className="fill-none stroke-current text-sky-500 transition-all duration-150"
             strokeWidth="2.5"
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
@@ -78,7 +74,11 @@ export const ScrollProgress: React.FC<ScrollProgressProps> = ({ theme = 'dark' }
           />
         </svg>
 
-        <FaArrowUp className="text-sm transition-transform duration-300 group-hover:-translate-y-0.5" />
+        <FaArrowUp
+          className={`text-sm transition-transform duration-300 group-hover:-translate-y-0.5 ${
+            isLight ? 'text-sky-600 group-hover:text-sky-700' : 'text-sky-300 group-hover:text-white'
+          }`}
+        />
       </button>
     </div>
   );

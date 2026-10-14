@@ -1,16 +1,56 @@
 import React, { useEffect, useRef } from 'react';
+import { WeatherTheme } from './ThemeSwitcher';
 
 interface AnimatedBackgroundProps {
-  theme: string;
+  theme: WeatherTheme;
 }
 
-interface Particle {
+interface Raindrop {
   x: number;
   y: number;
-  vx: number;
-  vy: number;
+  length: number;
+  speed: number;
+  opacity: number;
+}
+
+interface Ripple {
+  x: number;
+  y: number;
   radius: number;
-  color: string;
+  maxRadius: number;
+  opacity: number;
+}
+
+interface Star {
+  x: number;
+  y: number;
+  radius: number;
+  alpha: number;
+  alphaChange: number;
+}
+
+interface CloudPuff {
+  offsetX: number;
+  offsetY: number;
+  radius: number;
+}
+
+interface Cloud {
+  x: number;
+  y: number;
+  speed: number;
+  scale: number;
+  opacity: number;
+  puffs: CloudPuff[];
+}
+
+interface SunParticle {
+  x: number;
+  y: number;
+  radius: number;
+  speedX: number;
+  speedY: number;
+  opacity: number;
 }
 
 const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ theme }) => {
@@ -35,152 +75,390 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ theme }) => {
 
     window.addEventListener('resize', handleResize);
 
-    // Mouse coordinates for interactive connection
-    const mouse = { x: -1000, y: -1000, radius: 150 };
+    // RAIN ENGINE
+    const raindrops: Raindrop[] = [];
+    const ripples: Ripple[] = [];
+    const rainCount = Math.min(Math.floor(width / 7), 160);
 
-    const handleMouseMove = (e: MouseEvent) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    };
-
-    const handleMouseLeave = () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseleave', handleMouseLeave);
-
-    // Determine particle colors based on theme
-    const isLight = theme === 'light';
-    const isCyber = theme === 'cyber';
-
-    const colors = isLight
-      ? ['rgba(99, 102, 241, 0.35)', 'rgba(14, 165, 233, 0.35)', 'rgba(168, 85, 247, 0.3)']
-      : isCyber
-      ? ['rgba(16, 185, 129, 0.45)', 'rgba(56, 189, 248, 0.45)', 'rgba(236, 72, 153, 0.4)']
-      : ['rgba(99, 102, 241, 0.4)', 'rgba(56, 189, 248, 0.4)', 'rgba(168, 85, 247, 0.35)'];
-
-    const lineColor = isLight
-      ? 'rgba(99, 102, 241, 0.08)'
-      : isCyber
-      ? 'rgba(16, 185, 129, 0.12)'
-      : 'rgba(99, 102, 241, 0.12)';
-
-    const particleCount = Math.min(Math.floor((width * height) / 18000), 65);
-    const particles: Particle[] = [];
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
+    for (let i = 0; i < rainCount; i++) {
+      raindrops.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.7,
-        vy: (Math.random() - 0.5) * 0.7,
-        radius: Math.random() * 2 + 1,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        length: 12 + Math.random() * 18,
+        speed: 12 + Math.random() * 16,
+        opacity: 0.3 + Math.random() * 0.45,
       });
     }
 
-    const animate = () => {
+    // CLOUDS ENGINE
+    const createCloud = (startX?: number): Cloud => {
+      const scale = 0.6 + Math.random() * 0.8;
+      const puffCount = 5 + Math.floor(Math.random() * 4);
+      const puffs: CloudPuff[] = [];
+
+      for (let i = 0; i < puffCount; i++) {
+        puffs.push({
+          offsetX: (i - puffCount / 2) * (34 * scale) + (Math.random() - 0.5) * 15,
+          offsetY: (Math.random() - 0.5) * (18 * scale),
+          radius: (35 + Math.random() * 25) * scale,
+        });
+      }
+
+      return {
+        x: startX !== undefined ? startX : Math.random() * (width + 300) - 150,
+        y: 30 + Math.random() * (height * 0.65),
+        speed: 0.2 + Math.random() * 0.4,
+        scale,
+        opacity: 0.55 + Math.random() * 0.35,
+        puffs,
+      };
+    };
+
+    const cloudCount = Math.min(Math.max(Math.floor(width / 160), 6), 12);
+    const clouds: Cloud[] = [];
+    for (let i = 0; i < cloudCount; i++) {
+      clouds.push(createCloud(Math.random() * width));
+    }
+
+    // STARS ENGINE (for moonlit night)
+    const stars: Star[] = [];
+    const starCount = Math.min(Math.floor(width / 12), 120);
+    for (let i = 0; i < starCount; i++) {
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * (height * 0.85),
+        radius: 0.6 + Math.random() * 1.6,
+        alpha: 0.2 + Math.random() * 0.7,
+        alphaChange: (Math.random() - 0.5) * 0.02,
+      });
+    }
+
+    // SUN ENGINE (for sunny theme)
+    const sunParticles: SunParticle[] = [];
+    const particleCount = 35;
+    for (let i = 0; i < particleCount; i++) {
+      sunParticles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: 1 + Math.random() * 2.5,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: -0.2 - Math.random() * 0.5,
+        opacity: 0.2 + Math.random() * 0.5,
+      });
+    }
+
+    let sunPulse = 0;
+
+    // ANIMATION LOOP
+    const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Update and draw particles
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
+      if (theme === 'sunny') {
+        // --- SUNNY DAY ENGINE ---
+        sunPulse += 0.02;
+        const sunX = width * 0.85;
+        const sunY = height * 0.15;
+        const baseRadius = 55 + Math.sin(sunPulse) * 4;
 
-        p.x += p.vx;
-        p.y += p.vy;
+        // Radiant Outer Sun Glow
+        const sunGlow = ctx.createRadialGradient(
+          sunX,
+          sunY,
+          baseRadius * 0.3,
+          sunX,
+          sunY,
+          baseRadius * 4.5
+        );
+        sunGlow.addColorStop(0, 'rgba(253, 224, 71, 0.45)');
+        sunGlow.addColorStop(0.35, 'rgba(251, 191, 36, 0.25)');
+        sunGlow.addColorStop(0.7, 'rgba(56, 189, 248, 0.15)');
+        sunGlow.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
-        // Bounce off edges
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
-
-        // Draw particle node
+        ctx.fillStyle = sunGlow;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
+        ctx.arc(sunX, sunY, baseRadius * 4.5, 0, Math.PI * 2);
         ctx.fill();
 
-        // Connect with nearby particles
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+        // Sun Core
+        const coreGlow = ctx.createRadialGradient(
+          sunX,
+          sunY,
+          5,
+          sunX,
+          sunY,
+          baseRadius
+        );
+        coreGlow.addColorStop(0, '#ffffff');
+        coreGlow.addColorStop(0.4, '#fef08a');
+        coreGlow.addColorStop(1, '#f59e0b');
 
-          if (dist < 130) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = lineColor;
-            ctx.lineWidth = 1 - dist / 130;
-            ctx.stroke();
+        ctx.fillStyle = coreGlow;
+        ctx.beginPath();
+        ctx.arc(sunX, sunY, baseRadius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Floating Sunbeam Light Motes
+        for (const p of sunParticles) {
+          p.x += p.speedX;
+          p.y += p.speedY;
+          if (p.y < 0) {
+            p.y = height + 10;
+            p.x = Math.random() * width;
           }
+
+          ctx.fillStyle = `rgba(251, 191, 36, ${p.opacity})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
         }
 
-        // Connect with mouse cursor
-        const mdx = p.x - mouse.x;
-        const mdy = p.y - mouse.y;
-        const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+        // Soft breezy wispy sun clouds
+        for (let i = 0; i < Math.min(clouds.length, 4); i++) {
+          const cloud = clouds[i];
+          cloud.x += cloud.speed * 0.7;
+          if (cloud.x - 200 * cloud.scale > width) {
+            cloud.x = -250 * cloud.scale;
+          }
+          ctx.save();
+          ctx.translate(cloud.x, cloud.y);
+          for (const puff of cloud.puffs) {
+            const grad = ctx.createRadialGradient(
+              puff.offsetX,
+              puff.offsetY - puff.radius * 0.2,
+              puff.radius * 0.1,
+              puff.offsetX,
+              puff.offsetY,
+              puff.radius
+            );
+            grad.addColorStop(0, 'rgba(255, 255, 255, 0.65)');
+            grad.addColorStop(0.7, 'rgba(254, 240, 138, 0.35)');
+            grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(puff.offsetX, puff.offsetY, puff.radius, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+      } else if (theme === 'cloudy') {
+        // --- CLOUDY WEATHER ENGINE ---
+        for (let i = 0; i < clouds.length; i++) {
+          const cloud = clouds[i];
+          cloud.x += cloud.speed;
+          if (cloud.x - 220 * cloud.scale > width) {
+            cloud.x = -260 * cloud.scale;
+            cloud.y = 30 + Math.random() * (height * 0.65);
+          }
 
-        if (mdist < mouse.radius) {
+          ctx.save();
+          ctx.translate(cloud.x, cloud.y);
+
+          for (const puff of cloud.puffs) {
+            const grad = ctx.createRadialGradient(
+              puff.offsetX,
+              puff.offsetY - puff.radius * 0.2,
+              puff.radius * 0.1,
+              puff.offsetX,
+              puff.offsetY,
+              puff.radius
+            );
+
+            // Fluffy white cloud with soft sky-blue ambient shadow
+            grad.addColorStop(0, `rgba(255, 255, 255, ${cloud.opacity * 0.95})`);
+            grad.addColorStop(0.65, `rgba(240, 249, 255, ${cloud.opacity * 0.85})`);
+            grad.addColorStop(0.9, `rgba(224, 242, 254, ${cloud.opacity * 0.6})`);
+            grad.addColorStop(1, 'rgba(224, 242, 254, 0)');
+
+            ctx.beginPath();
+            ctx.arc(puff.offsetX, puff.offsetY, puff.radius, 0, Math.PI * 2);
+            ctx.fillStyle = grad;
+            ctx.fill();
+          }
+
+          ctx.restore();
+        }
+      } else if (theme === 'rainy') {
+        // --- RAIN ENGINE ---
+        ctx.strokeStyle = 'rgba(186, 230, 253, 0.65)';
+        ctx.lineWidth = 1.6;
+        ctx.lineCap = 'round';
+
+        for (const drop of raindrops) {
+          drop.x += 1.8; // subtle wind drift
+          drop.y += drop.speed;
+
+          if (drop.y > height - 15) {
+            // Spawn ripple splash
+            if (Math.random() < 0.25) {
+              ripples.push({
+                x: drop.x,
+                y: height - 10 + Math.random() * 8,
+                radius: 1,
+                maxRadius: 10 + Math.random() * 8,
+                opacity: 0.6,
+              });
+            }
+            drop.y = -drop.length;
+            drop.x = Math.random() * width;
+          }
+
           ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(mouse.x, mouse.y);
-          ctx.strokeStyle = isLight ? 'rgba(99, 102, 241, 0.2)' : 'rgba(99, 102, 241, 0.3)';
-          ctx.lineWidth = 1.2 * (1 - mdist / mouse.radius);
+          ctx.moveTo(drop.x, drop.y);
+          ctx.lineTo(drop.x + 2.5, drop.y + drop.length);
           ctx.stroke();
+        }
+
+        // Render puddle ripples
+        for (let i = ripples.length - 1; i >= 0; i--) {
+          const r = ripples[i];
+          r.radius += 0.6;
+          r.opacity *= 0.92;
+
+          ctx.strokeStyle = `rgba(186, 230, 253, ${r.opacity})`;
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.ellipse(r.x, r.y, r.radius, r.radius * 0.4, 0, 0, Math.PI * 2);
+          ctx.stroke();
+
+          if (r.opacity < 0.04 || r.radius >= r.maxRadius) {
+            ripples.splice(i, 1);
+          }
+        }
+      } else if (theme === 'moonlit') {
+        // --- MOONLIT CELESTIAL NIGHT ENGINE ---
+        const moonX = width * 0.84;
+        const moonY = height * 0.16;
+        const moonRadius = 42;
+
+        // Ambient Lunar Halo
+        const moonHalo = ctx.createRadialGradient(
+          moonX,
+          moonY,
+          moonRadius * 0.5,
+          moonX,
+          moonY,
+          moonRadius * 4
+        );
+        moonHalo.addColorStop(0, 'rgba(186, 230, 253, 0.35)');
+        moonHalo.addColorStop(0.4, 'rgba(125, 211, 252, 0.15)');
+        moonHalo.addColorStop(0.8, 'rgba(30, 58, 138, 0.08)');
+        moonHalo.addColorStop(1, 'rgba(3, 7, 18, 0)');
+
+        ctx.fillStyle = moonHalo;
+        ctx.beginPath();
+        ctx.arc(moonX, moonY, moonRadius * 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Moon Sphere
+        const moonSphere = ctx.createRadialGradient(
+          moonX - 10,
+          moonY - 10,
+          5,
+          moonX,
+          moonY,
+          moonRadius
+        );
+        moonSphere.addColorStop(0, '#ffffff');
+        moonSphere.addColorStop(0.7, '#e0f2fe');
+        moonSphere.addColorStop(1, '#bae6fd');
+
+        ctx.fillStyle = moonSphere;
+        ctx.beginPath();
+        ctx.arc(moonX, moonY, moonRadius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Subtle Moon Craters
+        ctx.fillStyle = 'rgba(147, 197, 253, 0.3)';
+        ctx.beginPath();
+        ctx.arc(moonX - 10, moonY - 8, 7, 0, Math.PI * 2);
+        ctx.arc(moonX + 12, moonY + 6, 9, 0, Math.PI * 2);
+        ctx.arc(moonX - 4, moonY + 16, 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Twinkling Stars
+        for (const star of stars) {
+          star.alpha += star.alphaChange;
+          if (star.alpha > 0.95 || star.alpha < 0.15) {
+            star.alphaChange = -star.alphaChange;
+          }
+
+          ctx.fillStyle = `rgba(240, 249, 255, ${Math.max(0, star.alpha)})`;
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Wispy nocturnal cloud passing by moon
+        const nightCloud = clouds[0];
+        if (nightCloud) {
+          nightCloud.x += nightCloud.speed * 0.4;
+          if (nightCloud.x - 200 * nightCloud.scale > width) {
+            nightCloud.x = -250 * nightCloud.scale;
+          }
+          ctx.save();
+          ctx.translate(nightCloud.x, height * 0.18);
+          for (const puff of nightCloud.puffs) {
+            const grad = ctx.createRadialGradient(
+              puff.offsetX,
+              puff.offsetY,
+              puff.radius * 0.1,
+              puff.offsetX,
+              puff.offsetY,
+              puff.radius
+            );
+            grad.addColorStop(0, 'rgba(186, 230, 253, 0.18)');
+            grad.addColorStop(0.7, 'rgba(30, 58, 138, 0.1)');
+            grad.addColorStop(1, 'rgba(3, 7, 18, 0)');
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(puff.offsetX, puff.offsetY, puff.radius, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
         }
       }
 
-      animationFrameId = requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(render);
     };
 
-    animate();
+    render();
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
   }, [theme]);
 
-  const isLight = theme === 'light';
-  const isCyber = theme === 'cyber';
-
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {/* Dynamic Animated Blobs / Orbs */}
+      {/* Dynamic Atmospheric Sky Background Gradient */}
       <div
-        className={`absolute top-[-10%] left-[-5%] w-[550px] h-[550px] rounded-full blur-[130px] opacity-40 animate-float-slow transition-colors duration-700 ${
-          isLight
-            ? 'bg-blue-300/40'
-            : isCyber
-            ? 'bg-emerald-500/25'
-            : 'bg-indigo-600/25'
-        }`}
-      />
-      <div
-        className={`absolute top-[40%] right-[-10%] w-[600px] h-[600px] rounded-full blur-[140px] opacity-40 animate-float-reverse transition-colors duration-700 ${
-          isLight
-            ? 'bg-indigo-200/50'
-            : isCyber
-            ? 'bg-fuchsia-600/20'
-            : 'bg-purple-600/20'
-        }`}
-      />
-      <div
-        className={`absolute bottom-[-10%] left-[20%] w-[500px] h-[500px] rounded-full blur-[130px] opacity-35 animate-float-fast transition-colors duration-700 ${
-          isLight
-            ? 'bg-teal-200/50'
-            : isCyber
-            ? 'bg-cyan-500/25'
-            : 'bg-blue-500/20'
+        className={`absolute inset-0 transition-colors duration-1000 ${
+          theme === 'sunny'
+            ? 'bg-gradient-to-b from-[#e0f2fe]/75 via-[#fef9c3]/30 via-40% to-white'
+            : theme === 'cloudy'
+            ? 'bg-gradient-to-b from-[#e0f2fe]/60 via-[#f0f9ff]/50 via-40% to-white'
+            : theme === 'rainy'
+            ? 'bg-gradient-to-b from-[#0b1329] via-[#0f1d3a] to-[#080d1c]'
+            : 'bg-gradient-to-b from-[#050b1a] via-[#071126] to-[#02050e]'
         }`}
       />
 
-      {/* Interactive Particle Network Canvas */}
+      {/* Atmospheric Ambient Sunlight / Cloud / Rain / Moon Glow */}
+      {theme === 'sunny' && (
+        <div className="absolute -top-24 right-10 w-[550px] h-[550px] rounded-full bg-amber-200/40 blur-[130px] pointer-events-none transition-opacity duration-1000" />
+      )}
+      {theme === 'cloudy' && (
+        <div className="absolute -top-32 left-1/4 w-[600px] h-[400px] rounded-full bg-sky-200/50 blur-[140px] pointer-events-none transition-opacity duration-1000" />
+      )}
+      {theme === 'rainy' && (
+        <div className="absolute top-1/4 right-1/4 w-[600px] h-[500px] rounded-full bg-sky-900/25 blur-[160px] pointer-events-none transition-opacity duration-1000" />
+      )}
+      {theme === 'moonlit' && (
+        <div className="absolute -top-20 right-16 w-[500px] h-[500px] rounded-full bg-indigo-900/30 blur-[150px] pointer-events-none transition-opacity duration-1000" />
+      )}
+
+      {/* Weather Canvas Animation */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
     </div>
   );

@@ -11,117 +11,155 @@ body {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #070a12;
-  color: #e2e8f0;
   overflow-x: hidden;
+  transition: background-color 0.7s ease, color 0.5s ease;
 }
 
 code, pre {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Custom dark scrollbar */
+/* ============================================================
+   ATMOSPHERIC WEATHER THEMES
+   1. Sunny Day (Nắng)
+   2. Cloudy Sky (Có mây)
+   3. Gentle Rain (Mưa)
+   4. Moonlit Night (Có trăng)
+   ============================================================ */
+
+/* 1. SUNNY DAY (Nắng) */
+html[data-weather="sunny"] body {
+  background-color: #fbfdff;
+  color: #0f172a;
+}
+html[data-weather="sunny"] ::-webkit-scrollbar {
+  width: 8px;
+}
+html[data-weather="sunny"] ::-webkit-scrollbar-track {
+  background: #fefce8;
+}
+html[data-weather="sunny"] ::-webkit-scrollbar-thumb {
+  background: #fcd34d;
+  border-radius: 9999px;
+  border: 2px solid #fefce8;
+}
+html[data-weather="sunny"] ::-webkit-scrollbar-thumb:hover {
+  background: #f59e0b;
+}
+
+/* 2. CLOUDY SKY (Có mây) */
+html[data-weather="cloudy"] body {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+html[data-weather="cloudy"] ::-webkit-scrollbar {
+  width: 8px;
+}
+html[data-weather="cloudy"] ::-webkit-scrollbar-track {
+  background: #f0f9ff;
+}
+html[data-weather="cloudy"] ::-webkit-scrollbar-thumb {
+  background: #bae6fd;
+  border-radius: 9999px;
+  border: 2px solid #f0f9ff;
+}
+html[data-weather="cloudy"] ::-webkit-scrollbar-thumb:hover {
+  background: #38bdf8;
+}
+
+/* 3. GENTLE RAIN (Mưa) */
+html[data-weather="rainy"] body {
+  background-color: #0b1329;
+  color: #f0f9ff;
+}
+html[data-weather="rainy"] ::-webkit-scrollbar {
+  width: 8px;
+}
+html[data-weather="rainy"] ::-webkit-scrollbar-track {
+  background: #080d1c;
+}
+html[data-weather="rainy"] ::-webkit-scrollbar-thumb {
+  background: #0284c7;
+  border-radius: 9999px;
+  border: 2px solid #080d1c;
+}
+html[data-weather="rainy"] ::-webkit-scrollbar-thumb:hover {
+  background: #38bdf8;
+}
+
+/* 4. MOONLIT NIGHT (Có trăng) */
+html[data-weather="moonlit"] body {
+  background-color: #030712;
+  color: #f8fafc;
+}
+html[data-weather="moonlit"] ::-webkit-scrollbar {
+  width: 8px;
+}
+html[data-weather="moonlit"] ::-webkit-scrollbar-track {
+  background: #030712;
+}
+html[data-weather="moonlit"] ::-webkit-scrollbar-thumb {
+  background: #6366f1;
+  border-radius: 9999px;
+  border: 2px solid #030712;
+}
+html[data-weather="moonlit"] ::-webkit-scrollbar-thumb:hover {
+  background: #818cf8;
+}
+
+/* Default scrollbar fallback */
 ::-webkit-scrollbar {
   width: 8px;
 }
-
 ::-webkit-scrollbar-track {
-  background: #070a12;
+  background: #f8fafc;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #bae6fd;
   border-radius: 9999px;
-  border: 2px solid #070a12;
+  border: 2px solid #f8fafc;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #38bdf8;
 }
 
-/* Light mode styles */
-html.light body {
-  background-color: #f8fafc;
-  color: #0f172a;
-}
-html.light ::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-html.light ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border: 2px solid #f1f5f9;
-}
-html.light ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* Cyberpunk theme: Neon matrix & cyan styling */
-html.cyber body {
-  background-color: #020709;
-  color: #ecfeff;
-}
-html.cyber ::-webkit-scrollbar-track {
-  background: #020709;
-}
-html.cyber ::-webkit-scrollbar-thumb {
-  background: #059669;
-  border: 2px solid #020709;
-}
-html.cyber ::-webkit-scrollbar-thumb:hover {
-  background: #10b981;
+.animate-spin-slow {
+  animation: spin-slow 18s linear infinite;
 }
 
-.cyber-card {
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.12), inset 0 0 1px rgba(6, 182, 212, 0.3);
+@keyframes float-subtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
-.text-base-content-important {
-  color: hsla(var(--bc) / var(--tw-text-opacity)) !important;
-}
-
-svg {
-  vertical-align: unset;
-}
-
-.z-hover {
-  transition: all ease-in-out 0.3s !important;
-}
-
-.z-hover:hover,
-.z-hover:focus,
-.z-hover:active {
-  transition: transform 0.3s !important;
-  -ms-transform: scale(1.01) !important;
-  -webkit-transform: scale(1.01) !important;
-  transform: scale(1.01) !important;
-}
-
-.pb-0-important {
-  padding-bottom: 0 !important;
-}
-
-.fade-in {
-  opacity: 1;
-  animation-name: fadeIn;
-  animation-iteration-count: 1;
-  animation-timing-function: ease-in;
-  animation-duration: 1s;
+.animate-float-subtle {
+  animation: float-subtle 4s ease-in-out infinite;
 }
 
 @keyframes fadeIn {
   0% {
     opacity: 0;
+    transform: translateY(4px);
   }
   100% {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out forwards;
 }

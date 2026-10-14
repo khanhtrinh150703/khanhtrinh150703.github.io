@@ -60,7 +60,7 @@ const CONFIG = {
     snippetVersion: 6,
   },
   themeConfig: {
-    defaultTheme: 'dark',
+    defaultTheme: 'light',
     disableSwitch: false,
     respectPrefersColorScheme: false,
     displayAvatarRing: true,

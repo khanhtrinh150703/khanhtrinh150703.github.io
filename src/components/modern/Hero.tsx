@@ -1,144 +1,297 @@
 import React from 'react';
 import {
+  FaSun,
+  FaCloud,
+  FaCloudRain,
+  FaMoon,
   FaGithub,
   FaLinkedin,
   FaEnvelope,
   FaPhone,
   FaArrowRight,
-  FaCode,
-  FaServer,
-  FaBrain,
-  FaGraduationCap,
   FaDownload,
+  FaBrain,
+  FaTerminal,
+  FaWind,
+  FaDroplet,
+  FaGaugeHigh,
 } from 'react-icons/fa6';
+import {
+  SiPython,
+  SiCplusplus,
+  SiNodedotjs,
+  SiSpringboot,
+  SiDocker,
+  SiNeo4J,
+} from 'react-icons/si';
 import { SanitizedConfig } from '../../interfaces/sanitized-config';
 import { Profile } from '../../interfaces/profile';
 import profileData from '../../../profile.data.json';
-import ScrollReveal from './ScrollReveal';
+import { WeatherTheme } from './ThemeSwitcher';
 
 interface HeroProps {
   config: SanitizedConfig;
   profile: Profile | null;
-  theme?: string;
+  theme?: WeatherTheme;
   loading?: boolean;
 }
 
-const Hero: React.FC<HeroProps> = ({ config, profile, theme = 'dark' }) => {
-  const isLight = theme === 'light';
-  const isCyber = theme === 'cyber';
+const Hero: React.FC<HeroProps> = ({ config, theme = 'sunny' }) => {
+  const isLight = theme === 'sunny' || theme === 'cloudy';
 
-  const avatarUrl =
-    profile?.avatar ||
-    `https://avatars.githubusercontent.com/${config.github.username}`;
-  const name = profile?.name || profileData.personal.name || 'Nguyen Ba Khanh Trinh';
+  // Small refined avatar image from public folder
+  const avatarUrl = '/avatar.jpg';
+  const name = profileData.personal.name || 'Nguyen Ba Khanh Trinh';
+  const role = profileData.personal.role || 'AI Engineer & Backend Developer';
   const bio =
     config.description.description ||
     profileData.personal.shortBio ||
-    'A Backend Developer experienced in Node.js (TypeScript) and Java Spring Boot.';
+    'An AI Engineer with strong Backend and High-Performance Systems background. Specialized in Hybrid GraphRAG, Knowledge Graphs, Edge AI, and scalable backend architectures.';
+
+  // Weather Condition Meta
+  const weatherMeta = {
+    sunny: {
+      badge: 'Clear Skies & Optimal Atmosphere',
+      icon: <FaSun className="text-amber-500 animate-spin-slow text-xs" />,
+      pillBg: 'bg-amber-500/10 border-amber-300/40 text-amber-800 dark:text-amber-300',
+      ringGradient: 'from-amber-400 via-yellow-300 to-sky-400',
+      temp: '28°C',
+      humidity: '42%',
+      pressure: '1013 hPa',
+      wind: '12 km/h NE',
+      status: 'High Performance Inferences',
+    },
+    cloudy: {
+      badge: 'High-Altitude Clouds & Cumulus Drift',
+      icon: <FaCloud className="text-sky-500 text-xs" />,
+      pillBg: 'bg-sky-500/10 border-sky-300/40 text-sky-800 dark:text-sky-300',
+      ringGradient: 'from-sky-400 via-blue-300 to-slate-200',
+      temp: '24°C',
+      humidity: '58%',
+      pressure: '1012 hPa',
+      wind: '9 km/h W',
+      status: 'Deep Architectural Planning',
+    },
+    rainy: {
+      badge: 'Gentle Rain & Refreshing Precision',
+      icon: <FaCloudRain className="text-cyan-400 text-xs" />,
+      pillBg: 'bg-cyan-500/15 border-cyan-400/30 text-cyan-200',
+      ringGradient: 'from-cyan-400 via-sky-500 to-blue-600',
+      temp: '21°C',
+      humidity: '88%',
+      pressure: '1008 hPa',
+      wind: '16 km/h SW',
+      status: 'Focused Code Synthesis',
+    },
+    moonlit: {
+      badge: 'Moonlit Night & Stellar Constellations',
+      icon: <FaMoon className="text-indigo-300 text-xs" />,
+      pillBg: 'bg-indigo-500/15 border-indigo-400/30 text-indigo-200',
+      ringGradient: 'from-indigo-400 via-blue-500 to-sky-300',
+      temp: '19°C',
+      humidity: '65%',
+      pressure: '1015 hPa',
+      wind: '7 km/h N',
+      status: 'Autonomous Deep Execution',
+    },
+  }[theme];
 
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+    <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Column: Introduction */}
-          <div className="lg:col-span-7 flex flex-col items-start space-y-6 text-left">
-            {/* Status Pill */}
+        {/* Main Meteorological Hero Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left Column: Vision & Identity */}
+          <div className="lg:col-span-8 flex flex-col items-start space-y-6 text-left">
+            {/* Weather Station Atmosphere Badge */}
             <div
-              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium backdrop-blur-md shadow-sm border ${
-                isCyber
-                  ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
-                  : 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400 dark:text-indigo-300'
-              }`}
+              className={`inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-mono font-medium backdrop-blur-xl border transition-all shadow-sm ${weatherMeta.pillBg}`}
             >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span>{profileData.personal.status || 'Available for Backend & AI Opportunities'}</span>
+              {weatherMeta.icon}
+              <span className="font-semibold">{weatherMeta.badge}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-current opacity-60"></span>
+              <span className="opacity-90">{weatherMeta.temp}</span>
             </div>
 
-            {/* Main Headline */}
-            <div className="space-y-2">
-              <h2
-                className={`text-sm sm:text-base font-mono uppercase tracking-widest font-semibold ${
-                  isCyber ? 'text-cyan-400' : 'text-indigo-500 dark:text-indigo-400'
-                }`}
-              >
-                {profileData.personal.tagline || 'AI Engineer'}
-              </h2>
-              <h1
-                className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight ${
-                  isLight
-                    ? 'text-slate-900'
-                    : isCyber
-                    ? 'text-white'
-                    : 'text-white'
-                }`}
-              >
-                Hi, I'm{' '}
-                <span
-                  className={
-                    isCyber
-                      ? 'bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(16,185,129,0.35)]'
-                      : isLight
-                      ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent'
-                      : 'bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent'
-                  }
+            {/* Profile Avatar & Identity Header Row */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-6 pt-1">
+              {/* Compact Weather Avatar */}
+              <div className="relative group shrink-0 w-fit">
+                {/* Rotating Weather Aura Halo */}
+                <div
+                  className={`absolute -inset-1 rounded-full bg-gradient-to-tr ${weatherMeta.ringGradient} opacity-75 blur-sm group-hover:opacity-100 transition-opacity duration-500`}
+                />
+
+                {/* Avatar Frame with small rounded size */}
+                <div
+                  className={`relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 shadow-lg transition-transform duration-300 group-hover:scale-105 ${
+                    isLight
+                      ? 'border-white bg-white shadow-sky-200/50'
+                      : 'border-slate-800 bg-slate-900 shadow-black/60'
+                  }`}
+                >
+                  <img
+                    src={avatarUrl}
+                    alt={name}
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
+
+                {/* Live Weather Status Indicator Pin */}
+                <div
+                  className={`absolute -bottom-1 -right-1 p-1.5 rounded-full border shadow-md flex items-center justify-center ${
+                    isLight
+                      ? 'bg-white border-sky-100 text-sky-600'
+                      : 'bg-slate-900 border-sky-500/40 text-sky-300'
+                  }`}
+                  title={weatherMeta.status}
+                >
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span>
+                  </span>
+                </div>
+              </div>
+
+              {/* Title & Domain */}
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-widest text-sky-600 dark:text-sky-400">
+                  <span>METEOROLOGICAL CODING STATION</span>
+                  <span>•</span>
+                  <span>VIETNAM 🇻🇳</span>
+                </div>
+
+                <h1
+                  className={`text-3xl sm:text-4xl md:text-5xl font-black tracking-tight ${
+                    isLight ? 'text-slate-900' : 'text-white'
+                  }`}
                 >
                   {name}
-                </span>
-              </h1>
-              <p
-                className={`text-xl sm:text-2xl font-semibold ${
-                  isLight
-                    ? 'text-slate-700'
-                    : isCyber
-                    ? 'text-emerald-200'
-                    : 'text-slate-300'
-                }`}
-              >
-                {profileData.personal.role || 'Backend Developer & AI Engineer'}
-              </p>
+                </h1>
+
+                <p className="text-base sm:text-lg font-bold text-sky-700 dark:text-sky-300">
+                  {role}
+                </p>
+              </div>
             </div>
 
-            {/* Description */}
+            {/* Narrative Bio */}
             <p
-              className={`text-base sm:text-lg leading-relaxed max-w-2xl ${
-                isLight
-                  ? 'text-slate-600'
-                  : isCyber
-                  ? 'text-emerald-100/75'
-                  : 'text-slate-400'
+              className={`text-sm sm:text-base leading-relaxed max-w-3xl ${
+                isLight ? 'text-slate-600' : 'text-slate-300/90'
               }`}
             >
               {bio}
             </p>
 
-            {/* Call to Actions */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
+            {/* Weather Telemetry Instrument Bar */}
+            <div
+              className={`w-full max-w-3xl grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3 rounded-2xl border backdrop-blur-xl ${
+                isLight
+                  ? 'bg-white/80 border-sky-100 shadow-sm shadow-sky-100/50'
+                  : 'bg-slate-900/60 border-sky-500/20 shadow-inner'
+              }`}
+            >
+              <div className="p-2 rounded-xl flex items-center gap-2.5">
+                <FaGaugeHigh className="text-sky-500 text-base shrink-0" />
+                <div>
+                  <div className="text-[10px] font-mono text-slate-400 uppercase">Pressure</div>
+                  <div
+                    className={`text-xs font-mono font-bold ${
+                      isLight ? 'text-slate-800' : 'text-slate-200'
+                    }`}
+                  >
+                    {weatherMeta.pressure}
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-2 rounded-xl flex items-center gap-2.5">
+                <FaDroplet className="text-cyan-500 text-base shrink-0" />
+                <div>
+                  <div className="text-[10px] font-mono text-slate-400 uppercase">Humidity</div>
+                  <div
+                    className={`text-xs font-mono font-bold ${
+                      isLight ? 'text-slate-800' : 'text-slate-200'
+                    }`}
+                  >
+                    {weatherMeta.humidity}
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-2 rounded-xl flex items-center gap-2.5">
+                <FaWind className="text-teal-500 text-base shrink-0" />
+                <div>
+                  <div className="text-[10px] font-mono text-slate-400 uppercase">Wind Velocity</div>
+                  <div
+                    className={`text-xs font-mono font-bold ${
+                      isLight ? 'text-slate-800' : 'text-slate-200'
+                    }`}
+                  >
+                    {weatherMeta.wind}
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-2 rounded-xl flex items-center gap-2.5">
+                <FaBrain className="text-amber-500 text-base shrink-0" />
+                <div>
+                  <div className="text-[10px] font-mono text-slate-400 uppercase">Status</div>
+                  <div
+                    className={`text-xs font-mono font-bold truncate ${
+                      isLight ? 'text-slate-800' : 'text-slate-200'
+                    }`}
+                  >
+                    {weatherMeta.status.split(' ')[0]} Active
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Core Technical Capabilities Ribbon */}
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              {[
+                { name: 'Python (GraphRAG)', icon: <SiPython className="text-amber-500" /> },
+                { name: 'C++ Parallel (3.5x)', icon: <SiCplusplus className="text-blue-500" /> },
+                { name: 'Node.js (TypeScript)', icon: <SiNodedotjs className="text-green-500" /> },
+                { name: 'Java Spring Boot', icon: <SiSpringboot className="text-emerald-500" /> },
+                { name: 'Knowledge Graphs', icon: <SiNeo4J className="text-sky-500" /> },
+                { name: 'Docker Containerization', icon: <SiDocker className="text-sky-500" /> },
+              ].map((item, idx) => (
+                <span
+                  key={idx}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono border backdrop-blur-md transition-all ${
+                    isLight
+                      ? 'bg-white/80 border-sky-100 text-slate-700 shadow-xs hover:border-sky-300'
+                      : 'bg-slate-900/60 border-sky-500/20 text-slate-200 hover:border-sky-400/40'
+                  }`}
+                >
+                  <span className="text-xs">{item.icon}</span>
+                  <span>{item.name}</span>
+                </span>
+              ))}
+            </div>
+
+            {/* Atmospheric Action Buttons */}
+            <div className="flex flex-wrap items-center gap-4 pt-2">
               <a
                 href="#projects"
-                className={`inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-0.5 ${
-                  isCyber
-                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-bold shadow-emerald-500/25'
-                    : 'bg-gradient-to-r from-indigo-500 via-indigo-600 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white shadow-indigo-500/25'
-                }`}
+                className="group inline-flex items-center gap-2.5 px-6 py-3 text-sm font-semibold rounded-2xl bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-400 hover:to-blue-500 text-white shadow-lg shadow-sky-400/30 hover:shadow-xl hover:shadow-sky-400/40 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
               >
-                <span>View Projects</span>
-                <FaArrowRight className="text-xs" />
+                <span>Explore Radar Projects</span>
+                <FaArrowRight className="text-xs group-hover:translate-x-1 transition-transform" />
               </a>
 
               <a
                 href="#contact"
-                className={`inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold rounded-xl border transition-all duration-200 ${
+                className={`inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-2xl border backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 cursor-pointer ${
                   isLight
-                    ? 'bg-white hover:bg-slate-100 text-slate-800 border-slate-300 shadow-sm'
-                    : isCyber
-                    ? 'bg-[#041118] hover:bg-[#061e2a] text-emerald-300 border-emerald-500/30'
-                    : 'bg-slate-900/90 hover:bg-slate-800/90 text-slate-200 hover:text-white border-slate-700/80 hover:border-slate-600'
+                    ? 'bg-white/90 hover:bg-sky-50 text-slate-800 border-sky-200 shadow-xs'
+                    : 'bg-slate-900/80 hover:bg-slate-800 text-sky-200 border-sky-500/30'
                 }`}
               >
-                <span>Get In Touch</span>
+                <span>Dispatch Signal</span>
               </a>
 
               {config.resume.fileUrl && (
@@ -146,12 +299,10 @@ const Hero: React.FC<HeroProps> = ({ config, profile, theme = 'dark' }) => {
                   href={config.resume.fileUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className={`inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold rounded-xl border transition-all duration-200 ${
+                  className={`inline-flex items-center gap-2 px-4 py-3 text-sm font-semibold rounded-2xl border transition-all cursor-pointer ${
                     isLight
-                      ? 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-300'
-                      : isCyber
-                      ? 'bg-[#041118] text-cyan-300 border-cyan-500/30 hover:bg-[#071c26]'
-                      : 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border-white/10'
+                      ? 'bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100'
+                      : 'border-sky-500/20 bg-slate-900/60 text-sky-300 hover:bg-slate-800'
                   }`}
                 >
                   <FaDownload className="text-xs" />
@@ -159,366 +310,117 @@ const Hero: React.FC<HeroProps> = ({ config, profile, theme = 'dark' }) => {
                 </a>
               )}
             </div>
+          </div>
 
-            {/* Social Links */}
+          {/* Right Column: Atmospheric Bento Meteorological Station Radar */}
+          <div className="lg:col-span-4 flex flex-col gap-4">
+            {/* Weather Radar Station Card */}
             <div
-              className={`flex items-center gap-3 pt-4 border-t w-full max-w-xl ${
+              className={`p-6 rounded-3xl border backdrop-blur-xl transition-all shadow-xl ${
                 isLight
-                  ? 'border-slate-200'
-                  : isCyber
-                  ? 'border-emerald-500/20'
-                  : 'border-slate-800/80'
+                  ? 'bg-white/90 border-sky-100 shadow-sky-100/50'
+                  : 'bg-slate-900/80 border-sky-500/25 shadow-[0_15px_35px_rgba(0,0,0,0.5)]'
               }`}
             >
-              <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
-                Connect:
-              </span>
-              <div className="flex items-center gap-2">
-                {config.github.username && (
-                  <a
-                    href={`https://github.com/${config.github.username}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`p-2.5 rounded-xl border transition-all ${
-                      isLight
-                        ? 'bg-white text-slate-700 hover:text-slate-900 border-slate-300 shadow-sm'
-                        : isCyber
-                        ? 'bg-[#041118] text-emerald-300 hover:text-cyan-300 border-emerald-500/30 hover:border-cyan-400'
-                        : 'bg-slate-900/80 text-slate-300 hover:text-white border-slate-800 hover:border-indigo-500/40'
-                    }`}
-                    title="GitHub"
-                  >
-                    <FaGithub className="text-base" />
-                  </a>
-                )}
-                {config.social.linkedin && (
-                  <a
-                    href={`https://linkedin.com/in/${config.social.linkedin}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`p-2.5 rounded-xl border transition-all ${
-                      isLight
-                        ? 'bg-white text-blue-600 border-slate-300 shadow-sm'
-                        : isCyber
-                        ? 'bg-[#041118] text-cyan-400 border-emerald-500/30 hover:border-cyan-400'
-                        : 'bg-slate-900/80 text-slate-300 hover:text-white border-slate-800 hover:border-blue-500/40'
-                    }`}
-                    title="LinkedIn"
-                  >
-                    <FaLinkedin className="text-base" />
-                  </a>
-                )}
-                {config.social.email && (
-                  <a
-                    href={`mailto:${config.social.email}`}
-                    className={`p-2.5 rounded-xl border transition-all ${
-                      isLight
-                        ? 'bg-white text-rose-500 border-slate-300 shadow-sm'
-                        : isCyber
-                        ? 'bg-[#041118] text-rose-400 border-emerald-500/30 hover:border-rose-400'
-                        : 'bg-slate-900/80 text-slate-300 hover:text-white border-slate-800 hover:border-red-500/40'
-                    }`}
-                    title="Email"
-                  >
-                    <FaEnvelope className="text-base" />
-                  </a>
-                )}
-                {config.social.phone && (
-                  <a
-                    href={`tel:${config.social.phone}`}
-                    className={`p-2.5 rounded-xl border transition-all ${
-                      isLight
-                        ? 'bg-white text-emerald-600 border-slate-300 shadow-sm'
-                        : isCyber
-                        ? 'bg-[#041118] text-emerald-400 border-emerald-500/30 hover:border-emerald-400'
-                        : 'bg-slate-900/80 text-slate-300 hover:text-white border-slate-800 hover:border-emerald-500/40'
-                    }`}
-                    title="Phone"
-                  >
-                    <FaPhone className="text-base" />
-                  </a>
-                )}
+              <div className="flex items-center justify-between pb-3 border-b border-sky-500/15 text-xs font-mono">
+                <span className="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-semibold uppercase tracking-wider">
+                  <FaTerminal className="text-xs" />
+                  <span>WEATHER RADAR CORE</span>
+                </span>
+                <span className="text-[11px] text-slate-400">KT-METEO-01</span>
               </div>
-            </div>
-          </div>
 
-          {/* Right Column: Hero Profile Card */}
-          <div className="lg:col-span-5 flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-sm sm:max-w-md">
-              {/* Outer decorative glow */}
-              <div
-                className={`absolute -inset-1 rounded-3xl opacity-25 blur-xl transition duration-1000 ${
-                  isCyber
-                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500'
-                    : 'bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500'
-                }`}
-              ></div>
-
-              {/* Card Container */}
-              <div
-                className={`relative rounded-3xl border p-6 sm:p-8 shadow-2xl backdrop-blur-xl ${
-                  isLight
-                    ? 'bg-white/90 border-slate-200/90 shadow-slate-200/50'
-                    : isCyber
-                    ? 'bg-[#030e16] border-emerald-500/40 shadow-[0_0_25px_rgba(16,185,129,0.15)]'
-                    : 'bg-gradient-to-b from-[#10182c] to-[#0c1222] border-slate-700/80'
-                }`}
-              >
-                {/* Header with Avatar */}
-                <div
-                  className={`flex flex-col items-center text-center pb-6 border-b ${
-                    isLight
-                      ? 'border-slate-200'
-                      : isCyber
-                      ? 'border-emerald-500/20'
-                      : 'border-slate-800/80'
-                  }`}
-                >
-                  <div className="relative mb-4 group">
-                    <div
-                      className={`absolute -inset-1 rounded-full opacity-80 blur-sm group-hover:opacity-100 transition duration-500 ${
-                        isCyber
-                          ? 'bg-gradient-to-tr from-emerald-400 to-cyan-400'
-                          : 'bg-gradient-to-tr from-indigo-500 to-teal-400'
-                      }`}
-                    ></div>
-                    <img
-                      src={avatarUrl}
-                      alt={name}
-                      className={`relative w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover border-2 shadow-xl ${
-                        isCyber ? 'border-emerald-400' : 'border-indigo-400/50'
-                      }`}
-                    />
-                    <div className="absolute bottom-1 right-1 h-5 w-5 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900 shadow"></div>
-                  </div>
-
-                  <h3
-                    className={`text-xl font-bold tracking-tight ${
-                      isLight
-                        ? 'text-slate-900'
-                        : isCyber
-                        ? 'text-emerald-300'
-                        : 'text-white'
-                    }`}
-                  >
-                    {name}
-                  </h3>
-                  <p
-                    className={`text-xs font-mono mt-0.5 ${
-                      isCyber ? 'text-cyan-400' : 'text-indigo-500 dark:text-indigo-400'
-                    }`}
-                  >
-                    @{config.github.username}
-                  </p>
-                  <p className="text-xs text-slate-400 mt-1">
-                    {config.dateOfBirth.dateOfBirth || 'Vietnam 🇻🇳'}
-                  </p>
-                </div>
-
-                {/* Quick Profile Specs */}
-                <div className="pt-6 space-y-3">
+              <div className="space-y-4 pt-4">
+                {profileData.heroHighlights.map((highlight, idx) => (
                   <div
-                    className={`flex items-center justify-between p-3 rounded-xl border ${
+                    key={idx}
+                    className={`p-3.5 rounded-2xl border transition-all ${
                       isLight
-                        ? 'bg-slate-50 border-slate-200'
-                        : isCyber
-                        ? 'bg-[#021820] border-emerald-500/25'
-                        : 'bg-slate-900/60 border-slate-800/80'
+                        ? 'bg-sky-50/50 border-sky-100 hover:bg-sky-50 hover:border-sky-200'
+                        : 'bg-slate-950/40 border-sky-500/15 hover:border-sky-400/30'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`p-2 rounded-lg ${
-                          isCyber
-                            ? 'bg-cyan-500/15 text-cyan-300'
-                            : 'bg-indigo-500/10 text-indigo-500 dark:text-indigo-400'
-                        }`}
-                      >
-                        <FaGraduationCap className="text-sm" />
-                      </div>
-                      <div className="text-left">
-                        <p className="text-xs text-slate-400">Education</p>
-                        <p
-                          className={`text-xs font-semibold ${
-                            isLight
-                              ? 'text-slate-900'
-                              : isCyber
-                              ? 'text-emerald-200'
-                              : 'text-white'
-                          }`}
-                        >
-                          {profileData.education[0]?.institution ? 'HUTECH' : 'HUTECH'} ({profileData.education[0]?.degree?.replace('Current ', '') || 'GPA: 3.6/4.0'})
-                        </p>
-                      </div>
+                    <div className="flex items-center gap-2 text-xs font-bold tracking-tight">
+                      <span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+                      <span className={isLight ? 'text-slate-900' : 'text-slate-100'}>
+                        {highlight.title}
+                      </span>
                     </div>
-                    <span
-                      className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${
-                        isCyber
-                          ? 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30'
-                          : 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border-indigo-500/20'
+                    <p
+                      className={`text-[11px] mt-1 leading-normal ${
+                        isLight ? 'text-slate-500' : 'text-slate-400'
                       }`}
                     >
-                      {profileData.education[0]?.from} - {profileData.education[0]?.to}
-                    </span>
+                      {highlight.description}
+                    </p>
                   </div>
+                ))}
+              </div>
 
-                  <div
-                    className={`flex items-center justify-between p-3 rounded-xl border ${
-                      isLight
-                        ? 'bg-slate-50 border-slate-200'
-                        : isCyber
-                        ? 'bg-[#021820] border-emerald-500/25'
-                        : 'bg-slate-900/60 border-slate-800/80'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`p-2 rounded-lg ${
-                          isCyber
-                            ? 'bg-emerald-500/15 text-emerald-300'
-                            : 'bg-teal-500/10 text-teal-600 dark:text-teal-400'
-                        }`}
-                      >
-                        <FaBrain className="text-sm" />
-                      </div>
-                      <div className="text-left">
-                        <p className="text-xs text-slate-400">Latest Role</p>
-                        <p
-                          className={`text-xs font-semibold ${
-                            isLight
-                              ? 'text-slate-900'
-                              : isCyber
-                              ? 'text-emerald-200'
-                              : 'text-white'
-                          }`}
-                        >
-                          {profileData.experiences[0]?.position || 'AI Engineer'}
-                        </p>
-                      </div>
-                    </div>
-                    <span
-                      className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${
-                        isCyber
-                          ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'
-                          : 'bg-teal-500/10 text-teal-600 dark:text-teal-300 border-teal-500/20'
+              {/* Direct Connectivity Strip */}
+              <div className="pt-4 mt-4 border-t border-sky-500/15 flex items-center justify-between text-xs font-mono">
+                <span className="text-slate-400">Signals:</span>
+                <div className="flex items-center gap-2">
+                  {config.github.username && (
+                    <a
+                      href={`https://github.com/${config.github.username}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`p-2 rounded-xl border transition-colors ${
+                        isLight
+                          ? 'bg-white hover:bg-sky-50 text-slate-700 hover:text-sky-600 border-sky-200'
+                          : 'bg-slate-950 hover:bg-slate-800 text-sky-200 border-sky-500/30'
                       }`}
+                      title="GitHub"
                     >
-                      {profileData.experiences[0]?.company || 'TO_TravelRAG'}
-                    </span>
-                  </div>
-
-                  <div
-                    className={`flex items-center justify-between p-3 rounded-xl border ${
-                      isLight
-                        ? 'bg-slate-50 border-slate-200'
-                        : isCyber
-                        ? 'bg-[#021820] border-emerald-500/25'
-                        : 'bg-slate-900/60 border-slate-800/80'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`p-2 rounded-lg ${
-                          isCyber
-                            ? 'bg-emerald-500/15 text-emerald-300'
-                            : 'bg-purple-500/10 text-purple-600 dark:text-purple-400'
-                        }`}
-                      >
-                        <FaServer className="text-sm" />
-                      </div>
-                      <div className="text-left">
-                        <p className="text-xs text-slate-400">Core Focus</p>
-                        <p
-                          className={`text-xs font-semibold ${
-                            isLight
-                              ? 'text-slate-900'
-                              : isCyber
-                              ? 'text-emerald-200'
-                              : 'text-white'
-                          }`}
-                        >
-                          {profileData.personal.role || 'AI Engineer & Backend'}
-                        </p>
-                      </div>
-                    </div>
-                    <span
-                      className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${
-                        isCyber
-                          ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'
-                          : 'bg-purple-500/10 text-purple-600 dark:text-purple-300 border-purple-500/20'
+                      <FaGithub className="text-sm" />
+                    </a>
+                  )}
+                  {config.social.linkedin && (
+                    <a
+                      href={`https://linkedin.com/in/${config.social.linkedin}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`p-2 rounded-xl border transition-colors ${
+                        isLight
+                          ? 'bg-white hover:bg-sky-50 text-slate-700 hover:text-sky-600 border-sky-200'
+                          : 'bg-slate-950 hover:bg-slate-800 text-sky-200 border-sky-500/30'
                       }`}
+                      title="LinkedIn"
                     >
-                      {profileData.personal.tagline || 'AI'}
-                    </span>
-                  </div>
+                      <FaLinkedin className="text-sm" />
+                    </a>
+                  )}
+                  {config.social.email && (
+                    <a
+                      href={`mailto:${config.social.email}`}
+                      className={`p-2 rounded-xl border transition-colors ${
+                        isLight
+                          ? 'bg-white hover:bg-sky-50 text-slate-700 hover:text-sky-600 border-sky-200'
+                          : 'bg-slate-950 hover:bg-slate-800 text-sky-200 border-sky-500/30'
+                      }`}
+                      title="Email"
+                    >
+                      <FaEnvelope className="text-sm" />
+                    </a>
+                  )}
+                  {config.social.phone && (
+                    <a
+                      href={`tel:${config.social.phone}`}
+                      className={`p-2 rounded-xl border transition-colors ${
+                        isLight
+                          ? 'bg-white hover:bg-sky-50 text-slate-700 hover:text-sky-600 border-sky-200'
+                          : 'bg-slate-950 hover:bg-slate-800 text-sky-200 border-sky-500/30'
+                      }`}
+                      title="Phone"
+                    >
+                      <FaPhone className="text-sm" />
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Feature Highlights Grid - Driven directly by profile.data.json */}
-        <div className="mt-16 sm:mt-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {profileData.heroHighlights.map((highlight, idx) => {
-            const icons = [
-              <FaServer className="text-lg" />,
-              <FaBrain className="text-lg" />,
-              <FaCode className="text-lg" />,
-              <FaGraduationCap className="text-lg" />,
-            ];
-            const icon = icons[idx % icons.length];
-            return (
-              <ScrollReveal key={idx} delay={idx * 120} direction="up" className="h-full">
-                <div
-                  className={`h-full p-5 rounded-2xl border transition-all duration-300 group shadow-md hover:-translate-y-1.5 cursor-pointer ${
-                    isLight
-                      ? 'bg-white border-slate-200 hover:border-indigo-400 shadow-slate-200/60 hover:shadow-xl'
-                      : isCyber
-                      ? 'bg-[#041118] border-emerald-500/30 hover:border-cyan-400 shadow-[0_0_15px_rgba(16,185,129,0.08)] hover:shadow-[0_0_25px_rgba(6,182,212,0.2)]'
-                      : 'bg-gradient-to-b from-slate-900/80 to-slate-950/80 border-slate-800 hover:border-indigo-500/40 hover:shadow-xl hover:shadow-indigo-500/10'
-                  }`}
-                >
-                <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform ${
-                    isCyber
-                      ? 'bg-emerald-500/10 text-emerald-300'
-                      : idx === 1
-                      ? 'bg-purple-500/10 text-purple-500 dark:text-purple-400'
-                      : idx === 2
-                      ? 'bg-blue-500/10 text-blue-500 dark:text-blue-400'
-                      : idx === 3
-                      ? 'bg-teal-500/10 text-teal-600 dark:text-teal-400'
-                      : 'bg-indigo-500/10 text-indigo-500 dark:text-indigo-400'
-                  }`}
-                >
-                  {icon}
-                </div>
-                <h4
-                  className={`text-sm font-bold ${
-                    isLight
-                      ? 'text-slate-900'
-                      : isCyber
-                      ? 'text-emerald-300'
-                      : 'text-white'
-                  }`}
-                >
-                  {highlight.title}
-                </h4>
-                <p
-                  className={`text-xs mt-1 leading-relaxed ${
-                    isLight
-                      ? 'text-slate-600'
-                      : isCyber
-                      ? 'text-emerald-100/70'
-                      : 'text-slate-400'
-                  }`}
-                >
-                  {highlight.description}
-                </p>
-              </div>
-            </ScrollReveal>
-          );
-        })}
         </div>
       </div>
     </section>

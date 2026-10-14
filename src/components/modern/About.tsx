@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  FaUser,
   FaEnvelope,
   FaPhone,
   FaLocationDot,
@@ -9,20 +8,22 @@ import {
   FaTerminal,
   FaCopy,
   FaCodeBranch,
+  FaCloudSun,
 } from 'react-icons/fa6';
 import { SanitizedConfig } from '../../interfaces/sanitized-config';
 import { Profile } from '../../interfaces/profile';
 import profileData from '../../../profile.data.json';
+import { WeatherTheme } from './ThemeSwitcher';
 import ScrollReveal from './ScrollReveal';
 
 interface AboutProps {
   config: SanitizedConfig;
   profile: Profile | null;
-  theme?: string;
+  theme?: WeatherTheme;
 }
 
-const About: React.FC<AboutProps> = ({ config, theme = 'dark' }) => {
-  const isLight = theme === 'light';
+const About: React.FC<AboutProps> = ({ config, theme = 'sunny' }) => {
+  const isLight = theme === 'sunny' || theme === 'cloudy';
   const [terminalTab, setTerminalTab] = useState<'developer' | 'profile'>('developer');
   const [copied, setCopied] = useState(false);
 
@@ -39,13 +40,16 @@ const About: React.FC<AboutProps> = ({ config, theme = 'dark' }) => {
     );
 
   const getDeveloperTs = () =>
-    `const engineer: SoftwareEngineer = {
-  name: '${profileData.personal.name}',
-  role: '${profileData.personal.role}',
-  location: '${profileData.personal.location}',
-  skills: ${JSON.stringify(profileData.skills.allSkills.slice(0, 6), null, 2)},
-  status: '${profileData.personal.status}'
-};`;
+    `interface SystemsArchitect {
+  engineer: '${profileData.personal.name}';
+  domain: '${profileData.personal.role}';
+  academicGPA: '${profileData.education[0]?.degree?.replace('Current ', '') || '3.6 / 4.0'}';
+  location: '${profileData.personal.location}';
+  coreStrengths: [
+${profileData.about.strengths.map((s) => `    '${s.title}'`).join(',\n')}
+  ];
+  operationalStatus: '${profileData.personal.status}';
+}`;
 
   const handleCopy = () => {
     const textToCopy = terminalTab === 'developer' ? getDeveloperTs() : getProfileJson();
@@ -60,18 +64,24 @@ const About: React.FC<AboutProps> = ({ config, theme = 'dark' }) => {
         {/* Section Header */}
         <ScrollReveal direction="up">
           <div className="flex flex-col items-center text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-500 dark:text-indigo-400 text-xs font-mono mb-3">
-              <FaUser className="text-xs" />
-              <span>{profileData.about?.badge || 'ABOUT ME'}</span>
+            <div
+              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium mb-3 border shadow-sm ${
+                isLight
+                  ? 'bg-sky-50 border-sky-200 text-sky-700'
+                  : 'bg-slate-900/80 border-sky-500/30 text-sky-300 shadow-sm'
+              }`}
+            >
+              <FaCloudSun className="text-xs text-sky-500" />
+              <span>{profileData.about?.badge || 'ATMOSPHERIC OBSERVATIONS'}</span>
             </div>
             <h2
-              className={`text-3xl sm:text-4xl font-extrabold tracking-tight ${
+              className={`text-3xl sm:text-4xl font-black tracking-tight ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
               {profileData.about?.title || 'Background & Engineering Philosophy'}
             </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full mt-4"></div>
+            <div className="w-20 h-1 bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 rounded-full mt-4"></div>
           </div>
         </ScrollReveal>
 
@@ -79,142 +89,182 @@ const About: React.FC<AboutProps> = ({ config, theme = 'dark' }) => {
           {/* Left Column: Personal Narrative */}
           <ScrollReveal direction="up" delay={100} className="lg:col-span-7 flex flex-col">
             <div
-              className={`h-full flex flex-col justify-between p-6 sm:p-8 rounded-3xl border backdrop-blur-xl shadow-xl ${
-              isLight
-                ? 'bg-white/90 border-slate-200/90 shadow-slate-200/50'
-                : 'bg-[#0c1222]/90 border-slate-800'
-            }`}
-          >
-            <div className="space-y-4">
-              <h3
-                className={`text-xl font-bold flex items-center gap-2 ${
-                  isLight ? 'text-slate-900' : 'text-white'
-                }`}
-              >
-                <span className="text-indigo-500">#</span> {profileData.about.subheading}
-              </h3>
-              {profileData.about.paragraphs.map((p, idx) => (
-                <p
-                  key={idx}
-                  className={`leading-relaxed text-sm sm:text-base ${
-                    isLight ? 'text-slate-600' : 'text-slate-300'
-                  }`}
-                >
-                  {p}
-                </p>
-              ))}
-
-              {/* Core Strengths */}
-              <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {profileData.about.strengths.map((str, idx) => (
-                  <div
-                    key={idx}
-                    className={`flex items-start gap-2.5 p-3 rounded-xl border ${
-                      isLight ? 'bg-slate-50 border-slate-200' : 'bg-slate-900/60 border-slate-800'
-                    }`}
-                  >
-                    <div className="p-1 rounded-md bg-emerald-500/10 text-emerald-500 mt-0.5">
-                      <FaCheck className="text-xs" />
-                    </div>
-                    <div>
-                      <h5 className={`text-xs font-semibold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                        {str.title}
-                      </h5>
-                      <p className="text-[11px] text-slate-400">{str.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Quick Contact Chips */}
-            <div
-              className={`pt-6 mt-6 border-t grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs ${
-                isLight ? 'border-slate-200' : 'border-slate-800/80'
+              className={`h-full flex flex-col justify-between p-7 sm:p-9 rounded-3xl border backdrop-blur-xl shadow-xl transition-all ${
+                isLight
+                  ? 'bg-white/95 border-sky-100 shadow-sky-100/50 hover:shadow-sky-200/50'
+                  : 'bg-slate-900/80 border-sky-500/20 shadow-[0_15px_40px_rgba(0,0,0,0.6)]'
               }`}
             >
+              <div className="space-y-4">
+                <h3
+                  className={`text-xl font-bold flex items-center gap-2 tracking-tight ${
+                    isLight ? 'text-sky-950' : 'text-sky-200'
+                  }`}
+                >
+                  <span className="text-sky-500 font-mono">#</span> {profileData.about.subheading}
+                </h3>
+                {profileData.about.paragraphs.map((p, idx) => (
+                  <p
+                    key={idx}
+                    className={`leading-relaxed text-sm sm:text-base ${
+                      isLight ? 'text-slate-600' : 'text-slate-300/90'
+                    }`}
+                  >
+                    {p}
+                  </p>
+                ))}
+
+                {/* Core Strengths Grid */}
+                <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  {profileData.about.strengths.map((str, idx) => (
+                    <div
+                      key={idx}
+                      className={`flex items-start gap-3 p-3.5 rounded-2xl border transition-all ${
+                        isLight
+                          ? 'bg-sky-50/50 border-sky-100 hover:bg-sky-50 hover:border-sky-200'
+                          : 'bg-slate-950/40 border-sky-500/15 hover:border-sky-400/30'
+                      }`}
+                    >
+                      <div
+                        className={`p-1.5 rounded-xl border mt-0.5 shrink-0 ${
+                          isLight
+                            ? 'bg-sky-100 text-sky-600 border-sky-200'
+                            : 'bg-sky-500/20 text-sky-300 border-sky-400/30'
+                        }`}
+                      >
+                        <FaCheck className="text-xs" />
+                      </div>
+                      <div>
+                        <h5
+                          className={`text-xs font-bold tracking-tight ${
+                            isLight ? 'text-slate-900' : 'text-white'
+                          }`}
+                        >
+                          {str.title}
+                        </h5>
+                        <p
+                          className={`text-[11px] mt-0.5 leading-normal ${
+                            isLight ? 'text-slate-500' : 'text-slate-400'
+                          }`}
+                        >
+                          {str.description}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quick Contact Chips */}
               <div
-                className={`flex items-center gap-2.5 ${
-                  isLight ? 'text-slate-700' : 'text-slate-300'
+                className={`pt-6 mt-6 border-t grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs ${
+                  isLight ? 'border-sky-100' : 'border-sky-500/20'
                 }`}
               >
-                <FaLocationDot className="text-indigo-500 text-sm" />
-                <span>{config.dateOfBirth.dateOfBirth || 'Ho Chi Minh City, Vietnam'}</span>
+                <div
+                  className={`flex items-center gap-2.5 ${
+                    isLight ? 'text-slate-700' : 'text-slate-300'
+                  }`}
+                >
+                  <FaLocationDot className="text-sky-500 text-sm" />
+                  <span>{config.dateOfBirth.dateOfBirth || 'Vietnam 🇻🇳'}</span>
+                </div>
+                {config.social.email && (
+                  <a
+                    href={`mailto:${config.social.email}`}
+                    className={`flex items-center gap-2.5 transition-colors ${
+                      isLight
+                        ? 'text-slate-700 hover:text-sky-600'
+                        : 'text-slate-300 hover:text-white'
+                    }`}
+                  >
+                    <FaEnvelope className="text-sky-500 text-sm" />
+                    <span className="truncate">{config.social.email}</span>
+                  </a>
+                )}
+                {config.social.phone && (
+                  <a
+                    href={`tel:${config.social.phone}`}
+                    className={`flex items-center gap-2.5 transition-colors ${
+                      isLight
+                        ? 'text-slate-700 hover:text-sky-600'
+                        : 'text-slate-300 hover:text-white'
+                    }`}
+                  >
+                    <FaPhone className="text-sky-500 text-sm" />
+                    <span>{config.social.phone}</span>
+                  </a>
+                )}
+                {config.social.linkedin && (
+                  <a
+                    href={`https://linkedin.com/in/${config.social.linkedin}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`flex items-center gap-2.5 transition-colors ${
+                      isLight
+                        ? 'text-slate-700 hover:text-sky-600'
+                        : 'text-slate-300 hover:text-sky-300'
+                    }`}
+                  >
+                    <FaLinkedin className="text-sky-500 text-sm" />
+                    <span>linkedin.com/in/{config.social.linkedin}</span>
+                  </a>
+                )}
               </div>
-              {config.social.email && (
-                <a
-                  href={`mailto:${config.social.email}`}
-                  className={`flex items-center gap-2.5 transition-colors ${
-                    isLight ? 'text-slate-700 hover:text-rose-600' : 'text-slate-300 hover:text-white'
-                  }`}
-                >
-                  <FaEnvelope className="text-rose-400 text-sm" />
-                  <span className="truncate">{config.social.email}</span>
-                </a>
-              )}
-              {config.social.phone && (
-                <a
-                  href={`tel:${config.social.phone}`}
-                  className={`flex items-center gap-2.5 transition-colors ${
-                    isLight ? 'text-slate-700 hover:text-emerald-600' : 'text-slate-300 hover:text-white'
-                  }`}
-                >
-                  <FaPhone className="text-emerald-400 text-sm" />
-                  <span>{config.social.phone}</span>
-                </a>
-              )}
-              {config.social.linkedin && (
-                <a
-                  href={`https://linkedin.com/in/${config.social.linkedin}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`flex items-center gap-2.5 transition-colors ${
-                    isLight ? 'text-slate-700 hover:text-blue-600' : 'text-slate-300 hover:text-blue-400'
-                  }`}
-                >
-                  <FaLinkedin className="text-blue-400 text-sm" />
-                  <span>linkedin.com/in/{config.social.linkedin}</span>
-                </a>
-              )}
             </div>
-          </div>
-        </ScrollReveal>
+          </ScrollReveal>
 
-          {/* Right Column: Interactive Code Terminal Presentation */}
+          {/* Right Column: Meteorological Code Capsule */}
           <ScrollReveal direction="up" delay={200} className="lg:col-span-5 flex flex-col">
             <div
-              className={`h-full flex flex-col rounded-3xl border shadow-2xl overflow-hidden font-mono text-xs ${
+              className={`h-full flex flex-col rounded-3xl border shadow-xl overflow-hidden font-mono text-xs backdrop-blur-xl ${
                 isLight
-                  ? 'bg-slate-900 border-slate-800'
-                  : 'bg-[#090e1a] border-slate-800'
+                  ? 'bg-white/95 border-sky-100 shadow-sky-100/60'
+                  : 'bg-slate-900/80 border-sky-500/25 shadow-[0_15px_40px_rgba(0,0,0,0.7)]'
               }`}
             >
               {/* Terminal Top Bar with Interactive Tabs */}
-              <div className="flex items-center justify-between px-4 py-3 bg-slate-950 border-b border-slate-800">
+              <div
+                className={`flex items-center justify-between px-4 py-3 border-b ${
+                  isLight
+                    ? 'bg-sky-50/80 border-sky-100'
+                    : 'bg-slate-950/70 border-sky-500/20'
+                }`}
+              >
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-rose-500/80"></div>
-                  <div className="w-3 h-3 rounded-full bg-amber-500/80"></div>
-                  <div className="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+                  <div className="w-3 h-3 rounded-full bg-rose-400"></div>
+                  <div className="w-3 h-3 rounded-full bg-amber-400"></div>
+                  <div className="w-3 h-3 rounded-full bg-sky-400"></div>
                 </div>
 
                 {/* Interactive Click Tabs */}
-                <div className="flex items-center gap-1 bg-slate-900/90 p-1 rounded-xl border border-slate-800">
+                <div
+                  className={`flex items-center gap-1 p-1 rounded-xl border ${
+                    isLight
+                      ? 'bg-white/80 border-sky-200/70'
+                      : 'bg-slate-900/90 border-sky-500/25'
+                  }`}
+                >
                   <button
                     onClick={() => setTerminalTab('developer')}
-                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] transition-all duration-200 ${
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] transition-all duration-200 cursor-pointer ${
                       terminalTab === 'developer'
-                        ? 'bg-indigo-600 text-white font-semibold shadow'
+                        ? 'bg-sky-500 text-white font-semibold shadow-xs'
+                        : isLight
+                        ? 'text-slate-600 hover:text-slate-900'
                         : 'text-slate-400 hover:text-slate-200'
                     }`}
                   >
                     <FaTerminal className="text-[10px]" />
-                    <span>developer.ts</span>
+                    <span>architect.ts</span>
                   </button>
                   <button
                     onClick={() => setTerminalTab('profile')}
-                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] transition-all duration-200 ${
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] transition-all duration-200 cursor-pointer ${
                       terminalTab === 'profile'
-                        ? 'bg-cyan-600 text-white font-semibold shadow'
+                        ? 'bg-sky-600 text-white font-semibold shadow-xs'
+                        : isLight
+                        ? 'text-slate-600 hover:text-slate-900'
                         : 'text-slate-400 hover:text-slate-200'
                     }`}
                   >
@@ -223,14 +273,18 @@ const About: React.FC<AboutProps> = ({ config, theme = 'dark' }) => {
                   </button>
                 </div>
 
-                {/* Copy Button with animation */}
+                {/* Copy Button */}
                 <button
                   onClick={handleCopy}
-                  className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-all text-xs flex items-center gap-1"
+                  className={`p-1.5 rounded-lg transition-all text-xs flex items-center gap-1 cursor-pointer ${
+                    isLight
+                      ? 'hover:bg-sky-100 text-sky-700'
+                      : 'hover:bg-sky-900/40 text-sky-300 hover:text-white'
+                  }`}
                   title="Copy code"
                 >
                   {copied ? (
-                    <span className="flex items-center gap-1 text-[10px] text-emerald-400 font-mono">
+                    <span className="flex items-center gap-1 text-[10px] text-sky-600 font-mono">
                       <FaCheck className="text-[10px]" /> Copied!
                     </span>
                   ) : (
@@ -240,62 +294,93 @@ const About: React.FC<AboutProps> = ({ config, theme = 'dark' }) => {
               </div>
 
               {/* Terminal Body */}
-              <div className="p-5 space-y-2 text-slate-300 leading-relaxed overflow-x-auto min-h-[300px]">
+              <div
+                className={`p-5 space-y-2 leading-relaxed overflow-x-auto min-h-[320px] ${
+                  isLight ? 'text-slate-700 bg-white/60' : 'text-slate-300 bg-slate-950/40'
+                }`}
+              >
                 {terminalTab === 'developer' ? (
-                  <div className="transition-opacity duration-300">
+                  <div className="transition-opacity duration-300 font-mono text-xs">
                     <p>
-                      <span className="text-purple-400">const</span>{' '}
-                      <span className="text-blue-400">engineer</span>:{' '}
-                      <span className="text-teal-300">SoftwareEngineer</span> = {'{'}
+                      <span className={isLight ? 'text-sky-600 font-bold' : 'text-sky-400 font-bold'}>
+                        interface
+                      </span>{' '}
+                      <span className={isLight ? 'text-blue-800 font-bold' : 'text-sky-200 font-bold'}>
+                        SystemsArchitect
+                      </span>{' '}
+                      {'{'}
                     </p>
-                    <div className="pl-4 space-y-1">
+                    <div className="pl-4 space-y-1 mt-1">
                       <p>
-                        <span className="text-slate-400">name:</span>{' '}
-                        <span className="text-emerald-300">'{profileData.personal.name}'</span>,
-                      </p>
-                      <p>
-                        <span className="text-slate-400">role:</span>{' '}
-                        <span className="text-emerald-300">'{profileData.personal.role}'</span>,
-                      </p>
-                      <p>
-                        <span className="text-slate-400">location:</span>{' '}
-                        <span className="text-emerald-300">'{profileData.personal.location}'</span>,
+                        <span className={isLight ? 'text-slate-500' : 'text-slate-400'}>
+                          engineer:
+                        </span>{' '}
+                        <span className={isLight ? 'text-sky-700' : 'text-sky-300'}>
+                          '{profileData.personal.name}'
+                        </span>
+                        ;
                       </p>
                       <p>
-                        <span className="text-slate-400">education:</span> {'{'}
+                        <span className={isLight ? 'text-slate-500' : 'text-slate-400'}>
+                          domain:
+                        </span>{' '}
+                        <span className={isLight ? 'text-sky-700' : 'text-sky-300'}>
+                          '{profileData.personal.role}'
+                        </span>
+                        ;
                       </p>
-                      <p className="pl-4">
-                        <span className="text-slate-400">university:</span>{' '}
-                        <span className="text-emerald-300">'{profileData.education[0]?.institution || ''}'</span>,
-                      </p>
-                      <p className="pl-4">
-                        <span className="text-slate-400">degree:</span>{' '}
-                        <span className="text-amber-400">'{profileData.education[0]?.degree || ''}'</span>,
-                      </p>
-                      {profileData.certifications[0]?.name && (
-                        <p className="pl-4">
-                          <span className="text-slate-400">certification:</span>{' '}
-                          <span className="text-amber-400">'{profileData.certifications[0].name}'</span>,
-                        </p>
-                      )}
-                      <p>{'},'}</p>
                       <p>
-                        <span className="text-slate-400">skills:</span> [
+                        <span className={isLight ? 'text-slate-500' : 'text-slate-400'}>
+                          academics:
+                        </span>{' '}
+                        <span className={isLight ? 'text-amber-700' : 'text-amber-300'}>
+                          '{profileData.education[0]?.degree || 'GPA: 3.6 / 4.0'}'
+                        </span>
+                        ;
                       </p>
-                      <p className="pl-4 text-emerald-300">
-                        {profileData.skills.allSkills.slice(0, 6).map((s) => `'${s}'`).join(', ')}
-                      </p>
-                      <p>],</p>
                       <p>
-                        <span className="text-slate-400">status:</span>{' '}
-                        <span className="text-emerald-300">'{profileData.personal.status}'</span>
+                        <span className={isLight ? 'text-slate-500' : 'text-slate-400'}>
+                          location:
+                        </span>{' '}
+                        <span className={isLight ? 'text-sky-700' : 'text-sky-300'}>
+                          '{profileData.personal.location}'
+                        </span>
+                        ;
+                      </p>
+                      <p>
+                        <span className={isLight ? 'text-slate-500' : 'text-slate-400'}>
+                          coreSpecializations:
+                        </span>{' '}
+                        [
+                      </p>
+                      <div className={`pl-4 ${isLight ? 'text-sky-800' : 'text-sky-300'}`}>
+                        {profileData.about.strengths.map((s, idx) => (
+                          <div key={idx}>
+                            '{s.title}'
+                            {idx < profileData.about.strengths.length - 1 ? ',' : ''}
+                          </div>
+                        ))}
+                      </div>
+                      <p>];</p>
+                      <p>
+                        <span className={isLight ? 'text-slate-500' : 'text-slate-400'}>
+                          status:
+                        </span>{' '}
+                        <span className={isLight ? 'text-emerald-700' : 'text-emerald-400'}>
+                          '{profileData.personal.status}'
+                        </span>
+                        ;
                       </p>
                     </div>
-                    <p>{'};'}</p>
+                    <p className="mt-1">{'}'}</p>
                   </div>
                 ) : (
-                  <div className="transition-opacity duration-300 text-slate-300">
-                    <pre className="text-emerald-300 font-mono text-xs whitespace-pre-wrap overflow-x-auto leading-relaxed">
+                  <div className="transition-opacity duration-300">
+                    <pre
+                      className={`font-mono text-xs whitespace-pre-wrap overflow-x-auto leading-relaxed ${
+                        isLight ? 'text-sky-950' : 'text-sky-300'
+                      }`}
+                    >
                       {getProfileJson()}
                     </pre>
                   </div>
