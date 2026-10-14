@@ -2,42 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  scrollbar-width: thin;
-}
-
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-@media screen and (min-width: 966px) {
-  ::-webkit-scrollbar,
-  .scroller {
-    width: 8px;
-    height: 8px;
-    background-color: #f1f1f1;
-  }
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 10px;
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #070a12;
+  color: #e2e8f0;
+  overflow-x: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Custom dark scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070a12;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+  border: 2px solid #070a12;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Light mode styles */
+html.light body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+html.light ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border: 2px solid #f1f5f9;
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Cyberpunk theme: Neon matrix & cyan styling */
+html.cyber body {
+  background-color: #020709;
+  color: #ecfeff;
+}
+html.cyber ::-webkit-scrollbar-track {
+  background: #020709;
+}
+html.cyber ::-webkit-scrollbar-thumb {
+  background: #059669;
+  border: 2px solid #020709;
+}
+html.cyber ::-webkit-scrollbar-thumb:hover {
+  background: #10b981;
+}
+
+.cyber-card {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.12), inset 0 0 1px rgba(6, 182, 212, 0.3);
 }
 
 .text-base-content-important {

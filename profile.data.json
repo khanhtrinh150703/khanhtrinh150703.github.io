@@ -1,0 +1,346 @@
+{
+  "personal": {
+    "name": "Nguyen Ba Khanh Trinh",
+    "github": "khanhtrinh150703",
+    "email": "khanhtrinh150703@gmail.com",
+    "phone": "0963788076",
+    "linkedin": "khanh-trinh-78a7b6235",
+    "location": "15/07/2003 | Viet Nam 🇻🇳",
+    "status": "Available for AI Engineer & Backend Roles",
+    "role": "AI Engineer & Backend Developer",
+    "tagline": "AI Engineer",
+    "shortBio": "An AI Engineer with strong Backend and High-Performance Systems background. Specialized in Hybrid GraphRAG, Knowledge Graphs (Ontotext/Neo4j), Edge AI (NVIDIA Jetson, TensorRT, YOLO), and robust backend architectures (Node.js TypeScript, Java Spring Boot, Python, C++).",
+    "resumeUrl": ""
+  },
+  "heroHighlights": [
+    {
+      "title": "Hybrid GraphRAG & AI",
+      "description": "Dual SPARQL & Vector retrieval, Knowledge Graphs (Ontotext GraphDB/Neo4j), and Qdrant."
+    },
+    {
+      "title": "Edge AI & Vision",
+      "description": "Real-world YOLO deployment on NVIDIA Jetson with TensorRT and industrial camera systems."
+    },
+    {
+      "title": "High-Performance Backend",
+      "description": "Clean Architecture, DDD, high-concurrency APIs, distributed caching, and C++ parallel processing."
+    },
+    {
+      "title": "Top Academic Track",
+      "description": "HUTECH Graduate with GPA 3.6/4.0 and English B1 Certification."
+    }
+  ],
+  "about": {
+    "badge": "ABOUT ME",
+    "title": "Background & Engineering Philosophy",
+    "subheading": "Architecting Intelligent Systems & High-Performance Infrastructure",
+    "paragraphs": [
+      "I am an AI Engineer specializing in Intelligent Systems, Hybrid GraphRAG architectures, and Computer Vision. I design end-to-end AI pipelines that transform raw unstructured multi-modal data into validated Knowledge Graphs and high-speed neural inferences.",
+      "With a solid foundation in Backend development and Systems Optimization (Node.js, Spring Boot, Python, C++), I bridge the gap between cutting-edge AI models and production-ready, scalable enterprise services."
+    ],
+    "strengths": [
+      {
+        "title": "GraphRAG & Knowledge Graphs",
+        "description": "Ontology-guided retrieval, dual SPARQL/Vector engines, and semantic validation (SHACL/SWRL)."
+      },
+      {
+        "title": "Edge AI & Industrial Vision",
+        "description": "High-FPS YOLO inference on NVIDIA Jetson using TensorRT and Basler/Cognex cameras."
+      },
+      {
+        "title": "Scalable Backend Systems",
+        "description": "Clean Architecture, DDD, high-throughput RESTful APIs, and Redis caching."
+      },
+      {
+        "title": "Parallel & Systems Optimization",
+        "description": "Multi-threading, algorithmic efficiency, and low-latency data pipelines."
+      }
+    ]
+  },
+  "experiences": [
+    {
+      "company": "TO_TravelRAG Project",
+      "position": "AI Engineer",
+      "from": "July 2026",
+      "to": "Present",
+      "companyLink": "https://github.com/khanhtrinh150703/TO_TravelRAG_Project",
+      "description": "Architected TO_TravelRAG, an end-to-end Hybrid GraphRAG system that transforms unstructured Booking.com hotel metadata and customer reviews into a validated Knowledge Graph, orchestrating dual-engine Information Retrieval (SPARQL & Vector) powered by an Ontology-driven GraphDB core.",
+      "responsibilities": [
+        "Data Extraction & Schema Alignment: Ingested Booking.com raw JSON data (hotel profiles and multi-aspect reviews), executing ontology-guided LLM extraction for aspect-sentiment-evidence triples and resolving hierarchy via vector deepening (Qdrant) and BFS schema pathfinding.",
+        "Entity Resolution (ER) & Validation: Built a 2-tier ER pipeline matching geo-spatial entities against a MongoDB Geo-Index and running cosine vector similarity (threshold >= 0.88); enforced structural integrity via SHACL shape validation and SWRL reasoning prior to Ontotext GraphDB and Neo4j loading.",
+        "Query Parsing & Ontology Mapping: Developed a query understanding engine using Entity Atomization (targets, entities, metrics) and physical unit normalization (pint), applying RRF and Noisy-OR probability across multi-index Qdrant stores to accurately ground natural language to Ontology classes.",
+        "Dual-SPARQL Compilation & Chain Relaxation: Mitigated RDF relation sparsity by compiling dual SPARQL queries: a strict schema-level query (T-Box) and an instance-grounded query (A-Box) utilizing dynamic URI anchoring (VALUES) with OPTIONAL chain relaxation to guarantee zero-result prevention.",
+        "Parallel Retrieval & Response Synthesis: Orchestrated a multi-threaded retrieval pipeline querying GraphDB for deterministic facts alongside LlamaIndex vector chunks reranked via BAAI/bge-reranker-base, consolidating outputs to synthesize citation-backed, hallucination-free Markdown responses."
+      ],
+      "tags": [
+        "Python",
+        "Ontotext GraphDB",
+        "Neo4j",
+        "Semantic Web (RDF, OWL, SPARQL, SHACL, SWRL)",
+        "Qdrant",
+        "MongoDB",
+        "LlamaIndex",
+        "BAAI Cross-Encoder",
+        "Docker"
+      ]
+    },
+    {
+      "company": "Backend & Systems Architecture",
+      "position": "Backend Engineer",
+      "from": "2024",
+      "to": "Present",
+      "companyLink": "https://github.com/khanhtrinh150703",
+      "description": "Robust server architecture, Clean Architecture, Domain-Driven Design (DDD), high-concurrency APIs, and C++ parallel computing.",
+      "tags": [
+        "Node.js (TypeScript)",
+        "Java (Spring Boot)",
+        "C / C++ (Parallel Computing)",
+        "Clean Architecture & DDD",
+        "Docker"
+      ]
+    },
+    {
+      "company": "Hondaplus VietNam Co., Ltd.",
+      "position": "AI Engineer",
+      "from": "April 2025",
+      "to": "January 2026",
+      "companyLink": "https://www.hondaplus-vietnam.com.vn/vi",
+      "description": "Researched, developed, and deployed Edge AI computer vision solutions in manufacturing workflows, focusing on automated visual inspection and industrial camera integration.",
+      "responsibilities": [
+        "Delivered assigned tasks on schedule in close collaboration with team mentor; analyzed workflows and built features aligned with business needs.",
+        "Collaborated with mentors on real-world projects, conducting research to develop and implement effective solutions.",
+        "Acquired real-world image datasets using industrial cameras (Basler, Cognex, Dino-Lite), followed by data preprocessing and precise labeling for model training.",
+        "Configured Linux environments and integrated CUDA / Deep Learning libraries for NVIDIA Jetson platforms (Orin, Nano).",
+        "Executed the training, software implementation, and real-world deployment of YOLO models on Edge devices, leveraging TensorRT to achieve high-FPS inference with industrial camera systems."
+      ],
+      "tags": [
+        "YOLO",
+        "TensorRT",
+        "NVIDIA Jetson (Orin, Nano)",
+        "Industrial Cameras (Basler, Cognex, Dino-Lite)",
+        "CUDA",
+        "Edge AI",
+        "Computer Vision",
+        "Python",
+        "Linux"
+      ]
+    },
+    {
+      "company": "Parallel Computing Project",
+      "position": "Parallel Engineer",
+      "from": "December 2024",
+      "to": "March 2025",
+      "companyLink": "https://github.com/khanhtrinh150703/Parallel-on-Frequent-Itemset",
+      "description": "A high-performance system that implements parallel and multi-threading techniques to optimize the N-List frequent pattern mining algorithm.",
+      "responsibilities": [
+        "Optimization: Used C++ parallel processing to enhance tree-building and extraction efficiency.",
+        "Applied parallel computing to the N-List algorithm to speed up PPC-tree construction and data mining processes.",
+        "Performance: Achieved speedups of 3.5x or more with 4 threads, especially at lower minsub values, compared to single-threaded benchmarks."
+      ],
+      "tags": [
+        "C/C++",
+        "Multi-threading",
+        "N-List Algorithm",
+        "Parallel Computing",
+        "WSL/Ubuntu",
+        "Makefile",
+        "Performance Optimization"
+      ]
+    },
+    {
+      "company": "TOIDM",
+      "position": "Teacher Assistant",
+      "from": "September 2024",
+      "to": "December 2024",
+      "companyLink": "https://www.facebook.com/toidmedu/",
+      "description": "Assisted instructors in conducting lectures and laboratory sessions, reviewing student code, and explaining algorithms, data structures, and programming concepts.",
+      "tags": [
+        "Data Structures",
+        "Algorithms",
+        "Code Review",
+        "Instruction"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "TO_TravelRAG - Hybrid GraphRAG System",
+      "description": "An end-to-end Hybrid GraphRAG system that transforms unstructured Booking.com hotel metadata and customer reviews into a validated Knowledge Graph, orchestrating dual-engine Information Retrieval (SPARQL & Vector) powered by an Ontology-driven GraphDB core.",
+      "imageUrl": "",
+      "link": "https://github.com/khanhtrinh150703/TO_TravelRAG_Project",
+      "category": "AI",
+      "aiStack": [
+        "Python",
+        "Ontotext GraphDB",
+        "Neo4j",
+        "RDF / OWL",
+        "SPARQL",
+        "SHACL / SWRL",
+        "Qdrant",
+        "MongoDB",
+        "LlamaIndex",
+        "Docker"
+      ]
+    },
+    {
+      "title": "Parallel N-List Mining - Frequent Itemset",
+      "description": "A high-performance parallel computing program implementing multi-threading and C++ optimization techniques for the N-List frequent pattern mining algorithm, achieving 3.5x+ speedup on multi-core CPU architectures.",
+      "imageUrl": "",
+      "link": "https://github.com/khanhtrinh150703/Parallel-on-Frequent-Itemset",
+      "category": "AI",
+      "aiStack": [
+        "C/C++",
+        "Multi-threading",
+        "Parallel Computing",
+        "Data Mining",
+        "N-List Algorithm",
+        "Performance Optimization",
+        "WSL/Ubuntu"
+      ]
+    },
+    {
+      "title": "Smart GPLX - Backend Architecture",
+      "description": "A robust, production-ready backend engine for the online driving license examination platform. Architected as a Modular Monolith adhering to Clean Architecture & Domain-Driven Design (DDD). Features an automated Exam Matrix generation engine matching Ministry of Transport standards, fine-grained RBAC permission controls, Redis caching & real-time leaderboards, asynchronous BullMQ queues, MongoDB session storage, and automated CI/CD pipeline using Docker, Husky, and GitHub Actions.",
+      "imageUrl": "/Smart.png",
+      "link": "https://github.com/khanhtrinh150703/SMART-GPLX-SYSTEM",
+      "category": "BE",
+      "beStack": [
+        "Node.js",
+        "TypeScript",
+        "Clean Architecture",
+        "DDD",
+        "Prisma",
+        "MySQL",
+        "MongoDB Atlas",
+        "Redis (Cache/Queue)",
+        "BullMQ",
+        "Docker",
+        "CI/CD Pipeline"
+      ]
+    },
+    {
+      "title": "MathQuiz Application",
+      "description": "A math quiz practice app for students. Users can register/login, take quizzes, review past results, and join classes. Admins can manage users, quizzes, and classes. Built entirely with Java Spring Boot.",
+      "imageUrl": "/Math.png",
+      "link": "https://github.com/NghiaDau/MathQuizJava",
+      "category": "BE",
+      "beStack": [
+        "Java",
+        "Spring Boot",
+        "Spring Security",
+        "JWT",
+        "MySQL",
+        "RESTful API"
+      ]
+    },
+    {
+      "title": "RubikBMT Academy Website",
+      "description": "Official website for RubikBMT Academy. Users can enroll in courses, read and comment on news, and track live competition results. Admins can manage students, posts, and competitions.",
+      "imageUrl": "/Rubik.png",
+      "link": "https://rubikbmt.vn",
+      "category": "BE",
+      "beStack": [
+        "Java",
+        "Spring Boot",
+        "MySQL",
+        "Thymeleaf",
+        "Bootstrap"
+      ]
+    }
+  ],
+  "skills": {
+    "badge": "SKILLS & EXPERTISE",
+    "title": "Technical Stack & Capabilities",
+    "description": "Nhấp vào bất kỳ kỹ năng nào bên dưới để xem tiêu điểm công nghệ.",
+    "categories": [
+      {
+        "title": "AI, GraphRAG & Computer Vision",
+        "description": "Hybrid GraphRAG, Knowledge Graphs (Ontotext/Neo4j), semantic queries (SPARQL), vector stores, and Edge AI with YOLO/TensorRT.",
+        "skills": [
+          "Python",
+          "GraphRAG",
+          "Ontotext GraphDB",
+          "Neo4j",
+          "YOLO & TensorRT",
+          "Edge AI (Jetson)",
+          "Qdrant",
+          "LlamaIndex",
+          "Semantic Web (RDF/OWL/SPARQL)"
+        ]
+      },
+      {
+        "title": "Backend & Systems Architecture",
+        "description": "Robust server architecture, Clean Architecture, Domain-Driven Design (DDD), high-concurrency APIs, and C++ parallel computing.",
+        "skills": [
+          "Node.js (TypeScript)",
+          "Java (Spring Boot)",
+          "C / C++ (Parallel Computing)",
+          "Clean Architecture & DDD",
+          "Docker"
+        ]
+      },
+      {
+        "title": "Databases & Semantic Storage",
+        "description": "Knowledge Graphs, relational databases, NoSQL document stores, vector databases, and distributed caching.",
+        "skills": [
+          "Ontotext GraphDB",
+          "Neo4j",
+          "Qdrant Vector DB",
+          "MongoDB",
+          "PostgreSQL",
+          "MySQL",
+          "Redis"
+        ]
+      }
+    ],
+    "allSkills": [
+      "Python",
+      "GraphRAG",
+      "Ontotext GraphDB",
+      "Neo4j",
+      "YOLO & TensorRT",
+      "Edge AI (Jetson)",
+      "Qdrant",
+      "LlamaIndex",
+      "SPARQL & RDF",
+      "Node.js (TypeScript)",
+      "Java (Spring Boot)",
+      "C / C++ (Multi-threading)",
+      "MySQL",
+      "MongoDB",
+      "PostgreSQL",
+      "Redis",
+      "Docker"
+    ]
+  },
+  "education": [
+    {
+      "institution": "Ho Chi Minh City University of Technology (HUTECH)",
+      "degree": "Current GPA: 3.6/4.0",
+      "from": "2021",
+      "to": "2025",
+      "description": "Rigorous coursework in Computer Science, Data Structures & Algorithms, Database Systems, Computer Networks, and Artificial Intelligence."
+    }
+  ],
+  "certifications": [
+    {
+      "name": "B1 HUTECH",
+      "year": "July 2024",
+      "issuer": "Issued by University"
+    }
+  ],
+  "contact": {
+    "badge": "GET IN TOUCH",
+    "title": "Ready to Build Something Great?",
+    "description": "I am currently open to Backend Developer and AI Engineer opportunities. Whether you have a question, an exciting project, or simply want to connect, feel free to reach out!",
+    "buttonText": "Send Me an Email"
+  },
+  "displayGithubProjects": [
+    "khanhtrinh150703/TO_TravelRAG_Project",
+    "khanhtrinh150703/SMART-GPLX-SYSTEM",
+    "khanhtrinh150703/Exam-Cheating-Detection",
+    "khanhtrinh150703/AppESP",
+    "khanhtrinh150703/Parallel-on-Frequent-Itemset",
+    "khanhtrinh150703/paychain_backend"
+  ]
+}

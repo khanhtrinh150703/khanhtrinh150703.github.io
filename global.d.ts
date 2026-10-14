@@ -80,6 +80,11 @@ interface ExternalProjects {
     description?: string;
     imageUrl?: string;
     link: string;
+    category?: string;
+    beStack?: string[];
+    aiStack?: string[];
+    beDescription?: string;
+    aiDescription?: string;
   }[];
 }
 
@@ -227,6 +232,7 @@ interface Experience {
   from: string;
   to: string;
   companyLink?: string;
+  description?: string;
 }
 
 interface Certification {

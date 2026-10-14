@@ -1,296 +1,341 @@
 import { useCallback, useEffect, useState } from 'react';
-import axios, { AxiosError } from 'axios';
-import { formatDistance } from 'date-fns';
-import {
-  CustomError,
-  GENERIC_ERROR,
-  INVALID_CONFIG_ERROR,
-  INVALID_GITHUB_USERNAME_ERROR,
-  setTooManyRequestError,
-} from '../constants/errors';
+import axios from 'axios';
 import { HelmetProvider } from 'react-helmet-async';
 import '../assets/index.css';
-import { getInitialTheme, getSanitizedConfig, setupHotjar } from '../utils';
+import { getSanitizedConfig, setupHotjar } from '../utils';
 import { SanitizedConfig } from '../interfaces/sanitized-config';
-import ErrorPage from './error-page';
 import HeadTagEditor from './head-tag-editor';
-import { DEFAULT_THEMES } from '../constants/default-themes';
-import { BG_COLOR } from '../constants';
-import AvatarCard from './avatar-card';
 import { Profile } from '../interfaces/profile';
-import DetailsCard from './details-card';
-import SkillCard from './skill-card';
-import ExperienceCard from './experience-card';
-import EducationCard from './education-card';
-import CertificationCard from './certification-card';
 import { GithubProject } from '../interfaces/github-project';
-import GithubProjectCard from './github-project-card';
-import ExternalProjectCard from './external-project-card';
-import BlogCard from './blog-card';
-import Footer from './footer';
-import PublicationCard from './publication-card';
+
+// Modern Components
+import Navbar from './modern/Navbar';
+import Hero from './modern/Hero';
+import About from './modern/About';
+import Experience from './modern/Experience';
+import Projects from './modern/Projects';
+import Skills from './modern/Skills';
+import Education from './modern/Education';
+import Contact from './modern/Contact';
+import Footer from './modern/Footer';
+import AnimatedBackground from './modern/AnimatedBackground';
+import ScrollProgress from './modern/ScrollProgress';
+import { ThemeMode } from './modern/ThemeSwitcher';
 
 /**
- * Renders the GitProfile component.
- *
- * @param {Object} config - the configuration object
- * @return {JSX.Element} the rendered GitProfile component
+ * Modern Developer Portfolio for Nguyen Ba Khanh Trinh
  */
 const GitProfile = ({ config }: { config: Config }) => {
-  const [sanitizedConfig] = useState<SanitizedConfig | Record<string, never>>(
-    getSanitizedConfig(config),
+  const [sanitizedConfig] = useState<SanitizedConfig>(
+    getSanitizedConfig(config) as SanitizedConfig,
   );
-  const [theme, setTheme] = useState<string>(DEFAULT_THEMES[10]);
-  const [error, setError] = useState<CustomError | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<Profile | null>({
+    avatar: `https://github.com/${config.github.username}.png`,
+    name: config.seo?.title?.replace('Portfolio of ', '') || 'Nguyen Ba Khanh Trinh',
+    bio: config.description?.description || '',
+    location: config.dateOfBirth?.dateOfBirth || 'Vietnam 🇻🇳',
+    company: 'HondaPlus Vietnam / TOIDM',
+  });
   const [githubProjects, setGithubProjects] = useState<GithubProject[]>([]);
+
+  // Theme State: 'dark' | 'light' | 'cyber'
+  const [theme, setTheme] = useState<ThemeMode>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('theme_preference') as ThemeMode;
+      if (saved && ['dark', 'light', 'cyber'].includes(saved)) {
+        return saved;
+      }
+    }
+    return 'dark';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('theme_preference', theme);
+    const root = document.documentElement;
+    if (theme === 'light') {
+      root.classList.remove('dark', 'cyber');
+      root.classList.add('light');
+      root.setAttribute('data-theme', 'light');
+    } else if (theme === 'cyber') {
+      root.classList.remove('light');
+      root.classList.add('dark', 'cyber');
+      root.setAttribute('data-theme', 'cyber');
+    } else {
+      root.classList.remove('light', 'cyber');
+      root.classList.add('dark');
+      root.setAttribute('data-theme', 'dark');
+    }
+  }, [theme]);
 
   const getGithubProjects = useCallback(
     async (publicRepoCount: number): Promise<GithubProject[]> => {
-      if (sanitizedConfig.projects.github.mode === 'automatic') {
-        if (publicRepoCount === 0) {
-          return [];
+      try {
+        if (!sanitizedConfig?.projects?.github?.display) return [];
+
+        if (sanitizedConfig.projects.github.mode === 'automatic') {
+          if (publicRepoCount === 0) return [];
+
+          const cleanRepo = (p: string) =>
+            p
+              .replace(/^https?:\/\/github\.com\//i, '')
+              .replace(/\.git$/i, '')
+              .replace(/^\/+|\/+$/g, '')
+              .trim();
+
+          const excludeRepo =
+            sanitizedConfig.projects.github.automatic.exclude.projects
+              .map((project) => `+-repo:${cleanRepo(project)}`)
+              .join('');
+
+          const query = `user:${sanitizedConfig.github.username}+fork:${!sanitizedConfig.projects.github.automatic.exclude.forks}${excludeRepo}`;
+          const url = `https://api.github.com/search/repositories?q=${query}&sort=${sanitizedConfig.projects.github.automatic.sortBy}&per_page=${sanitizedConfig.projects.github.automatic.limit}&type=Repositories`;
+
+          const repoResponse = await axios.get(url, {
+            headers: { 'Content-Type': 'application/vnd.github.v3+json' },
+          });
+
+          const items: GithubProject[] = repoResponse.data.items || [];
+          const excludeList = sanitizedConfig.projects.github.automatic.exclude.projects.map(
+            (p) => cleanRepo(p).toLowerCase()
+          );
+          return items.filter((item) => {
+            const fullName = item.name
+              ? `${sanitizedConfig.github.username}/${item.name}`.toLowerCase()
+              : '';
+            const name = item.name ? item.name.toLowerCase() : '';
+            return (
+              !excludeList.includes(fullName) &&
+              !excludeList.includes(name) &&
+              !excludeList.some((ex) => ex.endsWith('/' + name) || ex === name)
+            );
+          });
+        } else {
+          if (sanitizedConfig.projects.github.manual.projects.length === 0) return [];
+          const cleanRepoManual = (p: string) => {
+            let cleaned = p
+              .replace(/^https?:\/\/github\.com\//i, '')
+              .replace(/\.git$/i, '')
+              .replace(/^\/+|\/+$/g, '')
+              .trim();
+            if (!cleaned.includes('/')) {
+              cleaned = `${sanitizedConfig.github.username}/${cleaned}`;
+            }
+            return cleaned;
+          };
+
+          const validManualRepos = sanitizedConfig.projects.github.manual.projects.map(cleanRepoManual);
+
+          let rawItems: GithubProject[] = [];
+          try {
+            const repos = validManualRepos
+              .map((project) => `+repo:${project}`)
+              .join('');
+
+            const url = `https://api.github.com/search/repositories?q=${repos}+fork:true&type=Repositories`;
+            const repoResponse = await axios.get(url, {
+              headers: { 'Content-Type': 'application/vnd.github.v3+json' },
+            });
+            rawItems = repoResponse.data.items || [];
+          } catch (searchErr) {
+            console.warn('GitHub search query error:', searchErr);
+          }
+
+          // For any repo not found in bulk search, try direct repository lookup
+          for (const cleanFullName of validManualRepos) {
+            const repoOnlyName = cleanFullName.includes('/')
+              ? cleanFullName.split('/')[1]
+              : cleanFullName;
+            const alreadyFound = rawItems.some(
+              (item) => item.name.toLowerCase() === repoOnlyName.toLowerCase()
+            );
+            if (!alreadyFound) {
+              try {
+                const singleRes = await axios.get(`https://api.github.com/repos/${cleanFullName}`, {
+                  headers: { 'Content-Type': 'application/vnd.github.v3+json' },
+                });
+                if (singleRes.data && singleRes.data.name) {
+                  rawItems.push(singleRes.data);
+                }
+              } catch {
+                // If private or not found, fallback handles it
+              }
+            }
+          }
+
+          // Return items strictly in the EXACT sequence specified from top to bottom
+          const orderedItems: GithubProject[] = validManualRepos.map((cleanFullName) => {
+            const repoOnlyName = cleanFullName.includes('/')
+              ? cleanFullName.split('/')[1]
+              : cleanFullName;
+
+            const found = rawItems.find(
+              (item) =>
+                item.name.toLowerCase() === repoOnlyName.toLowerCase() ||
+                `${sanitizedConfig.github.username}/${item.name}`.toLowerCase() === cleanFullName.toLowerCase()
+            );
+
+            if (found) {
+              return found;
+            }
+
+            return {
+              name: repoOnlyName,
+              html_url: `https://github.com/${cleanFullName}`,
+              description: 'Backend & Intelligent Systems Project',
+              stargazers_count: '0',
+              forks_count: '0',
+              language: 'TypeScript',
+            };
+          });
+
+          return orderedItems;
         }
-
-        const excludeRepo =
-          sanitizedConfig.projects.github.automatic.exclude.projects
-            .map((project) => `+-repo:${project}`)
-            .join('');
-
-        const query = `user:${sanitizedConfig.github.username}+fork:${!sanitizedConfig.projects.github.automatic.exclude.forks}${excludeRepo}`;
-        const url = `https://api.github.com/search/repositories?q=${query}&sort=${sanitizedConfig.projects.github.automatic.sortBy}&per_page=${sanitizedConfig.projects.github.automatic.limit}&type=Repositories`;
-
-        const repoResponse = await axios.get(url, {
-          headers: { 'Content-Type': 'application/vnd.github.v3+json' },
-        });
-        const repoData = repoResponse.data;
-
-        return repoData.items;
-      } else {
-        if (sanitizedConfig.projects.github.manual.projects.length === 0) {
-          return [];
-        }
-        const repos = sanitizedConfig.projects.github.manual.projects
-          .map((project) => `+repo:${project}`)
-          .join('');
-
-        const url = `https://api.github.com/search/repositories?q=${repos}+fork:true&type=Repositories`;
-
-        const repoResponse = await axios.get(url, {
-          headers: { 'Content-Type': 'application/vnd.github.v3+json' },
-        });
-        const repoData = repoResponse.data;
-
-        return repoData.items;
+      } catch (err) {
+        console.warn('Could not fetch GitHub repositories:', err);
+        return [];
       }
     },
-    [
-      sanitizedConfig.github.username,
-      sanitizedConfig.projects.github.mode,
-      sanitizedConfig.projects.github.manual.projects,
-      sanitizedConfig.projects.github.automatic.sortBy,
-      sanitizedConfig.projects.github.automatic.limit,
-      sanitizedConfig.projects.github.automatic.exclude.forks,
-      sanitizedConfig.projects.github.automatic.exclude.projects,
-    ],
+    [sanitizedConfig],
   );
 
   const loadData = useCallback(async () => {
     try {
       setLoading(true);
-
       const response = await axios.get(
         `https://api.github.com/users/${sanitizedConfig.github.username}`,
       );
       const data = response.data;
 
       setProfile({
-        avatar: data.avatar_url,
-        name: data.name || ' ',
-        bio: data.bio || '',
-        location: data.location || '',
+        avatar: data.avatar_url || `https://github.com/${sanitizedConfig.github.username}.png`,
+        name: data.name || 'Nguyen Ba Khanh Trinh',
+        bio: data.bio || sanitizedConfig.description.description || '',
+        location: data.location || sanitizedConfig.dateOfBirth.dateOfBirth || '',
         company: data.company || '',
       });
 
-      if (!sanitizedConfig.projects.github.display) {
-        return;
+      if (sanitizedConfig.projects.github.display) {
+        const repos = await getGithubProjects(data.public_repos || 0);
+        setGithubProjects(repos);
       }
-
-      setGithubProjects(await getGithubProjects(data.public_repos));
-    } catch (error) {
-      handleError(error as AxiosError | Error);
+    } catch (err) {
+      console.warn('GitHub user API fetch error (using fallback data):', err);
     } finally {
       setLoading(false);
     }
-  }, [
-    sanitizedConfig.github.username,
-    sanitizedConfig.projects.github.display,
-    getGithubProjects,
-  ]);
+  }, [sanitizedConfig, getGithubProjects]);
 
   useEffect(() => {
-    if (Object.keys(sanitizedConfig).length === 0) {
-      setError(INVALID_CONFIG_ERROR);
-    } else {
-      setError(null);
-      setTheme(getInitialTheme(sanitizedConfig.themeConfig));
+    if (sanitizedConfig?.hotjar) {
       setupHotjar(sanitizedConfig.hotjar);
-      loadData();
     }
+    loadData();
   }, [sanitizedConfig, loadData]);
 
-  useEffect(() => {
-    theme && document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+  if (!sanitizedConfig || !sanitizedConfig.github) {
+    return (
+      <div className="min-h-screen bg-[#070a12] flex items-center justify-center text-white font-mono text-sm">
+        Invalid configuration.
+      </div>
+    );
+  }
 
-  const handleError = (error: AxiosError | Error): void => {
-    console.error('Error:', error);
-
-    if (error instanceof AxiosError) {
-      try {
-        const reset = formatDistance(
-          new Date(error.response?.headers?.['x-ratelimit-reset'] * 1000),
-          new Date(),
-          { addSuffix: true },
-        );
-
-        if (typeof error.response?.status === 'number') {
-          switch (error.response.status) {
-            case 403:
-              setError(setTooManyRequestError(reset));
-              break;
-            case 404:
-              setError(INVALID_GITHUB_USERNAME_ERROR);
-              break;
-            default:
-              setError(GENERIC_ERROR);
-              break;
-          }
-        } else {
-          setError(GENERIC_ERROR);
-        }
-      } catch (innerError) {
-        setError(GENERIC_ERROR);
-      }
-    } else {
-      setError(GENERIC_ERROR);
-    }
-  };
+  const isLight = theme === 'light';
+  const isCyber = theme === 'cyber';
 
   return (
     <HelmetProvider>
-      <div className="fade-in h-screen">
-        {error ? (
-          <ErrorPage
-            status={error.status}
-            title={error.title}
-            subTitle={error.subTitle}
+      <div
+        className={`min-h-screen font-sans antialiased relative transition-colors duration-500 ${
+          isLight
+            ? 'bg-[#f8fafc] text-slate-900 selection:bg-indigo-500/20 selection:text-indigo-700'
+            : isCyber
+            ? 'bg-[#040e14] text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-200'
+            : 'bg-[#070a12] text-slate-100 selection:bg-indigo-500/30 selection:text-indigo-200'
+        }`}
+      >
+        <HeadTagEditor
+          googleAnalyticsId={sanitizedConfig.googleAnalytics?.id}
+          appliedTheme={theme}
+        />
+
+        {/* Dynamic Animated Background with Floating Orbs & Interactive Particle Canvas */}
+        <AnimatedBackground theme={theme} />
+
+        {/* Global sticky navbar with Theme Switcher */}
+        <Navbar
+          config={sanitizedConfig}
+          theme={theme}
+          onThemeChange={setTheme}
+        />
+
+        <main className="relative z-10">
+          {/* Hero Section */}
+          <Hero
+            config={sanitizedConfig}
+            profile={profile}
+            theme={theme}
+            loading={loading}
           />
-        ) : (
-          <>
-            <HeadTagEditor
-              googleAnalyticsId={sanitizedConfig.googleAnalytics.id}
-              appliedTheme={theme}
+
+          {/* About Section */}
+          <About
+            config={sanitizedConfig}
+            profile={profile}
+            theme={theme}
+          />
+
+          {/* Experience Section */}
+          {sanitizedConfig.experiences && sanitizedConfig.experiences.length > 0 && (
+            <Experience
+              experiences={sanitizedConfig.experiences}
+              theme={theme}
             />
-            <div className={`p-4 lg:p-10 min-h-full ${BG_COLOR}`}>
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 rounded-box">
-                <div className="col-span-1">
-                  <div className="grid grid-cols-1 gap-6">
-                    <AvatarCard
-                      profile={profile}
-                      loading={loading}
-                      avatarRing={sanitizedConfig.themeConfig.displayAvatarRing}
-                      resumeFileUrl={sanitizedConfig.resume.fileUrl}
-                      dateOfBirth={sanitizedConfig.dateOfBirth.dateOfBirth}
-                      description={sanitizedConfig.description.description}
-                      themeConfig={sanitizedConfig.themeConfig}
-                      theme={theme} // ✅ Truyền theme
-                      setTheme={setTheme} // ✅ Truyền setTheme
-                    />
-                    <DetailsCard
-                      profile={profile}
-                      loading={loading}
-                      github={sanitizedConfig.github}
-                      social={sanitizedConfig.social}
-                    />
-                    {sanitizedConfig.educations.length !== 0 && (
-                      <EducationCard
-                        loading={loading}
-                        educations={sanitizedConfig.educations}
-                      />
-                    )}
-                    {sanitizedConfig.certifications.length !== 0 && (
-                      <CertificationCard
-                        loading={loading}
-                        certifications={sanitizedConfig.certifications}
-                      />
-                    )}
-                    {sanitizedConfig.skills.length !== 0 && (
-                      <SkillCard
-                        loading={loading}
-                        skills={sanitizedConfig.skills}
-                      />
-                    )}
-                    {sanitizedConfig.experiences.length !== 0 && (
-                      <ExperienceCard
-                        loading={loading}
-                        experiences={sanitizedConfig.experiences}
-                      />
-                    )}
-                  </div>
-                </div>
-                <div className="lg:col-span-2 col-span-1">
-                  <div className="grid grid-cols-1 gap-6">
-                    {sanitizedConfig.projects.external.projects.length !==
-                      0 && (
-                      <ExternalProjectCard
-                        loading={loading}
-                        header={sanitizedConfig.projects.external.header}
-                        externalProjects={
-                          sanitizedConfig.projects.external.projects
-                        }
-                        googleAnalyticId={sanitizedConfig.googleAnalytics.id}
-                      />
-                    )}
-                    {sanitizedConfig.projects.github.display && (
-                      <GithubProjectCard
-                        header={sanitizedConfig.projects.github.header}
-                        limit={sanitizedConfig.projects.github.automatic.limit}
-                        githubProjects={githubProjects}
-                        loading={loading}
-                        username={sanitizedConfig.github.username}
-                        googleAnalyticsId={sanitizedConfig.googleAnalytics.id}
-                      />
-                    )}
-                    {sanitizedConfig.publications.length !== 0 && (
-                      <PublicationCard
-                        loading={loading}
-                        publications={sanitizedConfig.publications}
-                      />
-                    )}
-                    {sanitizedConfig.blog.display && (
-                      <BlogCard
-                        loading={loading}
-                        googleAnalyticsId={sanitizedConfig.googleAnalytics.id}
-                        blog={sanitizedConfig.blog}
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-            {sanitizedConfig.footer && (
-              <footer
-                className={`p-4 footer ${BG_COLOR} text-base-content footer-center`}
-              >
-                <div className="card compact bg-base-100 shadow">
-                  <Footer content={sanitizedConfig.footer} loading={loading} />
-                </div>
-              </footer>
-            )}
-          </>
-        )}
+          )}
+
+          {/* Projects Section (Clear separation between BE and AI) */}
+          <Projects
+            externalProjects={sanitizedConfig.projects.external.projects}
+            externalHeader={sanitizedConfig.projects.external.header}
+            githubProjects={githubProjects}
+            username={sanitizedConfig.github.username}
+            theme={theme}
+            loading={loading}
+          />
+
+          {/* Skills Section */}
+          {sanitizedConfig.skills && sanitizedConfig.skills.length > 0 && (
+            <Skills
+              skills={sanitizedConfig.skills}
+              theme={theme}
+            />
+          )}
+
+          {/* Education & Certifications Section */}
+          {(sanitizedConfig.educations?.length > 0 || sanitizedConfig.certifications?.length > 0) && (
+            <Education
+              educations={sanitizedConfig.educations}
+              certifications={sanitizedConfig.certifications}
+              theme={theme}
+            />
+          )}
+
+          {/* Contact Section */}
+          <Contact
+            config={sanitizedConfig}
+            theme={theme}
+          />
+        </main>
+
+        {/* Footer */}
+        <Footer
+          config={sanitizedConfig}
+          theme={theme}
+        />
+
+        {/* Floating Scroll Progress & Scroll-to-Top Button */}
+        <ScrollProgress theme={theme} />
       </div>
     </HelmetProvider>
   );

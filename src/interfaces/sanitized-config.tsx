@@ -24,6 +24,11 @@ export interface SanitizedExternalProject {
   description?: string;
   imageUrl?: string;
   link: string;
+  category?: string;
+  beStack?: string[];
+  aiStack?: string[];
+  beDescription?: string;
+  aiDescription?: string;
 }
 
 export interface SanitizedExternalProjects {
@@ -81,6 +86,9 @@ export interface SanitizedExperience {
   from: string;
   to: string;
   companyLink?: string;
+  description?: string;
+  responsibilities?: string[];
+  tags?: string[];
 }
 
 export interface SanitizedCertification {
@@ -88,6 +96,7 @@ export interface SanitizedCertification {
   name?: string;
   year?: string;
   link?: string;
+  issuer?: string;
 }
 
 export interface SanitizedEducation {
@@ -95,6 +104,7 @@ export interface SanitizedEducation {
   degree?: string;
   from: string;
   to: string;
+  description?: string;
 }
 
 export interface SanitizedPublication {
