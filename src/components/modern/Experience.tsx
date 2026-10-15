@@ -131,6 +131,32 @@ const Experience: React.FC<ExperienceProps> = ({ experiences, theme = 'sunny' })
                             </span>
                           )}
                         </div>
+                        {(exp.role || exp.teamSize) && (
+                          <div className="flex items-center gap-2 flex-wrap mt-2">
+                            {exp.role && (
+                              <span
+                                className={`px-2.5 py-0.5 rounded-lg text-xs font-mono font-medium border ${
+                                  isLight
+                                    ? 'bg-sky-50 border-sky-200 text-sky-800'
+                                    : 'bg-slate-950/70 border-sky-500/30 text-sky-300'
+                                }`}
+                              >
+                                Role: {exp.role}
+                              </span>
+                            )}
+                            {exp.teamSize && (
+                              <span
+                                className={`px-2.5 py-0.5 rounded-lg text-xs font-mono font-medium border ${
+                                  isLight
+                                    ? 'bg-slate-100 border-slate-200 text-slate-700'
+                                    : 'bg-slate-950/70 border-slate-800 text-slate-300'
+                                }`}
+                              >
+                                Team size: {exp.teamSize}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
 
                       <div className="flex items-center gap-3">

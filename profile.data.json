@@ -9,7 +9,7 @@
     "status": "Available for AI Engineer Opportunities",
     "role": "AI Engineer",
     "tagline": "AI Engineer",
-    "shortBio": "An AI Engineer specialized in Hybrid GraphRAG, Knowledge Graphs (Ontotext GraphDB, Neo4j), Edge AI (NVIDIA Jetson, TensorRT, YOLO), backed by robust C++ parallel computing and high-concurrency systems expertise.",
+    "shortBio": "An AI Engineer focused on GraphRAG, NLP, and Edge AI, backed by strong computer science fundamentals and hands-on systems experience.",
     "resumeUrl": ""
   },
   "heroHighlights": [
@@ -33,27 +33,31 @@
   "about": {
     "badge": "ABOUT ME",
     "title": "Background & Engineering Philosophy",
-    "subheading": "Architecting Intelligent Systems & High-Performance Infrastructure",
+    "subheading": "Building Practical & Intelligent AI Systems",
     "paragraphs": [
-      "I am an AI Engineer specializing in Intelligent Systems, Hybrid GraphRAG architectures, and Computer Vision. I design end-to-end AI pipelines that transform raw unstructured multi-modal data into validated Knowledge Graphs and high-speed neural inferences.",
-      "With a solid foundation in Systems Optimization and Backend architecture (Python, C++, Node.js, Spring Boot), I bridge the gap between cutting-edge AI research and production-grade, scalable services."
+      "I am an AI Engineer focused on Hybrid GraphRAG, Knowledge Graphs, and Computer Vision. I build end-to-end AI workflows—from structuring complex domain data into validated Knowledge Graphs (Ontotext GraphDB, Neo4j) to fine-tuning NLP Transformers and deploying vision models with TensorRT on Edge hardware.",
+      "Backed by a strong foundation in backend architecture and systems optimization (C++, Python, Node.js), I focus on engineering efficiency, low-latency execution, and clean architectural design to deliver reliable, production-ready AI applications."
     ],
     "strengths": [
       {
         "title": "GraphRAG & Knowledge Graphs",
-        "description": "Ontology-guided retrieval, dual SPARQL/Vector engines, and semantic validation (SHACL/SWRL)."
+        "description": "Ontology-driven retrieval, dual SPARQL & Vector queries, and semantic validation (SHACL, SWRL) for factual synthesis.",
+        "icon": "brain"
       },
       {
         "title": "Edge AI & Industrial Vision",
-        "description": "High-FPS YOLO inference on NVIDIA Jetson using TensorRT and Basler/Cognex cameras."
-      },
-      {
-        "title": "Scalable Backend Systems",
-        "description": "Clean Architecture, DDD, high-throughput RESTful APIs, and Redis caching."
+        "description": "Real-world YOLO deployment with TensorRT on NVIDIA Jetson, integrating industrial cameras (Basler, Cognex) for automated inspection.",
+        "icon": "microchip"
       },
       {
         "title": "Parallel & Systems Optimization",
-        "description": "Multi-threading, algorithmic efficiency, and low-latency data pipelines."
+        "description": "C++ multi-threading, algorithmic speedup (3.5x+), PPC-tree data mining, and low-latency computation.",
+        "icon": "bolt"
+      },
+      {
+        "title": "Scalable Backend Systems",
+        "description": "Clean Architecture, high-concurrency Node.js and Java APIs, Redis caching, and Docker deployment.",
+        "icon": "server"
       }
     ]
   },
@@ -61,6 +65,8 @@
     {
       "company": "TO_TravelRAG Project",
       "position": "AI Engineer",
+      "role": "AI Engineer",
+      "teamSize": "1",
       "from": "July 2026",
       "to": "Present",
       "companyLink": "https://github.com/khanhtrinh150703/TO_TravelRAG_Project",
@@ -87,10 +93,12 @@
     {
       "company": "SMART-GPLX-SYSTEM",
       "position": "Full Stack",
+      "role": "Full Stack",
+      "teamSize": "1",
       "from": "March 2026",
       "to": "May 2026",
       "companyLink": "https://gplx.dividesk.com",
-      "description": "Online multiple-choice traffic exam platform with session management, history tracking, and user performance analytics. (Team size: 1 | Role: Full Stack)",
+      "description": "Online multiple-choice traffic exam platform with session management, history tracking, and user performance analytics.",
       "responsibilities": [
         "Full-Stack Core: Developed the Node.js (TypeScript/Awilix/Prisma) backend, MySQL database schemas, and a responsive Next.js (Shadcn UI) exam dashboard.",
         "State and Session Architecture: Managed live exam states in MongoDB to prevent F5 data loss, implemented JWT/Redis token blacklisting, and handled temporary registration OTP via Nodemailer.",
@@ -120,8 +128,39 @@
       ]
     },
     {
+      "company": "Multi-Source Sentiment Analysis (MSSA)",
+      "position": "AI / NLP Researcher & Engineer",
+      "role": "AI / NLP Researcher & Engineer",
+      "teamSize": "2",
+      "from": "September 2025",
+      "to": "April 2026",
+      "companyLink": "https://github.com/khanhtrinh150703/Bert",
+      "description": "Researched and engineered the Multi-Source Sentiment Analysis (MSSA) deep learning framework for Vietnamese hotel reviews on Booking.com. Fused PhoBERT deep contextual text representations with objective hotel service scores and guest booking context, utilizing Supervised Contrastive Learning (SupCon) and Focal Loss to achieve benchmark state-of-the-art results (80.93% Accuracy, 0.8080 Weighted F1-Score).",
+      "responsibilities": [
+        "Multi-Source Fusion Architecture: Designed an end-to-end multi-modal architecture combining deep contextual text representations from PhoBERT with tabular hotel attributes (7 dims) and guest booking context (3 dims) into a unified 304-dimensional latent embedding.",
+        "Hidden Layer Extraction & Linear Compression: Extracted and concatenated the last 4 hidden states of PhoBERT (3072 dims), applying attention-masked mean pooling and a Linear Compressor (BatchNorm + GELU + Dropout) down to 256 dims for balanced multi-source fusion.",
+        "Hybrid Loss Optimization (SupCon + Focal Loss): Integrated an independent 2-layer Projection Head (768 -> 256 -> 128) optimized with Supervised Contrastive Loss (SupConLoss) to enforce cluster tightness, paired with Focal Loss to penalize hard samples and resolve extreme class imbalance.",
+        "Multi-Sample Dropout & Regularization: Implemented 5 parallel dropout branches (p=0.3) within the classification head to stabilize gradient flow and prevent overfitting during fine-tuning.",
+        "Extensive Benchmarking & Ablation: Empirically evaluated across 18 models (PhoBERT, XLM-RoBERTa, DistilBERT, TF-IDF + XGBoost/SVM/LR/KNN, Word2Vec, Doc2Vec); surpassed all baselines with 80.93% Accuracy and 0.8080 F1-Score, confirmed through ablation and statistical significance tests."
+      ],
+      "tags": [
+        "Python",
+        "PyTorch",
+        "PhoBERT (vinai/phobert-base)",
+        "HuggingFace Transformers",
+        "Contrastive Learning (SupCon)",
+        "Focal Loss",
+        "Multi-Sample Dropout",
+        "Word Segmentation",
+        "XGBoost",
+        "Scikit-learn",
+        "Pandas / NumPy"
+      ]
+    },
+    {
       "company": "Hondaplus VietNam Co., Ltd.",
       "position": "AI Engineer",
+      "role": "AI Engineer",
       "from": "April 2025",
       "to": "January 2026",
       "companyLink": "https://www.hondaplus-vietnam.com.vn/vi",
@@ -148,6 +187,8 @@
     {
       "company": "Parallel Computing Project",
       "position": "Parallel Engineer",
+      "role": "Parallel Engineer",
+      "teamSize": "1",
       "from": "December 2024",
       "to": "March 2025",
       "companyLink": "https://github.com/khanhtrinh150703/Parallel-on-Frequent-Itemset",
@@ -170,6 +211,7 @@
     {
       "company": "TOIDM",
       "position": "Teacher Assistant",
+      "role": "Teacher Assistant",
       "from": "September 2024",
       "to": "December 2024",
       "companyLink": "https://www.facebook.com/toidmedu/",
@@ -184,10 +226,12 @@
     {
       "company": "RubikBMT Website",
       "position": "Backend",
+      "role": "Backend",
+      "teamSize": "2",
       "from": "August 2024",
       "to": "October 2024",
       "companyLink": "https://rubikbmt.vn/",
-      "description": "Web platform for managing Rubik's Cube competitions, event registrations, and news, successfully serving over 100 users during live events. (Team size: 2 | Role: Backend)",
+      "description": "Web platform for managing Rubik's Cube competitions, event registrations, and news, successfully serving over 100 users during live events.",
       "responsibilities": [
         "Backend and API Development: Built RESTful APIs and core business logic using Java and Spring Boot to handle event workflows and competitor data.",
         "Data Integration: Engineered a conversion utility to parse and standardize custom timestamps from csTimer.net into standard date formats for score consistency.",
@@ -210,7 +254,18 @@
       "description": "An end-to-end Hybrid GraphRAG system that transforms unstructured Booking.com hotel metadata and customer reviews into a validated Knowledge Graph, orchestrating dual-engine Information Retrieval (SPARQL & Vector) powered by an Ontology-driven GraphDB core.",
       "imageUrl": "",
       "link": "https://github.com/khanhtrinh150703/TO_TravelRAG_Project",
+      "github": "https://github.com/khanhtrinh150703/TO_TravelRAG_Project",
       "category": "AI",
+      "role": "AI Engineer",
+      "period": "July 2026 - Present",
+      "teamSize": "1",
+      "responsibilities": [
+        "Data Extraction & Schema Alignment: Ingested Booking.com raw JSON data (hotel profiles and multi-aspect reviews), executing ontology-guided LLM extraction for aspect-sentiment-evidence triples and resolving hierarchy via vector deepening (Qdrant) and BFS schema pathfinding.",
+        "Entity Resolution (ER) & Validation: Built a 2-tier ER pipeline matching geo-spatial entities against a MongoDB Geo-Index and running cosine vector similarity (threshold >= 0.88); enforced structural integrity via SHACL shape validation and SWRL reasoning prior to Ontotext GraphDB and Neo4j loading.",
+        "Query Parsing & Ontology Mapping: Developed a query understanding engine using Entity Atomization (targets, entities, metrics) and physical unit normalization (pint), applying RRF and Noisy-OR probability across multi-index Qdrant stores to accurately ground natural language to Ontology classes.",
+        "Dual-SPARQL Compilation & Chain Relaxation: Mitigated RDF relation sparsity by compiling dual SPARQL queries: a strict schema-level query (T-Box) and an instance-grounded query (A-Box) utilizing dynamic URI anchoring (VALUES) with OPTIONAL chain relaxation to guarantee zero-result prevention.",
+        "Parallel Retrieval & Response Synthesis: Orchestrated a multi-threaded retrieval pipeline querying GraphDB for deterministic facts alongside LlamaIndex vector chunks reranked via BAAI/bge-reranker-base, consolidating outputs to synthesize citation-backed, hallucination-free Markdown responses."
+      ],
       "aiStack": [
         "Python",
         "Ontotext GraphDB",
@@ -225,11 +280,51 @@
       ]
     },
     {
+      "title": "Multi-Source Sentiment Analysis (MSSA)",
+      "description": "A Multi-Source Sentiment Analysis (MSSA) research architecture for Vietnamese hotel reviews on Booking.com. Fuses PhoBERT deep textual representations with hotel objective metrics and booking context, optimized via Supervised Contrastive Learning (SupCon) and Focal Loss to achieve SOTA benchmark performance (80.93% Accuracy, 0.8080 Weighted F1-Score).",
+      "imageUrl": "",
+      "link": "https://github.com/khanhtrinh150703/Bert",
+      "github": "https://github.com/khanhtrinh150703/Bert",
+      "category": "AI",
+      "role": "AI / NLP Researcher & Engineer",
+      "period": "September 2025 - April 2026",
+      "teamSize": "2",
+      "responsibilities": [
+        "Multi-Source Fusion Architecture: Designed an end-to-end multi-modal architecture combining deep contextual text representations from PhoBERT with tabular hotel attributes (7 dims) and guest booking context (3 dims) into a unified 304-dimensional latent embedding.",
+        "Hidden Layer Extraction & Linear Compression: Extracted and concatenated the last 4 hidden states of PhoBERT (3072 dims), applying attention-masked mean pooling and a Linear Compressor (BatchNorm + GELU + Dropout) down to 256 dims for balanced multi-source fusion.",
+        "Hybrid Loss Optimization (SupCon + Focal Loss): Integrated an independent 2-layer Projection Head (768 -> 256 -> 128) optimized with Supervised Contrastive Loss (SupConLoss) to enforce cluster tightness, paired with Focal Loss to penalize hard samples and resolve extreme class imbalance.",
+        "Multi-Sample Dropout & Regularization: Implemented 5 parallel dropout branches (p=0.3) within the classification head to stabilize gradient flow and prevent overfitting during fine-tuning.",
+        "Extensive Benchmarking & Ablation: Empirically evaluated across 18 models (PhoBERT, XLM-RoBERTa, DistilBERT, TF-IDF + XGBoost/SVM/LR/KNN, Word2Vec, Doc2Vec); surpassed all baselines with 80.93% Accuracy and 0.8080 F1-Score, confirmed through ablation and statistical significance tests."
+      ],
+      "aiStack": [
+        "Python",
+        "PyTorch",
+        "PhoBERT (vinai/phobert-base)",
+        "HuggingFace Transformers",
+        "Contrastive Learning (SupCon)",
+        "Focal Loss",
+        "Multi-Sample Dropout",
+        "Word Segmentation",
+        "XGBoost",
+        "Scikit-learn",
+        "Pandas / NumPy"
+      ]
+    },
+    {
       "title": "Parallel N-List Mining - Frequent Itemset",
       "description": "A high-performance parallel computing program implementing multi-threading and C++ optimization techniques for the N-List frequent pattern mining algorithm, achieving 3.5x+ speedup on multi-core CPU architectures.",
       "imageUrl": "",
       "link": "https://github.com/khanhtrinh150703/Parallel-on-Frequent-Itemset",
+      "github": "https://github.com/khanhtrinh150703/Parallel-on-Frequent-Itemset",
       "category": "AI",
+      "role": "Parallel Engineer",
+      "period": "December 2024 - March 2025",
+      "teamSize": "1",
+      "responsibilities": [
+        "C++ Parallel Optimization: Applied multi-threading and C++ memory optimizations to enhance PPC-tree construction and parallel frequent itemset extraction.",
+        "High-Efficiency N-List Mining: Engineered high-concurrency pruning and prefix-tree traversals to maximize CPU core utilization.",
+        "Performance Benchmarking: Achieved 3.5x+ parallel speedup with 4 threads, especially at low minimum support thresholds compared to single-threaded algorithms."
+      ],
       "aiStack": [
         "C/C++",
         "Multi-threading",
@@ -283,7 +378,16 @@
       "description": "A math quiz practice app for students. Users can register/login, take quizzes, review past results, and join classes. Admins can manage users, quizzes, and classes. Built entirely with Java Spring Boot.",
       "imageUrl": "/Math.png",
       "link": "https://github.com/NghiaDau/MathQuizJava",
+      "github": "https://github.com/NghiaDau/MathQuizJava",
       "category": "BE",
+      "role": "Backend Engineer",
+      "period": "May 2024 - July 2024",
+      "teamSize": "4",
+      "responsibilities": [
+        "Backend & Security: Architected RESTful APIs with Java and Spring Boot, integrating Spring Security and JWT authentication for robust user session management.",
+        "Quiz Engine & Class Management: Implemented core business logic allowing students to enroll in classes, take time-restricted quizzes, and review question-by-question scoring and analytics.",
+        "Database Design & Optimization: Designed MySQL relational schemas to manage users, classes, question banks, and submission records with index tuning."
+      ],
       "beStack": [
         "Java",
         "Spring Boot",
@@ -298,6 +402,7 @@
       "description": "Web platform for managing Rubik's Cube competitions, event registrations, and news, successfully serving over 100 users during live events.",
       "imageUrl": "/Rubik.png",
       "link": "https://rubikbmt.vn/",
+      "github": "https://rubikbmt.vn/",
       "category": "BE",
       "role": "Backend",
       "period": "August 2024 - October 2024",
@@ -329,6 +434,7 @@
         "skills": [
           "Python",
           "GraphRAG",
+          "PhoBERT & Transformers",
           "Ontotext GraphDB",
           "Neo4j",
           "YOLO & TensorRT",
@@ -365,6 +471,7 @@
     ],
     "allSkills": [
       "Python",
+      "PhoBERT & Transformers",
       "GraphRAG",
       "Ontotext GraphDB",
       "Neo4j",
@@ -408,10 +515,10 @@
   "displayGithubProjects": [
     "khanhtrinh150703/TO_TravelRAG_Project",
     "khanhtrinh150703/SMART-GPLX-SYSTEM",
+    "khanhtrinh150703/Bert",
     "khanhtrinh150703/Exam-Cheating-Detection",
     "khanhtrinh150703/AppESP",
-    "khanhtrinh150703/Parallel-on-Frequent-Itemset",
-    "khanhtrinh150703/paychain_backend"
+    "khanhtrinh150703/Parallel-on-Frequent-Itemset"
   ]
 }
  

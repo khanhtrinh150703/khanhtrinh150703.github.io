@@ -24,28 +24,32 @@ interface AboutProps {
 const About: React.FC<AboutProps> = ({ theme = 'sunny' }) => {
   const isLight = theme === 'sunny' || theme === 'cloudy' || theme === 'snowy';
 
-  const strengths = [
-    {
-      title: 'GraphRAG & Knowledge Graphs',
-      desc: 'Ontology-driven retrieval, dual-engine SPARQL & Vector queries, and semantic validation (SHACL, SWRL) for factual synthesis.',
-      icon: <FaBrain className="text-sky-500 text-lg" />,
-    },
-    {
-      title: 'Edge AI & Industrial Vision',
-      desc: 'Real-world YOLO deployment with TensorRT on NVIDIA Jetson, integrating industrial cameras (Basler, Cognex) for high-FPS inspection.',
-      icon: <FaMicrochip className="text-blue-500 text-lg" />,
-    },
-    {
-      title: 'Parallel & Systems Optimization',
-      desc: 'C++ multi-threading, algorithmic speedup (3.5x+), PPC-tree data mining, and low-latency computation.',
-      icon: <FaBolt className="text-amber-500 text-lg" />,
-    },
-    {
-      title: 'Scalable Backend Architecture',
-      desc: 'Clean Architecture, Domain-Driven Design (DDD), high-concurrency Node.js/Java APIs, Redis caching, and Docker.',
-      icon: <FaServer className="text-emerald-500 text-lg" />,
-    },
-  ];
+  const getIcon = (iconName?: string) => {
+    switch (iconName) {
+      case 'brain':
+        return <FaBrain className="text-sky-500 text-lg" />;
+      case 'microchip':
+        return <FaMicrochip className="text-blue-500 text-lg" />;
+      case 'bolt':
+        return <FaBolt className="text-amber-500 text-lg" />;
+      case 'server':
+        return <FaServer className="text-emerald-500 text-lg" />;
+      default:
+        return <FaBrain className="text-sky-500 text-lg" />;
+    }
+  };
+
+  const aboutBadge = profileData.about?.badge || 'ABOUT ME';
+  const aboutTitle = profileData.about?.title || 'Background & Focus';
+  const aboutSubheading =
+    profileData.about?.subheading ||
+    'Hands-on AI Engineer with Strong CS Fundamentals';
+  const paragraphs = profileData.about?.paragraphs || [];
+  const strengths = (profileData.about?.strengths || []).map((s) => ({
+    title: s.title,
+    desc: s.description,
+    icon: getIcon((s as any).icon),
+  }));
 
   return (
     <section id="about" className="py-16 md:py-24 relative">
@@ -60,14 +64,14 @@ const About: React.FC<AboutProps> = ({ theme = 'sunny' }) => {
                   : 'bg-slate-900 border-slate-800 text-sky-300'
               }`}
             >
-              ABOUT ME
+              {aboutBadge}
             </span>
             <h2
               className={`text-3xl sm:text-4xl font-black tracking-tight ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
-              Background & Engineering Philosophy
+              {aboutTitle}
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full mt-3"></div>
           </div>
@@ -90,10 +94,10 @@ const About: React.FC<AboutProps> = ({ theme = 'sunny' }) => {
                     isLight ? 'text-slate-900' : 'text-white'
                   }`}
                 >
-                  {profileData.about.subheading}
+                  {aboutSubheading}
                 </h3>
 
-                {profileData.about.paragraphs.map((p, idx) => (
+                {paragraphs.map((p, idx) => (
                   <p
                     key={idx}
                     className={`leading-relaxed text-sm ${

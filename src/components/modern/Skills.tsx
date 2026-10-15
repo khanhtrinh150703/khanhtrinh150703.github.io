@@ -25,6 +25,8 @@ import {
   SiCplusplus,
   SiNeo4J,
   SiLinux,
+  SiPytorch,
+  SiHuggingface,
 } from 'react-icons/si';
 
 import profileData from '../../../profile.data.json';
@@ -38,6 +40,12 @@ interface SkillsProps {
 
 const getSkillIcon = (name: string) => {
   const lower = name.toLowerCase();
+  if (lower.includes('pytorch') || lower.includes('torch'))
+    return <SiPytorch className="text-orange-500" />;
+  if (lower.includes('huggingface') || lower.includes('hugging face') || lower.includes('transformer'))
+    return <SiHuggingface className="text-yellow-500" />;
+  if (lower.includes('phobert') || lower.includes('bert') || lower.includes('sentiment') || lower.includes('contrastive') || lower.includes('supcon'))
+    return <FaBrain className="text-amber-500" />;
   if (lower.includes('spring') || (lower.includes('java') && !lower.includes('script')))
     return <SiSpringboot className="text-emerald-500" />;
   if (lower.includes('node')) return <SiNodedotjs className="text-green-500" />;

@@ -11,6 +11,7 @@ import {
   FaArrowRight,
   FaCircleInfo,
   FaDiagramProject,
+  FaBolt,
 } from 'react-icons/fa6';
 import { SanitizedExternalProject } from '../../interfaces/sanitized-config';
 import { GithubProject } from '../../interfaces/github-project';
@@ -243,18 +244,52 @@ const Projects: React.FC<ProjectsProps> = ({
                               backgroundSize: '20px 20px',
                             }}
                           />
-                          <FaDiagramProject
-                            className={`text-4xl mb-2 group-hover:scale-110 transition-transform duration-300 ${
-                              isLight ? 'text-sky-500' : 'text-sky-400'
-                            }`}
-                          />
-                          <span
-                            className={`text-xs font-mono font-semibold tracking-wider uppercase ${
-                              isLight ? 'text-sky-700' : 'text-sky-300'
-                            }`}
-                          >
-                            GraphRAG Architecture
-                          </span>
+                          {project.title.toLowerCase().includes('sentiment') ||
+                          project.title.toLowerCase().includes('mssa') ||
+                          project.title.toLowerCase().includes('bert') ? (
+                            <>
+                              <FaBrain
+                                className={`text-4xl mb-2 group-hover:scale-110 transition-transform duration-300 ${
+                                  isLight ? 'text-sky-500' : 'text-sky-400'
+                                }`}
+                              />
+                              <span
+                                className={`text-xs font-mono font-semibold tracking-wider uppercase ${
+                                  isLight ? 'text-sky-700' : 'text-sky-300'
+                                }`}
+                              >
+                                MSSA • PhoBERT NLP
+                              </span>
+                            </>
+                          ) : project.title.toLowerCase().includes('parallel') ? (
+                            <>
+                              <FaBolt
+                                className="text-4xl mb-2 group-hover:scale-110 transition-transform duration-300 text-amber-500"
+                              />
+                              <span
+                                className={`text-xs font-mono font-semibold tracking-wider uppercase ${
+                                  isLight ? 'text-amber-700' : 'text-amber-400'
+                                }`}
+                              >
+                                Parallel C++ Mining
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <FaDiagramProject
+                                className={`text-4xl mb-2 group-hover:scale-110 transition-transform duration-300 ${
+                                  isLight ? 'text-sky-500' : 'text-sky-400'
+                                }`}
+                              />
+                              <span
+                                className={`text-xs font-mono font-semibold tracking-wider uppercase ${
+                                  isLight ? 'text-sky-700' : 'text-sky-300'
+                                }`}
+                              >
+                                GraphRAG Architecture
+                              </span>
+                            </>
+                          )}
                         </div>
                       )}
 
@@ -317,6 +352,45 @@ const Projects: React.FC<ProjectsProps> = ({
                         >
                           {project.title}
                         </h3>
+
+                        {/* Project Metadata: Role, Period, Team Size */}
+                        {(project.role || project.period || project.teamSize) && (
+                          <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                            {project.role && (
+                              <span
+                                className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-medium border ${
+                                  isLight
+                                    ? 'bg-sky-50 border-sky-200 text-sky-800'
+                                    : 'bg-slate-950/70 border-sky-500/30 text-sky-300'
+                                }`}
+                              >
+                                {project.role}
+                              </span>
+                            )}
+                            {project.period && (
+                              <span
+                                className={`px-2 py-0.5 rounded-md text-[10px] font-mono border ${
+                                  isLight
+                                    ? 'bg-slate-50 border-slate-200 text-slate-600'
+                                    : 'bg-slate-950/70 border-slate-800 text-slate-400'
+                                }`}
+                              >
+                                {project.period}
+                              </span>
+                            )}
+                            {project.teamSize && (
+                              <span
+                                className={`px-2 py-0.5 rounded-md text-[10px] font-mono border ${
+                                  isLight
+                                    ? 'bg-slate-50 border-slate-200 text-slate-600'
+                                    : 'bg-slate-950/70 border-slate-800 text-slate-400'
+                                }`}
+                              >
+                                Team: {project.teamSize}
+                              </span>
+                            )}
+                          </div>
+                        )}
 
                         <p
                           className={`text-xs mt-2 line-clamp-2 leading-relaxed ${
@@ -557,17 +631,35 @@ const Projects: React.FC<ProjectsProps> = ({
                 {(selectedProject.role || selectedProject.period || selectedProject.teamSize) && (
                   <div className="flex flex-wrap items-center gap-2 mt-2">
                     {selectedProject.role && (
-                      <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-lg bg-sky-50 dark:bg-slate-800 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-slate-700">
+                      <span
+                        className={`text-[11px] font-mono px-2.5 py-0.5 rounded-lg border ${
+                          isLight
+                            ? 'bg-sky-50 text-sky-800 border-sky-200'
+                            : 'bg-slate-950/80 text-sky-300 border-sky-500/30'
+                        }`}
+                      >
                         Role: {selectedProject.role}
                       </span>
                     )}
                     {selectedProject.period && (
-                      <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                      <span
+                        className={`text-[11px] font-mono px-2.5 py-0.5 rounded-lg border ${
+                          isLight
+                            ? 'bg-slate-100 text-slate-700 border-slate-200'
+                            : 'bg-slate-950/80 text-slate-300 border-slate-800'
+                        }`}
+                      >
                         {selectedProject.period}
                       </span>
                     )}
                     {selectedProject.teamSize && (
-                      <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                      <span
+                        className={`text-[11px] font-mono px-2.5 py-0.5 rounded-lg border ${
+                          isLight
+                            ? 'bg-slate-100 text-slate-700 border-slate-200'
+                            : 'bg-slate-950/80 text-slate-300 border-slate-800'
+                        }`}
+                      >
                         Team size: {selectedProject.teamSize}
                       </span>
                     )}

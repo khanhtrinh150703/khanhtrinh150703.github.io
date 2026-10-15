@@ -88,6 +88,8 @@ export interface SanitizedDescription {
 export interface SanitizedExperience {
   company?: string;
   position?: string;
+  role?: string;
+  teamSize?: string | number;
   from: string;
   to: string;
   companyLink?: string;
