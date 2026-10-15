@@ -95,8 +95,8 @@ const Experience: React.FC<ExperienceProps> = ({ experiences, theme = 'sunny' })
                     }`}
                   >
                     {/* Header Row: Company, Role & Period */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-1">
-                      <div>
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 pb-1">
+                      <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2 flex-wrap">
                           <h3
                             className={`text-lg sm:text-xl font-bold tracking-tight ${
@@ -159,16 +159,16 @@ const Experience: React.FC<ExperienceProps> = ({ experiences, theme = 'sunny' })
                         )}
                       </div>
 
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 shrink-0 self-start sm:self-center">
                         <div
-                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-mono w-fit ${
+                          className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-mono whitespace-nowrap shrink-0 ${
                             isLight
                               ? 'bg-sky-50 border-sky-200/80 text-sky-700'
                               : 'bg-slate-950/70 border-sky-500/30 text-sky-300'
                           }`}
                         >
-                          <FaCalendarDays className="text-[11px] text-sky-500" />
-                          <span>
+                          <FaCalendarDays className="text-[11px] text-sky-500 shrink-0" />
+                          <span className="whitespace-nowrap">
                             {exp.from} – {exp.to}
                           </span>
                         </div>

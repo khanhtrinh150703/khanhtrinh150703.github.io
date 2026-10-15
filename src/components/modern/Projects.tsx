@@ -145,7 +145,7 @@ const Projects: React.FC<ProjectsProps> = ({
                 }`}
               >
                 <FaBrain className="text-xs" />
-                <span>AI & GraphRAG</span>
+                <span>AI Projects</span>
                 <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-white/20">
                   {externalProjects.filter((p) => p.category === 'AI').length}
                 </span>
@@ -162,7 +162,7 @@ const Projects: React.FC<ProjectsProps> = ({
                 }`}
               >
                 <FaServer className="text-xs" />
-                <span>Backend Architecture</span>
+                <span>Backend Projects</span>
                 <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-white/20">
                   {externalProjects.filter((p) => p.category === 'BE').length}
                 </span>
@@ -316,7 +316,7 @@ const Projects: React.FC<ProjectsProps> = ({
                             }`}
                           >
                             <FaBrain className="text-[10px]" />
-                            <span>AI ENGINE</span>
+                            <span>AI</span>
                           </span>
                         )}
                       </div>
@@ -609,7 +609,7 @@ const Projects: React.FC<ProjectsProps> = ({
                       }`}
                     >
                       <FaServer className="text-[10px]" />
-                      <span>Backend Subsystem (BE)</span>
+                      <span>Backend Project</span>
                     </span>
                   )}
                   {selectedProject.category === 'AI' && (
@@ -621,7 +621,7 @@ const Projects: React.FC<ProjectsProps> = ({
                       }`}
                     >
                       <FaBrain className="text-[10px]" />
-                      <span>AI Engine Subsystem (AI)</span>
+                      <span>AI Project</span>
                     </span>
                   )}
                 </div>

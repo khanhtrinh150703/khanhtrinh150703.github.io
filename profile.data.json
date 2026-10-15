@@ -14,49 +14,49 @@
   },
   "heroHighlights": [
     {
-      "title": "Hybrid GraphRAG & AI",
-      "description": "Dual SPARQL & Vector retrieval, Knowledge Graphs (Ontotext GraphDB/Neo4j), and Qdrant."
+      "title": "Hybrid GraphRAG",
+      "description": "Dual SPARQL and Vector retrieval, Knowledge Graphs (Ontotext GraphDB/Neo4j), Qdrant."
     },
     {
-      "title": "Edge AI & Vision",
+      "title": "Edge AI Vision",
       "description": "Real-world YOLO deployment on NVIDIA Jetson with TensorRT and industrial camera systems."
     },
     {
       "title": "High-Performance Systems",
-      "description": "Clean Architecture, DDD, distributed caching, and C++ parallel processing (3.5x speedup)."
+      "description": "Clean Architecture, DDD, distributed caching, C++ parallel processing (3.5x speedup)."
     },
     {
-      "title": "Top Academic Track",
+      "title": "Academic Track",
       "description": "HUTECH Graduate with GPA 3.6/4.0 and English B1 Certification."
     }
   ],
   "about": {
     "badge": "ABOUT ME",
-    "title": "Background & Engineering Philosophy",
-    "subheading": "Building Practical & Intelligent AI Systems",
+    "title": "About Me",
+    "subheading": "Engineering Practical AI Systems",
     "paragraphs": [
       "I am an AI Engineer focused on Hybrid GraphRAG, Knowledge Graphs, and Computer Vision. I build end-to-end AI workflows—from structuring complex domain data into validated Knowledge Graphs (Ontotext GraphDB, Neo4j) to fine-tuning NLP Transformers and deploying vision models with TensorRT on Edge hardware.",
       "Backed by a strong foundation in backend architecture and systems optimization (C++, Python, Node.js), I focus on engineering efficiency, low-latency execution, and clean architectural design to deliver reliable, production-ready AI applications."
     ],
     "strengths": [
       {
-        "title": "GraphRAG & Knowledge Graphs",
-        "description": "Ontology-driven retrieval, dual SPARQL & Vector queries, and semantic validation (SHACL, SWRL) for factual synthesis.",
+        "title": "GraphRAG Architecture",
+        "description": "Ontology-driven retrieval, dual SPARQL and Vector queries, semantic validation (SHACL, SWRL) for factual synthesis.",
         "icon": "brain"
       },
       {
-        "title": "Edge AI & Industrial Vision",
-        "description": "Real-world YOLO deployment with TensorRT on NVIDIA Jetson, integrating industrial cameras (Basler, Cognex) for automated inspection.",
+        "title": "Edge AI Vision",
+        "description": "Real-world YOLO deployment with TensorRT on NVIDIA Jetson, integrating industrial cameras for automated inspection.",
         "icon": "microchip"
       },
       {
-        "title": "Parallel & Systems Optimization",
-        "description": "C++ multi-threading, algorithmic speedup (3.5x+), PPC-tree data mining, and low-latency computation.",
+        "title": "Parallel Computing",
+        "description": "C++ multi-threading, algorithmic speedup (3.5x+), PPC-tree data mining, low-latency computation.",
         "icon": "bolt"
       },
       {
-        "title": "Scalable Backend Systems",
-        "description": "Clean Architecture, high-concurrency Node.js and Java APIs, Redis caching, and Docker deployment.",
+        "title": "Backend Systems",
+        "description": "Clean Architecture, high-concurrency Node.js and Java APIs, Redis caching, Docker deployment.",
         "icon": "server"
       }
     ]
@@ -129,8 +129,8 @@
     },
     {
       "company": "Multi-Source Sentiment Analysis (MSSA)",
-      "position": "AI / NLP Researcher & Engineer",
-      "role": "AI / NLP Researcher & Engineer",
+      "position": "AI Engineer",
+      "role": "AI Engineer",
       "teamSize": "2",
       "from": "September 2025",
       "to": "April 2026",
@@ -286,7 +286,7 @@
       "link": "https://github.com/khanhtrinh150703/Bert",
       "github": "https://github.com/khanhtrinh150703/Bert",
       "category": "AI",
-      "role": "AI / NLP Researcher & Engineer",
+      "role": "AI Engineer",
       "period": "September 2025 - April 2026",
       "teamSize": "2",
       "responsibilities": [
@@ -424,13 +424,13 @@
     }
   ],
   "skills": {
-    "badge": "SKILLS & EXPERTISE",
-    "title": "Technical Stack & Capabilities",
+    "badge": "TECHNICAL SKILLS",
+    "title": "Technical Stack",
     "description": "Click any skill below to explore technology highlights and focus areas.",
     "categories": [
       {
-        "title": "AI, GraphRAG & Computer Vision",
-        "description": "Hybrid GraphRAG, Knowledge Graphs (Ontotext/Neo4j), semantic queries (SPARQL), vector stores, and Edge AI with YOLO/TensorRT.",
+        "title": "AI, GraphRAG, Computer Vision",
+        "description": "Hybrid GraphRAG, Knowledge Graphs (Ontotext/Neo4j), semantic queries (SPARQL), vector stores, Edge AI with YOLO/TensorRT.",
         "skills": [
           "Python",
           "GraphRAG",
@@ -445,8 +445,8 @@
         ]
       },
       {
-        "title": "Backend & Systems Architecture",
-        "description": "Robust server architecture, Clean Architecture, Domain-Driven Design (DDD), high-concurrency APIs, and C++ parallel computing.",
+        "title": "Backend Architecture",
+        "description": "Robust server architecture, Clean Architecture, Domain-Driven Design (DDD), high-concurrency APIs, C++ parallel computing.",
         "skills": [
           "Node.js (TypeScript)",
           "Java (Spring Boot)",
@@ -456,8 +456,8 @@
         ]
       },
       {
-        "title": "Databases & Semantic Storage",
-        "description": "Knowledge Graphs, relational databases, NoSQL document stores, vector databases, and distributed caching.",
+        "title": "Databases, Storage",
+        "description": "Knowledge Graphs, relational databases, NoSQL document stores, vector databases, distributed caching.",
         "skills": [
           "Ontotext GraphDB",
           "Neo4j",

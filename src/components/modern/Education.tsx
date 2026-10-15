@@ -38,14 +38,14 @@ const Education: React.FC<EducationProps> = ({
                   : 'bg-slate-900 border-slate-800 text-sky-300'
               }`}
             >
-              EDUCATION & CREDENTIALS
+              EDUCATION
             </span>
             <h2
               className={`text-3xl sm:text-4xl font-black tracking-tight ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
-              Education & Certifications
+              Education
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-sky-400 to-blue-600 rounded-full mt-3"></div>
           </div>
